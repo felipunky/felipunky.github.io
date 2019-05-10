@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title lang="fr">Bézier Curves</title>
+    <title>Bézier Curves</title>
     <link href="felipunky.github.io/StyleSheet.css" rel="stylesheet">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <h2>
         Bézier curves
     </h2>
-    <p lang="fr">
+    <p>
         Bézier curves are parametric curves resulting from parametric equations.
     </p>
     <p>
@@ -21,10 +21,10 @@
     <p>
         Parametric equations express a set of quantities as explicit functions of a number of "parameters".
     </p>
-    <p lang="fr">
+    <p>
         A Bézier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
     </p>
-    <p lang="fr">
+    <p>
         Case 1: A linear Bézier takes as input two points (A (magenta dot)    and B (blue dot)) and outputs a new point W (red dot) (linear interpolation).
     </p>
     <p>
@@ -39,10 +39,10 @@
     <p>
         W = ( 1 - t )A + tB
     </p>
-    <p lang="fr">
+    <p>
         Case 2: A Quadratic or 3rd degree Bézier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
     </p>
-    <p lang="fr">
+    <p>
         We could take what we learnt from the 2nd degree Bézier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
     </p>
     <p>
@@ -63,7 +63,7 @@
     <p>
         W = ( 1 - t )^2A + 2( 1 - t )B + t^2C
     </p>
-    <p lang="fr">
+    <p>
         Case 3: Parametric Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
     </p>
     <p>
@@ -98,7 +98,7 @@
     </p>
     <h3>
         Rational Bézier Curves
-    </h3 lang="fr">
+    </h3>
     <p>
         We could add another parameter called "weight" to the equations, which corresponds to the strength each t point is discretely pulled towards the control point. 
         The equation reflects the transformed t parameter regarding both the calculations on the effect of weighted control points (control point * weight * t), and the
