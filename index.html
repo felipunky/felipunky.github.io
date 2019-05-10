@@ -701,6 +701,8 @@
             });
             var speed = gui.add(uniforms.iSpeed, "value", 0.0, 2.0, 0.1).name("Speed");
             var t = gui.add(uniforms.iT, "value", 0.0, 1.0, 0.001).name("t");
+            t.domElement.style.pointerEvents = "none";
+            t.domElement.style.opacity = 0.5;
             var iterations = gui.add(uniforms.iIterations, "value", 100, 500, 100).name("Iterations");
             var construction = gui.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
             var iterationSize = gui.add(uniforms.iIterationsSize, "value", 0.0025, 0.03, 0.001).name("Size Of Iterations");
