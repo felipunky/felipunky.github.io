@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+Ôªø<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>BÈzier Curves f</title>
+    <title>B√©zier Curves f</title>
     <link href="felipunky.github.io/StyleSheet.css" rel="stylesheet">
 </head>
 <body>
     <div id="container"></div>
     <h1 id="GUIContainer">
-        Rational BÈzier Curves
+        Rational B√©zier Curves
     </h1>
     <h2>
-        BÈzier curves
+        B√©zier curves
     </h2>
     <p>
-        BÈzier curves are parametric curves resulting from parametric equations.
+        B√©zier curves are parametric curves resulting from parametric equations.
     </p>
     <p>
         Parametric equations express a set of quantities as explicit functions of a number of "parameters".
@@ -23,10 +23,10 @@
         Parametric equations express a set of quantities as explicit functions of a number of "parameters".
     </p>
     <p>
-        A BÈzier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
+        A B√©zier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
     </p>
     <p>
-        Case 1: A linear BÈzier takes as input two points (A (magenta dot)    and B (blue dot)) and outputs a new point W (red dot) (linear interpolation).
+        Case 1: A linear B√©zier takes as input two points (A (magenta dot)    and B (blue dot)) and outputs a new point W (red dot) (linear interpolation).
     </p>
     <p>
         The equation to get a third point C in the middle of A and B:
@@ -35,16 +35,16 @@
         W = 0.5A + 0.5B
     </p>
     <p>
-        The parametric expression of C results in the graphing of the parametric curve at points (x, y) regarding various tís:
+        The parametric expression of C results in the graphing of the parametric curve at points (x, y) regarding various t√©s:
     </p>
     <p>
         W = ( 1 - t )A + tB
     </p>
     <p>
-        Case 2: A Quadratic or 3rd degree BÈzier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
+        Case 2: A Quadratic or 3rd degree B√©zier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
     </p>
     <p>
-        We could take what we learnt from the 2nd degree BÈzier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
+        We could take what we learnt from the 2nd degree B√©zier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
     </p>
     <p>
         D = ( 1 - t )A + tB
@@ -65,7 +65,7 @@
         W = ( 1 - t )^2A + 2( 1 - t )B + t^2C
     </p>
     <p>
-        Case 3: Parametric Cubic or degree 4 BÈzier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
+        Case 3: Parametric Cubic or degree 4 B√©zier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
     </p>
     <p>
         E = ( 1 - t )A + tB
@@ -98,7 +98,7 @@
         W = ( 1 - t )^3A + 3( 1 - t )^2tB + 3( 1 - t )t^2C + t^3D
     </p>
     <h3>
-        Rational BÈzier Curves
+        Rational B√©zier Curves
     </h3>
     <p>
         We could add another parameter called "weight" to the equations, which corresponds to the strength each t point is discretely pulled towards the control point. 
@@ -228,7 +228,7 @@
 
         }
 
-        // Line and SDFLine functions by IÒigo Quilez. https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
+        // Line and SDFLine functions by I√©igo Quilez. https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
         float sdLine( in vec2 p, in vec2 a, in vec2 b )
         {
 
@@ -263,8 +263,8 @@
 
         vec2 A = uv - iPointOne, B = uv - iPointTwo, C = uv - mou, D = uv - iPointThree;
 
-        // Weights for the BÈzier. This allows us to get perfect Conic Sections from
-        // BÈzier Curves.
+        // Weights for the B√©zier. This allows us to get perfect Conic Sections from
+        // B√©zier Curves.
         float w0 = iWeightOne, w1 = iWeightTwo, w2 = iWeightThree, w3 = iWeightFour;
 
         // Notice the relation for the for loop:
