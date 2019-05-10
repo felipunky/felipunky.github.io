@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Bézier Curves</title>
-    <link rel="stylesheet" href="StyleSheet.css">
+    <link href="/StyleSheet.css" rel="stylesheet">
 </head>
 <body>
     <div id="container"></div>
@@ -114,9 +114,9 @@
         W = ( 1 - t )^2Aw0 + 2( 1 - t )Bw1 + t^2Cw2 / ( 1 - t )^2w0 + 2( 1 - t )w1 + t^2w2
     </p>
 
-    <script src="three.min.js"></script>
+    <script src="/three.min.js"></script>
 
-    <script src="dat.gui.min.js"></script>
+    <script src="/dat.gui.min.js"></script>
 
     <script id="vertexShader" type="x-shader/x-vertex">
         void main() {
