@@ -578,8 +578,8 @@
 
                 if (uniforms.iMouse.value.z == 1) {
 
-                    uniforms.iMouse.value.x = e.touches[0].clientX;
-                    uniforms.iMouse.value.y = e.touches[0].clientY * 0.5 - e.pageY;
+                    uniforms.iMouse.value.x = e.touches[0].pageX;
+                    uniforms.iMouse.value.y = window.innerHeight * 0.5 - e.touches[0].pageY;
 
                 }
 
