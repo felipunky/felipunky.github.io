@@ -130,6 +130,9 @@
 
         #extension GL_EXT_shader_texture_lod : enable
         #extension GL_OES_standard_derivatives : enable
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
 
         uniform vec2 iResolution;
         uniform float iTime;
@@ -565,6 +568,30 @@
             }
 
             document.getElementById("container").onmouseup = function (e) {
+
+                uniforms.iMouse.value.z = 0;
+
+            }
+
+            document.getElementById("container").ontouchmove = function (e)
+            {
+
+                if (uniforms.iMouse.value.z == 1) {
+
+                    uniforms.iMouse.value.x = e.pageX;
+                    uniforms.iMouse.value.y = window.innerHeight * 0.5 - e.pageY;
+
+                }
+
+            }
+
+            document.getElementById("container").ontouchstart = function (e) {
+
+                uniforms.iMouse.value.z = 1;
+
+            }
+
+            document.getElementById("container").ontouchend = function (e) {
 
                 uniforms.iMouse.value.z = 0;
 
