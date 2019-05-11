@@ -554,9 +554,9 @@
 
             var el = document.getElementById("container");
             el.addEventListener("touchstart", handleStart, false);
-            /*el.addEventListener("touchend", handleEnd, false);
-            el.addEventListener("touchcancel", handleCancel, false);
-            el.addEventListener("touchmove", handleMove, false);*/
+            el.addEventListener("touchend", handleEnd, false);
+            //el.addEventListener("touchcancel", handleCancel, false);
+            el.addEventListener("touchmove", handleMove, false);
             console.log("initialized.");
 
         }
@@ -567,11 +567,35 @@
             console.log("touchstart.");
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-
+            uniforms.iMouse.value.z = 1;
             console.log("touchstart:" + touches[0] + ".");
 
         }
 
+        function handleMove(evt) {
+
+            evt.preventDefault();
+            var el = document.getElementById("container");
+            var touches = evt.changedTouches;
+
+            uniforms.iMouse.value.x = touches[i].pageX;
+            uniforms.iMouse.value.y = touches[i].pageY;
+
+            console.log("MousePosition(" + touches[i].pageX + ", " + touches[i].pageY + ");");
+
+        }
+
+        function handleEnd(evt) {
+
+            evt.preventDefault();
+            log("touchend");
+            var el = document.getElementById("container");
+            var touches = evt.changedTouches;
+
+            uniforms.iMouse.value.z = 1;
+            console.log("touchstart:" + touches[0] + ".");
+
+        }
 
         function onWindowResize(event) {
 
