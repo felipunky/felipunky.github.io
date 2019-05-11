@@ -641,9 +641,9 @@
         function onWindowResize(event) {
 
             renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
-            aspectRatio = ( renderer.domElement.width / renderer.domElement.height ) * scale;
-            uniforms.iResolution.value.x = renderer.domElement.width * scale;
-            uniforms.iResolution.value.y = renderer.domElement.height * scale;
+            aspectRatio = ( renderer.domElement.width / renderer.domElement.height );
+            uniforms.iResolution.value.x = renderer.domElement.width;
+            uniforms.iResolution.value.y = renderer.domElement.height;
 
         }
 
