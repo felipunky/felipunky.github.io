@@ -557,6 +557,7 @@
             var el = document.getElementById("container");
             el.addEventListener("touchstart", handleStart, false);
             el.addEventListener("touchend", handleEnd, false);
+            el.addEventListener("touchcancel", handleCancel, false);
             el.addEventListener("touchmove", handleMove, false);
             //console.log("initialized.");
 
@@ -600,6 +601,18 @@
 
             uniforms.iMouse.value.z = 0;
             //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
+
+        }
+
+        function handleCancel(evt) {
+
+            evt.preventDefault();
+            console.log("touchcancel.");
+            var touches = evt.changedTouches;
+  
+            var idx = ongoingTouchIndexById(touches[0].identifier);
+            ongoingTouches.splice(idx, 1);  // remove it; we're done
+            
 
         }
 
