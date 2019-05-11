@@ -652,6 +652,9 @@
             aspectRatio = ( renderer.domElement.width * scale ) / ( renderer.domElement.height * scale );
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
+            uniforms.iPointOne.value.x = aspectRatio * 0.1;
+            uniforms.iPointTwo.value.x = aspectRatio * 0.5;
+            uniforms.iPointThree.value.x = aspectRatio * 0.7;
 
         }
 
