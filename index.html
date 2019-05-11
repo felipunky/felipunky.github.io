@@ -558,6 +558,7 @@
             el.addEventListener("touchstart", handleStart, false);
             el.addEventListener("touchend", handleEnd, false);
             //el.addEventListener("touchcancel", handleCancel, false);
+            if (uniforms.iMouse.value.z === 1)
             el.addEventListener("touchmove", handleMove, false);
             //console.log("initialized.");
 
@@ -579,7 +580,7 @@
             evt.preventDefault();
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            if (uniforms.iMouse.value.z === 1) {
+            //if (uniforms.iMouse.value.z === 1) {
 
                 var scale = renderer.getPixelRatio();
                 uniforms.iMouse.value.x = touches[0].pageX * scale;
