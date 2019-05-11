@@ -497,6 +497,8 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
 
+            aspectRatio = (window.innerWidth * scale) / (window.innerHeight * scale);
+
             var geometry = new THREE.PlaneBufferGeometry(2, 2);
 
             uniforms = {
