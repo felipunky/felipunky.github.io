@@ -602,7 +602,7 @@
 
             }
 
-            if (uniforms.iMouse.value.z === 1 || !currentElement) 
+            if (uniforms.iMouse.value.z === 1 && currentElement == "YES" && touches[0].pageY > 0.0) 
             {
 
                 uniforms.iMouse.value.x = x;
