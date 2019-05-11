@@ -470,6 +470,7 @@
         var uniforms;
         var bool = 0;
         var aspectRatio = 0;
+        var iter = 100;
 
         init();
         addGUI();
@@ -495,7 +496,7 @@
                 iResolution: { type: "v2", value: new THREE.Vector2() },
                 iMouse: { type: "v3", value: new THREE.Vector3() },
                 iDegree: { type: "i", value: 4 },
-                iIterations: { type: "i", value: 100 },
+                iIterations: { type: "i", value: iter },
                 iWeightOne: { type: "f", value: 1.0 },
                 iWeightTwo: { type: "f", value: 1.0 },
                 iWeightThree: { type: "f", value: 1.0 },
