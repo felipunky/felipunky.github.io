@@ -578,9 +578,12 @@
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
             var scale = window.devicePixelRatio;
-
-            uniforms.iMouse.value.x = touches[0].pageX * scale;
-            uniforms.iMouse.value.y = window.innerHeight * 0.5 - touches[0].pageY * scale;
+            var x = touches[0].pageX;
+            x *= scale;
+            uniforms.iMouse.value.x = x;
+            var y = window.innerHeight * 0.5 - touches[0].pageY;
+            y *= scale;
+            uniforms.iMouse.value.y = y;
 
             //console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
 
