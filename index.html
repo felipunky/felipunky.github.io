@@ -578,10 +578,10 @@
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
 
-            uniforms.iMouse.value.x = touches[i].pageX;
-            uniforms.iMouse.value.y = touches[i].pageY;
+            uniforms.iMouse.value.x = touches[0].pageX;
+            uniforms.iMouse.value.y = touches[0].pageY;
 
-            console.log("MousePosition(" + touches[i].pageX + ", " + touches[i].pageY + ");");
+            console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
 
         }
 
