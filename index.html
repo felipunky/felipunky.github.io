@@ -551,15 +551,15 @@
             document.getElementById("container").ontouchmove = function (e)
             {
 
-                //if (uniforms.iMouse.value.z == 1) 
-                //{
+                if (uniforms.iMouse.value.z == 1) 
+                {
 
-                    uniforms.iMouse.value.x = e.pageX;
-                    uniforms.iMouse.value.y = window.innerHeight * 0.5 - e.pageY;
+                    uniforms.iMouse.value.x = e.changedTouches[0].pageX;
+                    uniforms.iMouse.value.y = window.innerHeight * 0.5 - e.changedTouches[0].pageY;
                     //uniforms.iMouse.value.x *= 2.0;
                     //uniforms.iMouse.value.y *= 2.0;
 
-                //}
+                }
 
             }
             
