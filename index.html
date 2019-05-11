@@ -563,34 +563,32 @@
 
         }
 
-        var enable = 0;
-
         function handleStart(evt) {
 
             evt.preventDefault();
             //console.log("touchstart.");
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            enable = 1;
+            uniforms.iMouse.value.z = 1;
             //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
 
         }
 
         function handleMove(evt) {
 
-            evt.preventDefault();
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            if (enable === 1) 
+            if (uniforms.iMouse.value.z === 1) 
             {
 
+                evt.preventDefault();
                 var scale = renderer.getPixelRatio();
                 uniforms.iMouse.value.x = touches[0].pageX * scale;
                 uniforms.iMouse.value.y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
 
             }
 
-            console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
+            //console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
 
         }
 
@@ -601,7 +599,7 @@
             //var el = document.getElementById("container");
             //var touches = evt.changedTouches;
 
-            enable = 0;
+            uniforms.iMouse.value.z = 0;
             //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
 
         }
@@ -612,7 +610,7 @@
             //console.log("touchcancel.");
             //var touches = evt.changedTouches;
 
-            enable = 0;
+            uniforms.iMouse.value.z = 0;
             //var idx = ongoingTouchIndexById(touches[0].identifier);
             //ongoingTouches.splice(idx, 1);  // remove it; we're done
             
