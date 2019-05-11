@@ -554,8 +554,8 @@
                 //if (uniforms.iMouse.value.z == 1) 
                 {
 
-                    uniforms.iMouse.value.x = e.touches[0].clientX;
-                    uniforms.iMouse.value.y = window.innerHeight * 0.5 - e.touches[0].clientY;
+                    uniforms.iMouse.value.x = e.touches[0].clientX - canvas.offsetLeft;
+                    uniforms.iMouse.value.y = e.touches[0].clientY - canvas.offsetTop;
                     //uniforms.iMouse.value.x *= 2.0;
                     //uniforms.iMouse.value.y *= 2.0;
 
