@@ -600,7 +600,7 @@
 
             }*/
 
-            if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && x < renderer.domElement.width * 0.5 && y < renderer.domElement.height * 0.5) 
+            if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX < renderer.domElement.width * 0.5 && touches[0].pageY < renderer.domElement.height * 0.5) 
             {
 
                 uniforms.iMouse.value.x = x;
