@@ -570,6 +570,18 @@
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
             uniforms.iMouse.value.z = 1;
+
+            var scale = renderer.getPixelRatio();
+            var x = touches[0].pageX * scale;
+            var y = ( window.innerHeight * 0.5 - touches[0].pageY ) * scale;
+            var currentElement = document.elementFromPoint(x, y);
+            if (currentElement !== "container")
+            {
+
+                uniforms.iMouse.value.z = 0;
+
+            }
+
             console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
 
         }
@@ -583,7 +595,7 @@
             var x = touches[0].pageX * scale;
             var y = ( window.innerHeight * 0.5 - touches[0].pageY ) * scale;
             var currentElement = document.elementFromPoint(x, y);
-            if (uniforms.iMouse.value.z === 1) 
+            if (uniforms.iMouse.value.z === 1 ) 
             {
 
                 uniforms.iMouse.value.x = x;
