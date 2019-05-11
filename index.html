@@ -470,6 +470,7 @@
         var uniforms;
         var bool = 0;
         var aspectRatio = 0;
+        var scale;
 
         init();
         addGUI();
@@ -529,7 +530,7 @@
 
                 if (uniforms.iMouse.value.z === 1) {
 
-                    var scale = renderer.getPixelRatio();
+                    scale = renderer.getPixelRatio();
 
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = ( window.innerHeight * 0.5 - e.pageY ) * scale;
@@ -580,7 +581,6 @@
             evt.preventDefault();
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            var scale = renderer.getPixelRatio();
             var x = touches[0].pageX * scale;
             var y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
             /*
@@ -641,7 +641,7 @@
         function onWindowResize(event) {
 
             renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
-            aspectRatio = renderer.domElement.width / renderer.domElement.height;
+            aspectRatio = renderer.domElement.width * scale / renderer.domElement.height * scale;
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
 
