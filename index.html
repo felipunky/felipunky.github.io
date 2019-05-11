@@ -557,18 +557,18 @@
             el.addEventListener("touchend", handleEnd, false);
             //el.addEventListener("touchcancel", handleCancel, false);
             el.addEventListener("touchmove", handleMove, false);
-            console.log("initialized.");
+            //console.log("initialized.");
 
         }
 
         function handleStart(evt) {
 
             evt.preventDefault();
-            console.log("touchstart.");
+            //console.log("touchstart.");
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
             uniforms.iMouse.value.z = 1;
-            console.log("touchstart:" + touches[0] + ".");
+            //console.log("touchstart:" + touches[0] + ".");
 
         }
 
@@ -588,12 +588,12 @@
         function handleEnd(evt) {
 
             evt.preventDefault();
-            log("touchend");
+            //console.log("touchend");
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
 
             uniforms.iMouse.value.z = 1;
-            console.log("touchstart:" + touches[0] + ".");
+            //console.log("touchstart:" + touches[0] + ".");
 
         }
 
