@@ -579,19 +579,15 @@
             evt.preventDefault();
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            if (uniforms.iMouse.value.z === 1) 
+            var scale = renderer.getPixelRatio();
+            var x = touches[0].pageX * scale;
+            var y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
+            var currentElement = document.elementFromPoint(x, y);
+            if (currentElement.id === "container") 
             {
 
-                var scale = renderer.getPixelRatio();
-                uniforms.iMouse.value.x = touches[0].pageX * scale;
-                uniforms.iMouse.value.y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
-
-            }
-
-            else
-            {
-
-                uniforms.iMouse.value.z = 0;
+                uniforms.iMouse.value.x = x;
+                uniforms.iMouse.value.y = y;
 
             }
 
