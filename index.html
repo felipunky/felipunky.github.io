@@ -530,7 +530,7 @@
                 if (uniforms.iMouse.value.z == 1) {
 
                     uniforms.iMouse.value.x = e.pageX;
-                    uniforms.iMouse.value.y = renderer.domElement.height * 0.5 - e.pageY;
+                    uniforms.iMouse.value.y = window.innerHeight * 0.5 - e.pageY;
 
                 }
 
@@ -577,11 +577,11 @@
             evt.preventDefault();
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            var scale = renderer.devicePixelRatio;
+            var scale = renderer.getPixelRatio();
             var x = touches[0].pageX;
             x *= scale;
             uniforms.iMouse.value.x = x;
-            var y = renderer.domElement.height * 0.5;
+            var y = window.innerHeight * 0.5;
             y *= scale;
             uniforms.iMouse.value.y = y - touches[0].pageY;
 
