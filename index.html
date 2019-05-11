@@ -586,7 +586,7 @@
             var scale = renderer.getPixelRatio();
             var x = touches[0].pageX * scale;
             var y = ( window.innerHeight * 0.5 - touches[0].pageY ) * scale;
-            var currentElement = document.elementFromPoint(x, y).name;
+            var currentElement = !document.elementFromPoint(x, y).name ? "no" : document.elementFromPoint(x, y).name;
             if (uniforms.iMouse.value.z === 1 ) 
             {
 
