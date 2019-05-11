@@ -557,8 +557,6 @@
             var el = document.getElementById("container");
             el.addEventListener("touchstart", handleStart, false);
             el.addEventListener("touchend", handleEnd, false);
-            //el.addEventListener("touchcancel", handleCancel, false);
-            if (uniforms.iMouse.value.z === 1)
             el.addEventListener("touchmove", handleMove, false);
             //console.log("initialized.");
 
@@ -571,7 +569,7 @@
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
             uniforms.iMouse.value.z = 1;
-            console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
+            //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
 
         }
 
@@ -589,7 +587,7 @@
 
             }
 
-            //console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
+            console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
 
         }
 
@@ -601,7 +599,7 @@
             var touches = evt.changedTouches;
 
             uniforms.iMouse.value.z = 0;
-            console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
+            //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
 
         }
 
