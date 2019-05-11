@@ -586,7 +586,7 @@
             var scale = renderer.getPixelRatio();
             var x = touches[0].pageX * scale;
             var y = ( window.innerHeight * 0.5 - touches[0].pageY ) * scale;
-            var currentElement = document.elementFromPoint(x, y).hasOwnProperty("name") ? "yes" : "no";
+            var currentElement = document.elementFromPoint(x, y)?.id || "Safe";
             if (uniforms.iMouse.value.z === 1 ) 
             {
 
@@ -596,7 +596,7 @@
             }
 
             //console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
-            //console.log(currentElement);
+            console.log(currentElement);
 
         }
 
