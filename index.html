@@ -548,10 +548,12 @@
 
             }
 
+            var enable = 0;
+
             document.getElementById("container").ontouchmove = function (e)
             {
 
-                if (uniforms.iMouse.value.z === 1) 
+                if (enable === 1) 
                 {
 
                     uniforms.iMouse.value.x = e.touches[0].clientX - canvas.offsetLeft;
@@ -565,13 +567,13 @@
             
             document.getElementById("container").ontouchstart = function (e) {
 
-                uniforms.iMouse.value.z = 1;
+                enable = 1;
 
             }
 
             document.getElementById("container").ontouchend = function (e) {
 
-                uniforms.iMouse.value.z = 0;
+                enable = 0;
 
             }
             
