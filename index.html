@@ -493,7 +493,8 @@
             scene = new THREE.Scene();
 
             renderer = new THREE.WebGLRenderer();
-            renderer.setPixelRatio(window.devicePixelRatio);
+            scale = window.devicePixelRatio;
+            renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
 
             var geometry = new THREE.PlaneBufferGeometry(2, 2);
@@ -645,7 +646,6 @@
 
         function onWindowResize(event) {
 
-            scale = renderer.getPixelRatio();
             renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
             aspectRatio = ( renderer.domElement.width * scale ) / ( renderer.domElement.height * scale );
             uniforms.iResolution.value.x = renderer.domElement.width;
