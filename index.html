@@ -591,14 +591,14 @@
             try
             {
 
-                currentElement = document.elementFromPoint(x, y).id;
+                currentElement = !document.elementFromPoint(x, y).id ? "YES" : "NO";
 
             }
 
             catch (e)
             {
 
-                currentElement = null;
+                currentElement = "NO";
 
             }
 
