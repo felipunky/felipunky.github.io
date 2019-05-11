@@ -547,29 +547,29 @@
                 uniforms.iMouse.value.z = 0;
 
             }
-
-            function startup() {
-
-                var el = document.getElementById("container");
-                el.addEventListener("touchstart", handleStart, false);
-                el.addEventListener("touchend", handleEnd, false);
-                el.addEventListener("touchcancel", handleCancel, false);
-                el.addEventListener("touchmove", handleMove, false);
-                console.log("initialized.");
-
-            }
-
-            function handleStart(evt) {
-
-                evt.preventDefault();
-                console.log("touchstart.");
-                var el = document.getElementById("container");
-                var touches = evt.changedTouches;
-
-                console.log("touchstart:" + touches[0] + ".");
-
-            }
             
+        }
+
+        function startup() {
+
+            var el = document.getElementById("container");
+            el.addEventListener("touchstart", handleStart, false);
+            el.addEventListener("touchend", handleEnd, false);
+            el.addEventListener("touchcancel", handleCancel, false);
+            el.addEventListener("touchmove", handleMove, false);
+            console.log("initialized.");
+
+        }
+
+        function handleStart(evt) {
+
+            evt.preventDefault();
+            console.log("touchstart.");
+            var el = document.getElementById("container");
+            var touches = evt.changedTouches;
+
+            console.log("touchstart:" + touches[0] + ".");
+
         }
 
 
