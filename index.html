@@ -530,8 +530,6 @@
 
                 if (uniforms.iMouse.value.z === 1) {
 
-                    scale = renderer.getPixelRatio();
-
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = ( window.innerHeight * 0.5 - e.pageY ) * scale;
 
@@ -640,8 +638,9 @@
 
         function onWindowResize(event) {
 
+            scale = renderer.getPixelRatio();
             renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
-            aspectRatio = ( renderer.domElement.width / scale ) / ( renderer.domElement.height / scale );
+            aspectRatio = ( renderer.domElement.width * scale ) / ( renderer.domElement.height * scale );
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
 
