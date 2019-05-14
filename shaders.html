@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bézier Curves</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+
+        GUIContainer {
+            position: absolute;
+            top: 0px;
+            left: 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body onload="startup()">
+    <div id="container"></div>
+    <h1 id="GUIContainer">
+        Rational Bézier Curves
+    </h1>
+    <h2>
+        Bézier curves
+    </h2>
+    <p>
+        Bézier curves are parametric curves resulting from parametric equations.
+    </p>
+    <p>
+        Parametric equations express a set of quantities as explicit functions of a number of "parameters".
+    </p>
+    <p>
+        A Bézier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
+    </p>
+    <p>
+        Case 1: A linear Bézier takes as input two points (A (magenta dot)
+        and B (blue dot)) and outputs a new point W (red dot) (linear interpolation).
+    </p>
+    <p>
+        The equation to get a third point C in the middle of A and B:
+    </p>
+    <p>
+        W = 0.5A + 0.5B
+    </p>
+    <p>
+        The parametric expression of C results in the graphing of the parametric curve at points (x, y) regarding various t's:
+    </p>
+    <p>
+        W = ( 1 - t )A + tB
+    </p>
+    <p>
+        Case 2: A Quadratic or 3rd degree Bézier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
+    </p>
+    <p>
+        We could take what we learnt from the 2nd degree Bézier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
+    </p>
+    <p>
+        D = ( 1 - t )A + tB
+    </p>
+    <p>
+        E = ( 1 - t )B + tC
+    </p>
+    <p>
+        W = ( 1 - t )D + tE
+    </p>
+    <p>
+        This is a system of equations, so we can substitute D and E directly into W without having to precompute them:
+    </p>
+    <p>
+        W = ( 1 - t )[ ( 1 - t )A + tB ] + t[ ( 1 - t )B + tC ]
+    </p>
+    <p>
+        W = ( 1 - t )^2A + 2( 1 - t )B + t^2C
+    </p>
+    <p>
+        Case 3: Parametric Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
+    </p>
+    <p>
+        E = ( 1 - t )A + tB
+    </p>
+    <p>
+        F = ( 1 - t )B + tC
+    </p>
+    <p>
+        G = ( 1 - t )C + tD
+    </p>
+    <p>
+        H = ( 1 - t )E + tF
+    </p>
+    <p>
+        I = ( 1 - t )F + tG
+    </p>
+    <p>
+        W = ( 1 - t )H + tI
+    </p>
+    <p>
+        This is a system of equations, so we can substitute the previous interpolations into the last ones:
+    </p>
+    <p>
+        W = ( 1 - t )[ ( 1 - t )( 1 - t )A + tB + ( 1 - t )B + tC ] + t[ ( 1 - t )( 1 - t )B + tC + ( 1 - t )C + tD ]
+    </p>
+    <p>
+        That corresponds to:
+    </p>
+    <p>
+        W = ( 1 - t )^3A + 3( 1 - t )^2tB + 3( 1 - t )t^2C + t^3D
+    </p>
+    <h3>
+        Rational Bézier Curves
+    </h3>
+    <p>
+        We could add another parameter called "weight" to the equations, which corresponds to the strength each t point is discretely pulled towards the control point.
+        The equation reflects the transformed t parameter regarding both the calculations on the effect of weighted control points (control point * weight * t), and the
+        parametrized (between 0 and 1) calculations amongst the weights and the parameter t (w * t), for each t being evaluated.
+    </p>
+    <p>
+        W = ( 1 - t )Aw0 + tBw1 / ( 1 - t )w0 + tw1
+    </p>
+    <p>
+        Higher degree (Quadratic):
+    </p>
+    <p>
+        W = ( 1 - t )^2Aw0 + 2( 1 - t )Bw1 + t^2Cw2 / ( 1 - t )^2w0 + 2( 1 - t )w1 + t^2w2
+    </p>
+
+    <script src="felipunky.github.io/three.min.js"></script>
+
+    <script src="felipunky.github.io/dat.gui.min.js"></script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main()
+        {
+
+        gl_Position = vec4( position, 1.0 );
+
+        }
+
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        // By Felipe Gutierrez,
+
+        #extension GL_EXT_shader_texture_lod : enable
+        #extension GL_OES_standard_derivatives : enable
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
+
+        uniform vec2 iResolution;
+        uniform float iTime;
+        uniform vec3 iMouse;
+        uniform int iDegree;
+        uniform int iIterations;
+        uniform float iWeightOne;
+        uniform float iWeightTwo;
+        uniform float iWeightThree;
+        uniform float iWeightFour;
+        uniform int iShow;
+        uniform float iIterationsSize;
+        uniform float iPointSize;
+        uniform float iBlurIteration;
+        uniform float iBlurPoint;
+        uniform float iSpeed;
+        uniform vec2 iPointOne;
+        uniform vec2 iPointTwo;
+        uniform vec2 iPointThree;
+        uniform vec2 iPointFour;
+        uniform int iManual;
+        uniform float iT;
+
+        float lerp( float a, float b, float t )
+        {
+
+        return mix( a, b, t );
+
+        }
+
+        vec2 lerp( vec2 a, vec2 b, float w1, float w2, float t, out float w )
+        {
+
+        float temp = ( 1.0 - t ) * w1, tempO = w2 * t;
+        w = temp + tempO;
+
+        return ( temp * a + tempO * b )
+        /
+        w;
+
+        }
+
+        float quad( float P0, float P1, float P2, float W0, float W1, float W2, float t )
+        {
+
+        float ber = 1.0 - t, berO = t * t;
+
+        return ( ber * ber * W0 * P0                 +
+        2.0 * ( t * P1 * W1 ) * ber           +
+        berO * P2 * W2 )
+        /
+        ( ber * ber * W0                      +
+        2.0 * ( t * W1 ) * ber                +
+        berO * W2 );
+
+        }
+
+        vec2 quad( vec2 P0, vec2 P1, vec2 P2, float W0, float W1, float W2, float t )
+        {
+
+        return vec2( quad( P0.x, P1.x, P2.x, W0, W1, W2, t ),
+        quad( P0.y, P1.y, P2.y, W0, W1, W2, t )
+        );
+
+        }
+
+        float cub( float P0, float P1, float P2, float P3, float W0, float W1, float W2, float W3,
+        float t )
+        {
+
+        float ber = 1.0 - t, berO = t * t;
+
+        return ( pow( ber, 3.0 ) * P0 * W0           +
+        3.0 * ( ber * ber ) * t * P1 * W1   +
+        3.0 * ( ber ) * berO * P2 * W2      +
+        pow( t, 3.0 ) * P3 * W3
+        )
+        /
+        ( pow( ber, 3.0 ) * W0                +
+        3.0 * ( ber * ber ) * t * W1        +
+        3.0 * ( ber ) * berO * W2           +
+        pow( t, 3.0 ) * W3
+        );
+
+        }
+
+        vec2 cub( vec2 P0, vec2 P1, vec2 P2, vec2 P3, float W0, float W1, float W2, float W3, float t )
+        {
+
+        return vec2( cub( P0.x, P1.x, P2.x, P3.x, W0, W1, W2, W3, t ),
+        cub( P0.y, P1.y, P2.y, P3.y, W0, W1, W2, W3, t )
+        );
+
+        }
+
+        float cir( vec2 uv, float r, float b )
+        {
+
+        return smoothstep( r, r - b, length( uv ) );
+
+        }
+
+        // Line and SDFLine functions by Iéigo Quilez. https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
+        float sdLine( in vec2 p, in vec2 a, in vec2 b )
+        {
+
+        vec2 pa = p-a, ba = b-a;
+        float h = clamp( dot( pa, ba ) / dot( ba, ba ), 0.0, 1.0 );
+        return length( pa - ba * h );
+
+        }
+
+        vec3 line( in vec3 buf, in vec2 a, in vec2 b, in vec2 p, in vec2 w, in vec4 col )
+        {
+
+        float f = sdLine( p, a, b );
+        float g = fwidth( f ) * w.y;
+        return mix( buf, col.xyz, col.w * ( 1.0 - smoothstep( w.x - g, w.x + g, f ) ) );
+
+        }
+
+        void main()
+        {
+
+        vec2 uv = gl_FragCoord.xy / iResolution.y;
+        vec2 mou = iMouse.xy / iResolution.y;
+
+        // r = size of interpolation, rO = size of points, b = blur of iterations, bO = blur of points.
+        float r = iIterationsSize, rO = iPointSize, b = iBlurIteration, bO = iBlurPoint;
+
+        vec3 col = vec3( 0 );
+
+        // Points coordinates:
+        mou = iMouse.x == 0.0 ? iPointFour : mou;
+
+        vec2 A = uv - iPointOne, B = uv - iPointTwo, C = uv - mou, D = uv - iPointThree;
+
+        // Weights for the Bézier. This allows us to get perfect Conic Sections from
+        // Bézier Curves.
+        float w0 = iWeightOne, w1 = iWeightTwo, w2 = iWeightThree, w3 = iWeightFour;
+
+        // Notice the relation for the for loop:
+        //                                       if the exit condition is 10,
+        //                                       the multiplication of i is 0.1
+        // And yes Fabrice I know I can loop on floats :)
+        // Iteration exit condition and multiplier.
+        // Okay, now I loop on floats :D Turns out the casting is way too expensive.
+        float wT = 0.0;
+
+        if( iIterations == 10 )
+        {
+
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
+        {
+
+        if( iDegree == 2 )
+        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        else if( iDegree == 3 )
+        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        else if( iDegree == 4 )
+        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+
+        }
+
+        }
+
+        if( iIterations == 100 )
+        {
+
+        for( float i = 0.0; i <= 1.0; i+=0.01 )
+        {
+
+        if( iDegree == 2 )
+        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        else if( iDegree == 3 )
+        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        else if( iDegree == 4 )
+        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+
+        }
+
+        }
+
+        if( iIterations == 1000 )
+        {
+
+        for( float i = 0.0; i <= 1.0; i+=0.001 )
+        {
+
+        if( iDegree == 2 )
+        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        else if( iDegree == 3 )
+        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        else if( iDegree == 4 )
+        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+
+        }
+
+        }
+
+        if( iIterations == 10000 )
+        {
+
+        for( float i = 0.0; i <= 1.0; i+=0.0001 )
+        {
+
+        if( iDegree == 2 )
+        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        else if( iDegree == 3 )
+        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        else if( iDegree == 4 )
+        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+
+        }
+
+        }
+
+        // Visualizing time t parameter of the basis-functions ( we have to reparametrize our t from 0 to 1, so + 0.5 amplitude and * 0.5):
+        float t = 0.0;
+
+        if( iManual == 0 )
+
+        t = 0.5 + sin( iTime * iSpeed ) * 0.5;
+
+        else
+        {
+
+        t = iT;
+
+        }
+
+        float tO = ( 1.0 - t );
+
+        if( iDegree == 2 )
+        {
+
+        // PointA.
+        col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+
+        // PointC.
+        col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+
+        // PointT.
+        col += cir( lerp( A, C, w0, w1, t, wT ), rO, bO ) * vec3( 1, 0, 0 );
+
+        }
+
+        if( iDegree == 3 )
+        {
+
+        if( iShow == 1 )
+        {
+
+        // Process visualization.
+        float wOut = 0.0, wOutOne = 0.0;
+        col = line( col, A, C, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.6) );
+        vec2 inter = lerp( A, C, w0, w1, t, wOut );
+        col += cir( inter, rO, bO ) * vec3( 1, 0.25, 0 );
+        col = line( col, D, C, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.6) );
+        vec2 interT = lerp( D, C, w2, w1, tO, wOutOne );
+        col += cir( interT, rO, bO ) * vec3( 1, 0.25, 0 );
+        col = line( col, inter, interT, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.6) );
+
+        }
+
+        // PointA.
+        col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+
+        // PointC.
+        col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+
+        // PointD.
+        col += cir( D, rO, bO ) * vec3( 0, 1, 1 );
+
+        // PointT.
+        col += cir( quad( A, C, D, w0, w1, w2, t ), rO, bO ) * vec3( 1, 0, 0 );
+
+        }
+
+        if( iDegree == 4 )
+        {
+
+        if( iShow == 1 )
+        {
+
+        // Show construction.
+        float wOut = 0.0, wOutOne = 0.0, wOutTwo = 0.0, wOutThree = 0.0, wOutFour = 0.0;
+
+        col = line( col, A, B, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
+        vec2 inter = lerp( A, B, w0, w1, t, wOut );
+        col += cir( inter, rO, bO ) * vec3( 1, 1, 0 );
+        col = line( col, B, C, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
+
+        vec2 interT = lerp( B, C, w1, w2, t, wOutOne );
+        col += cir( interT, rO, bO ) * vec3( 1, 1, 0 );
+        col = line( col, C, D, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
+
+        vec2 interTh = lerp( C, D, w2, w3, t, wOutTwo );
+        col += cir( interTh, rO, bO ) * vec3( 1, 1, 0 );
+
+        vec2 interN = lerp( inter, interT, wOut, wOutOne, t, wOutThree );
+        col = line( col, inter, interT, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
+        col += cir( interN, rO, bO ) * vec3( 1, 0.25, 0 );
+
+        vec2 interNT = lerp( interT, interTh, wOutOne, wOutTwo, t, wOutFour );
+        col = line( col, interT, interTh, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
+        col += cir( interNT, rO, bO ) * vec3( 1, 0.25, 0 );
+        col = line( col, interN, interNT, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
+
+        }
+
+        // PointA.
+        col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+
+        // PointB.
+        col += cir( B, rO, bO ) * vec3( 0, 1, 0 );
+
+        // PointC.
+        col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+
+        // PointD.
+        col += cir( D, rO, bO ) * vec3( 0, 1, 1 );
+
+        // PointT.
+        col += cir( cub( A, B, C, D, w0, w1, w2, w3, t ), rO, bO ) * vec3( 1, 0, 0 );
+
+        }
+
+        gl_FragColor = vec4( col, 1.0 );
+
+        }
+
+    </script>
+
+    <script>
+
+        var container;
+        var camera, scene, renderer;
+        var uniforms;
+        var bool = 0;
+        var aspectRatio = 0;
+        var scale;
+
+        init();
+        addGUI();
+        animate();
+
+        function init() {
+
+            container = document.getElementById('container');
+
+            camera = new THREE.Camera();
+            camera.position.z = 1;
+
+            scene = new THREE.Scene();
+
+            renderer = new THREE.WebGLRenderer();
+            scale = window.devicePixelRatio;
+            renderer.setPixelRatio(scale);
+            container.appendChild(renderer.domElement);
+
+            aspectRatio = (window.innerWidth * scale) / (window.innerHeight * scale);
+
+            var geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+            uniforms = {
+                iTime: { type: "f", value: 1.0 },
+                iResolution: { type: "v2", value: new THREE.Vector2() },
+                iMouse: { type: "v3", value: new THREE.Vector3() },
+                iDegree: { type: "i", value: 4 },
+                iIterations: { type: "i", value: 10 },
+                iWeightOne: { type: "f", value: 1.0 },
+                iWeightTwo: { type: "f", value: 1.0 },
+                iWeightThree: { type: "f", value: 1.0 },
+                iWeightFour: { type: "f", value: 1.0 },
+                iShow: { type: "i", value: 1 },
+                iIterationsSize: { type: "f", value: 0.02 },
+                iPointSize: { type: "f", value: 0.015 },
+                iBlurIteration: { type: "f", value: 0.03 },
+                iBlurPoint: { type: "f", value: 0.005 },
+                iSpeed: { type: "f", value: 0.4 },
+                iPointOne: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.1, 0.5) },
+                iPointTwo: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.5, 0.9) },
+                iPointThree: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.7, 0.5) },
+                iPointFour: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.85, 0.7) },
+                iManual: { type: "i", value: 0 },
+                iT: { type: "f", value: 0.5 }
+            };
+
+            var material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent
+            });
+
+            var mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            onWindowResize();
+            window.addEventListener('resize', onWindowResize, false);
+
+            document.getElementById("container").onmousemove = function (e) {
+
+                if (uniforms.iMouse.value.z === 1) {
+
+                    uniforms.iMouse.value.x = e.pageX * scale;
+                    uniforms.iMouse.value.y = ( window.innerHeight * 0.5 - e.pageY ) * scale;
+
+                }
+
+            }
+
+            document.getElementById("container").onmousedown = function (e) {
+
+                uniforms.iMouse.value.z = 1;
+
+            }
+
+            document.getElementById("container").onmouseup = function (e) {
+
+                uniforms.iMouse.value.z = 0;
+
+            }
+
+        }
+
+        function startup() {
+
+            var el = document.getElementById("container");
+            el.addEventListener("touchstart", handleStart, false);
+            el.addEventListener("touchend", handleEnd, false);
+            el.addEventListener("touchcancel", handleCancel, false);
+            el.addEventListener("touchmove", handleMove, false);
+            //console.log("initialized.");
+
+        }
+
+        function handleStart(evt) {
+
+            evt.preventDefault();
+            //console.log("touchstart.");
+            var el = document.getElementById("container");
+            //var touches = evt.changedTouches;
+            uniforms.iMouse.value.z = 1;
+
+            //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
+
+        }
+
+        function handleMove(evt) {
+
+            evt.preventDefault();
+            var el = document.getElementById("container");
+            var touches = evt.changedTouches;
+            var x = touches[0].pageX * scale;
+            var y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
+            /*
+            var currentElement;
+
+            try
+            {
+
+                currentElement = !document.elementFromPoint(x, y).id ? "YES" : "NO";
+
+            }
+
+            catch (e)
+            {
+
+                currentElement = "NO";
+
+            }*/
+
+            if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX > 0.0 && touches[0].pageX < renderer.domElement.width / scale && touches[0].pageY < renderer.domElement.height / scale )
+            {
+
+                uniforms.iMouse.value.x = x;
+                uniforms.iMouse.value.y = y;
+
+            }
+
+            //console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
+            //console.log(currentElement);
+
+        }
+
+        function handleEnd(evt) {
+
+            evt.preventDefault();
+            //console.log("touchend");
+            //var el = document.getElementById("container");
+            //var touches = evt.changedTouches;
+
+            uniforms.iMouse.value.z = 0;
+            //console.log("iMouse.z:" + uniforms.iMouse.value.z + ".");
+
+        }
+
+        function handleCancel(evt) {
+
+            evt.preventDefault();
+            //console.log("touchcancel.");
+            //var touches = evt.changedTouches;
+
+            uniforms.iMouse.value.z = 0;
+            //var idx = ongoingTouchIndexById(touches[0].identifier);
+            //ongoingTouches.splice(idx, 1);  // remove it; we're done
+
+
+        }
+
+        function onWindowResize(event) {
+
+            renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
+            aspectRatio = ( renderer.domElement.width * scale ) / ( renderer.domElement.height * scale );
+            uniforms.iResolution.value.x = renderer.domElement.width;
+            uniforms.iResolution.value.y = renderer.domElement.height;
+            uniforms.iPointOne.value.x = aspectRatio * 0.1;
+            uniforms.iPointTwo.value.x = aspectRatio * 0.5;
+            uniforms.iPointThree.value.x = aspectRatio * 0.7;
+            uniforms.iPointFour.value.x = aspectRatio * 0.85;
+
+        }
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+            render();
+
+        }
+
+        function render() {
+
+            uniforms.iTime.value += 0.05;
+            renderer.render(scene, camera);
+
+        }
+
+        function addGUI() {
+
+            //var gui = new dat.GUI({ autoPlace: false });
+            var gui = new dat.GUI();
+
+            var degree = gui.add(uniforms.iDegree, "value", 2, 4, 1).name("Degree");
+            degree.onChange(function (value) {
+
+                if (value === 3 || value == 2) {
+
+                    weightFour.domElement.style.pointerEvents = "none";
+                    //weightFour.domElement.parentElement.style.visibility = "hidden";
+                    weightFour.domElement.style.opacity = 0.5;
+
+                    pointTwoX.domElement.style.pointerEvents = "none";
+                    pointTwoX.domElement.style.opacity = 0.5;
+
+                    pointTwoY.domElement.style.pointerEvents = "none";
+                    pointTwoY.domElement.style.opacity = 0.5;
+
+                }
+
+                else {
+
+                    weightFour.domElement.style.pointerEvents = "auto";
+                    //weightFour.domElement.parentElement.style.visibility = "visible";
+                    weightFour.domElement.style.opacity = 1.0;
+
+                    pointTwoX.domElement.style.pointerEvents = "auto";
+                    pointTwoX.domElement.style.opacity = 1.0;
+
+                    pointTwoY.domElement.style.pointerEvents = "auto";
+                    pointTwoY.domElement.style.opacity = 1.0;
+
+                }
+
+                if (value === 2) {
+
+                    weightThree.domElement.style.pointerEvents = "none";
+                    //weightThree.domElement.parentElement.style.visibility = "hidden";
+                    weightThree.domElement.style.opacity = 0.5;
+                    /*
+                    weightTwo.domElement.style.pointerEvents = "none";
+                    //weightThree.domElement.parentElement.style.visibility = "hidden";
+                    weightTwo.domElement.style.opacity = 0.5;
+
+                    weightOne.domElement.style.pointerEvents = "none";
+                    //weightThree.domElement.parentElement.style.visibility = "hidden";
+                    weightOne.domElement.style.opacity = 0.5;
+                    */
+                    pointThreeX.domElement.style.pointerEvents = "none";
+                    pointThreeX.domElement.style.opacity = 0.5;
+
+                    pointThreeY.domElement.style.pointerEvents = "none";
+                    pointThreeY.domElement.style.opacity = 0.5;
+
+                }
+
+                else {
+
+                    weightThree.domElement.style.pointerEvents = "auto";
+                    //weightThree.domElement.parentElement.style.visibility = "visible";
+                    weightThree.domElement.style.opacity = 1.0;
+                    /*
+                    weightTwo.domElement.style.pointerEvents = "auto";
+                    //weightThree.domElement.parentElement.style.visibility = "hidden";
+                    weightTwo.domElement.style.opacity = 1.0;
+
+                    weightOne.domElement.style.pointerEvents = "auto";
+                    //weightThree.domElement.parentElement.style.visibility = "hidden";
+                    weightOne.domElement.style.opacity = 1.0;
+                    */
+                    pointThreeX.domElement.style.pointerEvents = "auto";
+                    pointThreeX.domElement.style.opacity = 1.0;
+
+                    pointThreeY.domElement.style.pointerEvents = "auto";
+                    pointThreeY.domElement.style.opacity = 1.0;
+
+                }
+
+            });
+            var manualTime = gui.add(uniforms.iManual, "value", 0, 1, 1).name("Manual Time");
+            manualTime.onChange(function (value) {
+
+                if (value === 1) {
+
+                    speed.domElement.style.pointerEvents = "none";
+                    speed.domElement.style.opacity = 0.5;
+                    t.domElement.style.pointerEvents = "auto";
+                    t.domElement.style.opacity = 1.0;
+
+                }
+
+                else {
+
+                    speed.domElement.style.pointerEvents = "auto";
+                    speed.domElement.style.opacity = 1.0;
+                    t.domElement.style.pointerEvents = "none";
+                    t.domElement.style.opacity = 0.5;
+
+                }
+
+            });
+            var speed = gui.add(uniforms.iSpeed, "value", 0.0, 2.0, 0.1).name("Speed");
+            var t = gui.add(uniforms.iT, "value", 0.0, 1.0, 0.001).name("t");
+            t.domElement.style.pointerEvents = "none";
+            t.domElement.style.opacity = 0.5;
+            var iterations = gui.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100, OneThousand: 1000, TenThousand: 10000 }).name("Iterations");
+            var construction = gui.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
+            var iterationSize = gui.add(uniforms.iIterationsSize, "value", 0.0025, 0.03, 0.001).name("Size Of Iterations");
+            var pointSize = gui.add(uniforms.iPointSize, "value", 0.010, 0.1, 0.001).name("Size Of Points");
+            var iterationBlur = gui.add(uniforms.iBlurIteration, "value", 0.01, 0.4, 0.01).name("Blur Of Iterations");
+            var pointBlur = gui.add(uniforms.iBlurPoint, "value", 0.001, 0.01, 0.001).name("Blur Of Points");
+
+            var pointsFolder = gui.addFolder("Points");
+            var pointOneX = pointsFolder.add(uniforms.iPointOne.value, "x", 0.0, aspectRatio, 0.01).name("Point One X");
+            var pointOneY = pointsFolder.add(uniforms.iPointOne.value, "y", 0.0, 1.0, 0.01).name("Point One Y");
+            var pointTwoX = pointsFolder.add(uniforms.iPointTwo.value, "x", 0.0, aspectRatio, 0.01).name("Point Two X");
+            var pointTwoY = pointsFolder.add(uniforms.iPointTwo.value, "y", 0.0, 1.0, 0.01).name("Point Two Y")
+            var pointThreeX = pointsFolder.add(uniforms.iPointThree.value, "x", 0.0, aspectRatio, 0.01).name("Point Three X");
+            var pointThreeY = pointsFolder.add(uniforms.iPointThree.value, "y", 0.0, 1.0, 0.01).name("Point Three Y");
+
+            var weightsFolder = gui.addFolder("Weights");
+            var weightOne = weightsFolder.add(uniforms.iWeightOne, "value", 0, 5).name("Weight One");
+            var weightTwo = weightsFolder.add(uniforms.iWeightTwo, "value", 0, 5).name("Weight Two");
+            var weightThree = weightsFolder.add(uniforms.iWeightThree, "value", 0, 5).name("Weight Three");
+            var weightFour = weightsFolder.add(uniforms.iWeightFour, "value", 0, 5).name("Weight Four");
+
+            var customContainer = document.getElementById("GUIContainer");
+            customContainer.appendChild(gui.domElement);
+
+        }
+
+    </script>
+</body>
+</html>
