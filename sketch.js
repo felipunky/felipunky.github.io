@@ -147,10 +147,12 @@ function draw()
 
     t += 0.01;
     // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
+    /*
     let fps = frameRate();
     text("FPS: " + fps.toFixed(2), 100, 200);
+    */
     stroke( 255 );
-    fill( 255 );
+    fill( 255 );    
 
 }
 
