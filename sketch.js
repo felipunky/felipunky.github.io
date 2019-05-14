@@ -24,7 +24,7 @@ function setup()
     C = createVector( windowWidth * 0.7, windowHeight * 0.1 );
     D = createVector( windowWidth * 0.9, windowHeight * 0.2 );
     
-    createCanvas( windowWidth, windowHeight );
+    createCanvas( windowWidth, windowHeight * 0.5 );
 
     wei = new Weight();
     deg = new Degree();
@@ -147,19 +147,17 @@ function draw()
 
     t += 0.01;
     // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
-    /*
     let fps = frameRate();
     text("FPS: " + fps.toFixed(2), 100, 200);
-    */
     stroke( 255 );
-    fill( 255 );    
+    fill( 255 );
 
 }
 
 function windowResized()
 {
     
-    resizeCanvas( windowWidth, windowHeight );
+    resizeCanvas( windowWidth, windowHeight * 0.5 );
     A = createVector( windowWidth * 0.1, windowHeight * 0.1 );
     B = createVector( windowWidth * 0.1, windowHeight * 0.3 );
     C = createVector( windowWidth * 0.7, windowHeight * 0.1 );

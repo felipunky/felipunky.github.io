@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="fr">
+<!--<html lang="fr">-->
 <head>
     <meta charset="utf-8">
     <title>Bézier Curves</title>
@@ -557,7 +557,7 @@
                 if (uniforms.iMouse.value.z === 1) {
 
                     uniforms.iMouse.value.x = e.pageX * scale;
-                    uniforms.iMouse.value.y = ( window.innerHeight * 0.5 - e.pageY ) * scale;
+                    uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
 
                 }
 
@@ -624,8 +624,7 @@
 
             }*/
 
-            if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX > 0.0 && touches[0].pageX < renderer.domElement.width / scale && touches[0].pageY < renderer.domElement.height / scale )
-            {
+            if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX > 0.0 && touches[0].pageX < renderer.domElement.width / scale && touches[0].pageY < renderer.domElement.height / scale) {
 
                 uniforms.iMouse.value.x = x;
                 uniforms.iMouse.value.y = y;
@@ -665,7 +664,7 @@
         function onWindowResize(event) {
 
             renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
-            aspectRatio = ( renderer.domElement.width * scale ) / ( renderer.domElement.height * scale );
+            aspectRatio = (renderer.domElement.width * scale) / (renderer.domElement.height * scale);
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
             uniforms.iPointOne.value.x = aspectRatio * 0.1;
