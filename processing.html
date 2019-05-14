@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Bézier Curves</title>
+    <title>BÃ©zier Curves</title>
     <style>
         body {
             margin: 0;
@@ -29,22 +29,22 @@
 <body>
     <div id="container"></div>
     <h1 id="GUIContainer">
-        Rational Bézier Curves
+        Rational BÃ©zier Curves
     </h1>
     <h2>
-        Bézier curves
+        BÃ©zier curves
     </h2>
     <p>
-        Bézier curves are parametric curves resulting from parametric equations.
+        BÃ©zier curves are parametric curves resulting from parametric equations.
     </p>
     <p>
         Parametric equations express a set of quantities as explicit functions of a number of "parameters".
     </p>
     <p>
-        A Bézier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
+        A BÃ©zier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
     </p>
     <p>
-        Case 1: A linear Bézier takes as input two points (A (magenta dot)
+        Case 1: A linear BÃ©zier takes as input two points (A (magenta dot)
         and B (blue dot)) and outputs a new point W (red dot) (linear interpolation).
     </p>
     <p>
@@ -60,10 +60,10 @@
         W = ( 1 - t )A + tB
     </p>
     <p>
-        Case 2: A Quadratic or 3rd degree Bézier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
+        Case 2: A Quadratic or 3rd degree BÃ©zier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
     </p>
     <p>
-        We could take what we learnt from the 2nd degree Bézier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
+        We could take what we learnt from the 2nd degree BÃ©zier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
     </p>
     <p>
         D = ( 1 - t )A + tB
@@ -84,7 +84,7 @@
         W = ( 1 - t )^2A + 2( 1 - t )B + t^2C
     </p>
     <p>
-        Case 3: Parametric Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
+        Case 3: Parametric Cubic or degree 4 BÃ©zier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
     </p>
     <p>
         E = ( 1 - t )A + tB
@@ -117,7 +117,7 @@
         W = ( 1 - t )^3A + 3( 1 - t )^2tB + 3( 1 - t )t^2C + t^3D
     </p>
     <h3>
-        Rational Bézier Curves
+        Rational BÃ©zier Curves
     </h3>
     <p>
         We could add another parameter called "weight" to the equations, which corresponds to the strength each t point is discretely pulled towards the control point.
