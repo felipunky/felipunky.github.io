@@ -24,7 +24,8 @@ function setup()
     C = createVector( windowWidth * 0.7, windowHeight * 0.1 );
     D = createVector( windowWidth * 0.9, windowHeight * 0.2 );
     
-    createCanvas( windowWidth, windowHeight * 0.5 );
+    var canvas = createCanvas( windowWidth, windowHeight * 0.5 );
+    canvas.parent( "container" );
 
     wei = new Weight();
     deg = new Degree();
@@ -36,6 +37,9 @@ function setup()
     weights.add( wei, "wT", 0.1, 5.0 ).name( "WeightTwo" );
     weights.add( wei, "wTh", 0.1, 5.0 ).name( "WeightThree" );
     weights.add( wei, "wF", 0.1, 5.0 ).name( "WeightFour" );
+
+    var customContainer = document.getElementById("GUIContainer");
+    customContainer.appendChild(gui.domElement);
         
 }
 
@@ -147,8 +151,10 @@ function draw()
 
     t += 0.01;
     // Draw FPS (rounded to 2 decimal places) at the bottom left of the screen
+    /*
     let fps = frameRate();
     text("FPS: " + fps.toFixed(2), 100, 200);
+    */
     stroke( 255 );
     fill( 255 );
 
