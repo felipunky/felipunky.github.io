@@ -119,7 +119,7 @@ function draw()
         ellipse( A.x, A.y, sizT, sizT );
         ellipse( B.x, B.y, sizT, sizT );
         ellipse( C.x, C.y, sizT, sizT );
-        quadB( A, B, time );
+        quadB( A, B, C, time );
         ellipse( W.x, W.y, siz, siz );
 
     }
