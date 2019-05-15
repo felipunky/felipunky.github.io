@@ -47,13 +47,13 @@
         The equation to get a third point C in the middle of A and B:
     </p>
     <p>
-        W = 0.5A + 0.5B
+        $$W = {1\over 2}A + {1\over 2}B$$
     </p>
     <p>
         The parametric expression of C results in the graphing of the parametric curve at points (x, y) regarding various t's:
     </p>
     <p>
-        W = ( 1 - t )A + tB
+        $$W = (1-t)A + tB$$
     </p>
     <p>
         Case 2: A Quadratic or 3rd degree Bézier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
@@ -62,55 +62,55 @@
         We could take what we learnt from the 2nd degree Bézier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
     </p>
     <p>
-        D = ( 1 - t )A + tB
+        $$D = (1-t)A + tB$$
     </p>
     <p>
-        E = ( 1 - t )B + tC
+        $$E = (1-t)B + tC$$
     </p>
     <p>
-        W = ( 1 - t )D + tE
+        $$W = (1-t)D + tE$$
     </p>
     <p>
         This is a system of equations, so we can substitute D and E directly into W without having to precompute them:
     </p>
     <p>
-        W = ( 1 - t )[ ( 1 - t )A + tB ] + t[ ( 1 - t )B + tC ]
+        $$W = (1-t)[(1-t)A + tB] + t[(1-t)B+tC]$$
     </p>
     <p>
-        W = ( 1 - t )^2A + 2( 1 - t )B + t^2C
+        $$W = A(1-t)^2+2t(1-t)B + t^2C$$
     </p>
     <p>
         Case 3: Parametric Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
     </p>
     <p>
-        E = ( 1 - t )A + tB
+        $$E = (1-t)A + tB$$
     </p>
     <p>
-        F = ( 1 - t )B + tC
+        $$F = (1-t)B + tC$$
     </p>
     <p>
-        G = ( 1 - t )C + tD
+        $$G = (1-t)C + tD$$
     </p>
     <p>
-        H = ( 1 - t )E + tF
+        $$H = (1-t)E + tF$$
     </p>
     <p>
-        I = ( 1 - t )F + tG
+        $$I = (1-t)F + tG$$
     </p>
     <p>
-        W = ( 1 - t )H + tI
+        $$W = (1-t)H + tI$$
     </p>
     <p>
         This is a system of equations, so we can substitute the previous interpolations into the last ones:
     </p>
     <p>
-        W = ( 1 - t )[ ( 1 - t )( 1 - t )A + tB + ( 1 - t )B + tC ] + t[ ( 1 - t )( 1 - t )B + tC + ( 1 - t )C + tD ]
+        $$W = (1-t)[(1-t)(1-t)A + tB + (1-t)B + tC] + t[(1-t)(1-t)B+tC+(1-t)C+tD]$$
     </p>
     <p>
         That corresponds to:
     </p>
     <p>
-        W = ( 1 - t )^3A + 3( 1 - t )^2tB + 3( 1 - t )t^2C + t^3D
+        $$W = A(1-t)^3+3Bt(1-t)^2+3Ct^2(1-t)+Dt^3$$
     </p>
     <h3>
         Rational Bézier Curves
@@ -121,18 +121,22 @@
         parametrized (between 0 and 1) calculations amongst the weights and the parameter t (w * t), for each t being evaluated.
     </p>
     <p>
-        W = ( 1 - t )Aw0 + tBw1 / ( 1 - t )w0 + tw1
+        $$W = {(1-t)Aw1 + tBw2\over (1-t)w1 + tw2}$$
     </p>
     <p>
         Higher degree (Quadratic):
     </p>
     <p>
-        W = ( 1 - t )^2Aw0 + 2( 1 - t )Bw1 + t^2Cw2 / ( 1 - t )^2w0 + 2( 1 - t )w1 + t^2w2
+        $$W = {Aw1(1-t)^2+2t(1-t)Bw2 + t^2Cw3\over w1(1-t)^2+2t(1-t)w2 + t^2w3}$$
     </p>
 
     <script src="felipunky.github.io/three.min.js"></script>
 
     <script src="felipunky.github.io/dat.gui.min.js"></script>
+
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
 
     <script id="vertexShader" type="x-shader/x-vertex">
         void main()
