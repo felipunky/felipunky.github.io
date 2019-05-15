@@ -406,122 +406,165 @@ function touchMoved()
     if( deg.value === 4 )
     {
 
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        else if( dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
         {
         
             C = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
+        else if( dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
         {
         
             D = createVector( mouseX, mouseY );
         
         }
-        /*
-        lineCubicB( A, B, C, D );
-        // Magenta.
-        fill( 255, 22, 255 );
-        noStroke();
-        ellipse( A.x, A.y, sizT, sizT );
-        // Green.
-        fill( 40, 255, 90 );
-        ellipse( B.x, B.y, sizT, sizT );
-        // Blue.
-        fill( 0, 0, 255 );
-        ellipse( C.x, C.y, sizT, sizT );
-        // Cyan.
-        fill( 0, 255, 250 );
-        ellipse( D.x, D.y, sizT, sizT );
-        cubicB( A, B, C, D, time );
-        // Red.
-        fill( 255, 0, 0 );
-        ellipse( W.x, W.y, siz, siz );
-        */
     }
 
     if( deg.value === 3 )
     {
         
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF  && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        if( dist( A.x, A.y, mouseX, mouseY ) < sizeF  && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        else if( dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
         {
         
             C = createVector( mouseX, mouseY );
         
         }
-        /*
-        lineQuadB( A, B, C );
-        fill( 255, 22, 255 );
-        noStroke();
-        ellipse( A.x, A.y, sizT, sizT );
-        fill( 0, 0, 255 );
-        ellipse( B.x, B.y, sizT, sizT );
-        fill( 0, 255, 250 );
-        ellipse( C.x, C.y, sizT, sizT );
-        quadB( A, B, C, time );
-        fill( 255, 0, 0 );
-        ellipse( W.x, W.y, siz, siz );
-        */
+
     }
 
     if( deg.value === 2 )
     {
         
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
-        /*
-        lineLinear( A, B );
-        fill( 255, 22, 255 );
-        noStroke();
-        ellipse( A.x, A.y, sizT, sizT );
-        fill( 0, 0, 255 )
-        ellipse( B.x, B.y, sizT, sizT );
-        lInterp( A, B, time );
-        fill( 255, 0, 0 )
-        ellipse( W.x, W.y, siz, siz );
-        */
+
     }
 
 }
+
+function mousePressed()
+{
+
+    var sizeF = scale + sizT;
+
+    if( deg.value === 4 )
+    {
+
+        if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        {
+        
+            A = createVector( mouseX, mouseY );
+        
+        }
+
+        else if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        {
+        
+            B = createVector( mouseX, mouseY );
+        
+        }
+    
+        else if( dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        {
+        
+            C = createVector( mouseX, mouseY );
+        
+        }
+
+        else if( dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
+        {
+        
+            D = createVector( mouseX, mouseY );
+        
+        }
+    }
+
+    if( deg.value === 3 )
+    {
+        
+        if( dist( A.x, A.y, mouseX, mouseY ) < sizeF  && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        {
+        
+            A = createVector( mouseX, mouseY );
+        
+        }
+
+        else if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        {
+        
+            B = createVector( mouseX, mouseY );
+        
+        }
+    
+        else if( dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        {
+        
+            C = createVector( mouseX, mouseY );
+        
+        }
+
+    }
+
+    if( deg.value === 2 )
+    {
+        
+        if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        {
+        
+            A = createVector( mouseX, mouseY );
+        
+        }
+
+        else if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        {
+        
+            B = createVector( mouseX, mouseY );
+        
+        }
+
+    }
+
+}
+
 
 
