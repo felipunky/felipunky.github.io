@@ -566,7 +566,7 @@
 
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
-                    var scaleO = scale + 30; 
+                    var scaleO = scale * 30; 
 
                     if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < scaleO )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
                     {

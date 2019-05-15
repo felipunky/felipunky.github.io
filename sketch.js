@@ -6,15 +6,19 @@ var WO;
 var t = 0;
 var siz = 5;
 var sizT = siz * 2;
-var sizTh = sizT * 2;
+//var sizTh = sizT * 2;
 var rate = 120;
 var off = 30;
 var wei;
+var wT;
+var wTT;
+var wTTh;
+var wTF;
 var deg;
 var steps = 0.01;
 var scale;
 
-p5.disableFriendlyErrors = true; // disables FES
+disableFriendlyErrors = true; // disables FES
 
 function setup()
 {
@@ -51,42 +55,45 @@ function draw()
 {
 
     var time = 0.5 * sin(t) + 0.5;
+    var sizeF = scale * 30;
 
     background( 0 );
 
     if( deg.value === 4 )
     {
 
-        /*
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        
+        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
         {
         
             C = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
+        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
         {
         
             D = createVector( mouseX, mouseY );
         
         }
-        */
-
+        
+        line( A.x, A.y, B.x, B.y, siz, siz );
+        line( B.x, B.y, C.x, C.y, siz, siz );
+        line( C.x, C.y, D.x, D.y, siz, siz );
         lineCubicB( A, B, C, D );
         // Magenta.
         fill( 255, 22, 255 );
@@ -111,32 +118,44 @@ function draw()
     if( deg.value === 3 )
     {
 
-        /*
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        
+        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
         {
         
             C = createVector( mouseX, mouseY );
         
         }
-        */
 
-        lineQuadB( A, B, C );
-        fill( 255, 22, 255 );
+        // Construction.
+        var negTime = ( 1.0 - time );
+        line( A.x, A.y, B.x, B.y, siz, siz );
+        line( B.x, B.y, C.x, C.y, siz, siz );
+        lInterpT( A, B, time );
+        fill( 219, 148, 6 );
         noStroke();
+        ellipse( wT.x, wT.y, siz, siz );
+        lInterpOT( B, C, time );
+        ellipse( wTT.x, wTT.y, siz, siz );
+        stroke(255);
+        line( wT.x, wT.y, wTT.x, wTT.y, siz, siz );
+        // Bézier.
+        lineQuadB( A, B, C );
+        noStroke();
+        fill( 255, 22, 255 );
         ellipse( A.x, A.y, sizT, sizT );
         fill( 0, 0, 255 );
         ellipse( B.x, B.y, sizT, sizT );
@@ -151,22 +170,22 @@ function draw()
     if( deg.value === 2 )
     {
 
-        /*
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        
+        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
-        */
-
+        
+        line( A.x, A.y, B.x, B.y, siz, siz );
         lineLinear( A, B );
         fill( 255, 22, 255 );
         noStroke();
@@ -236,6 +255,36 @@ function lInterpO( A, B, t )
     var temp = (1.0 - t) * wei.wO; var tempO = wei.wT * t; var w = temp + tempO;
 
     WO = createVector( ( temp * A.x + tempO * B.x ) 
+                      /
+                      w,
+                      ( temp * A.y + tempO * B.y ) 
+                      /
+                      w
+                    );
+    
+}
+
+function lInterpT( A, B, t )
+{
+    
+    var temp = ( 1.0 - t ) * wei.wO; var tempO = wei.wT * t; 
+    var w = temp + tempO;
+    wT = createVector( ( temp * A.x + tempO * B.x ) 
+                      /
+                      w,
+                      ( temp * A.y + tempO * B.y ) 
+                      /
+                      w
+                    );
+    
+}
+
+function lInterpOT( A, B, t )
+{
+
+    var temp = (1.0 - t) * wei.wO; var tempO = wei.wT * t; var w = temp + tempO;
+
+    wTT = createVector( ( temp * A.x + tempO * B.x ) 
                       /
                       w,
                       ( temp * A.y + tempO * B.y ) 
@@ -397,11 +446,11 @@ function Degree()
     this.value = 4;
 
 }
-
-function touchMoved()
+/*
+function touchStarted()
 {
 
-    var sizeF = scale + sizT;
+    var sizeF = scale * sizT;
 
     if( deg.value === 4 )
     {
@@ -481,11 +530,12 @@ function touchMoved()
     }
 
 }
-
+*/
+/*
 function mousePressed()
 {
 
-    var sizeF = scale + sizT;
+    var sizeF = scale * sizT;
 
     if( deg.value === 4 )
     {
@@ -565,6 +615,6 @@ function mousePressed()
     }
 
 }
-
+*/
 
 
