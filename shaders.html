@@ -138,6 +138,9 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
     </script>
 
+    <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
+    <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\dat.gui.min.js"></script>
+
     <script id="vertexShader" type="x-shader/x-vertex">
         void main()
         {
@@ -291,7 +294,7 @@
         // Points coordinates:
         mou = iMouse.x == 0.0 ? iPointFour : mou;
 
-        vec2 A = uv - iPointOne, B = uv - iPointTwo, C = uv - mou, D = uv - iPointThree;
+        vec2 A = uv - iPointOne / iResolution.y, B = uv - iPointTwo / iResolution.y, C = uv - iPointThree / iResolution.y, D = uv - iPointFour / iResolution.y;
 
         // Weights for the Bézier. This allows us to get perfect Conic Sections from
         // Bézier Curves.
@@ -342,7 +345,7 @@
         if( iIterations == 1000 )
         {
 
-        for( float i = 0.0; i <= 1.0; i+=0.001 )
+        for( float i = 0.0; i < 1.0; i+=0.001 )
         {
 
         if( iDegree == 2 )
@@ -537,10 +540,10 @@
                 iBlurIteration: { type: "f", value: 0.03 },
                 iBlurPoint: { type: "f", value: 0.005 },
                 iSpeed: { type: "f", value: 0.4 },
-                iPointOne: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.1, 0.5) },
-                iPointTwo: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.5, 0.9) },
-                iPointThree: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.7, 0.5) },
-                iPointFour: { type: "v2", value: new THREE.Vector2(aspectRatio * 0.85, 0.7) },
+                iPointOne: { type: "v2", value: new THREE.Vector2(renderer.domElement.width * 0.1, renderer.domElement.height * 0.2) },
+                iPointTwo: { type: "v2", value: new THREE.Vector2(renderer.domElement.width * 0.5, renderer.domElement.height * 0.5) },
+                iPointThree: { type: "v2", value: new THREE.Vector2(renderer.domElement.width * 0.7, renderer.domElement.height * 0.6) },
+                iPointFour: { type: "v2", value: new THREE.Vector2(renderer.domElement.width * 0.85, renderer.domElement.height * 0.8) },
                 iManual: { type: "i", value: 0 },
                 iT: { type: "f", value: 0.5 }
             };
@@ -564,6 +567,38 @@
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
 
+                    if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < 30 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+                    {
+        
+                        uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
+                        uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
+        
+                    }
+                    
+                    else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                    {
+        
+                        uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
+                        uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+        
+                    }
+    
+                    else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                    {
+        
+                        uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
+                        uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+        
+                    }
+
+                    else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                    {
+        
+                        uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
+                        uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
+        
+                    }
+                    
                 }
 
             }
@@ -634,6 +669,38 @@
                 uniforms.iMouse.value.x = x;
                 uniforms.iMouse.value.y = y;
 
+                if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < 30 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+                {
+        
+                    uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
+                    uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
+        
+                }
+                    
+                else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                {
+        
+                    uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
+                    uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+        
+                }
+    
+                else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                {
+        
+                    uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
+                    uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+        
+                }
+
+                else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                {
+        
+                    uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
+                    uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
+        
+                }
+
             }
 
             //console.log("MousePosition(" + touches[0].pageX + ", " + touches[0].pageY + ");");
@@ -672,10 +739,14 @@
             aspectRatio = (renderer.domElement.width * scale) / (renderer.domElement.height * scale);
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
-            uniforms.iPointOne.value.x = aspectRatio * 0.1;
-            uniforms.iPointTwo.value.x = aspectRatio * 0.5;
-            uniforms.iPointThree.value.x = aspectRatio * 0.7;
-            uniforms.iPointFour.value.x = aspectRatio * 0.85;
+            uniforms.iPointOne.value.x = renderer.domElement.width * 0.1;
+            uniforms.iPointTwo.value.x = renderer.domElement.width * 0.5;
+            uniforms.iPointThree.value.x = renderer.domElement.width * 0.7;
+            uniforms.iPointFour.value.x = renderer.domElement.width * 0.85;
+            uniforms.iPointOne.value.y = renderer.domElement.height * 0.2;
+            uniforms.iPointTwo.value.y = renderer.domElement.height * 0.5;
+            uniforms.iPointThree.value.y = renderer.domElement.height * 0.6;
+            uniforms.iPointFour.value.y = renderer.domElement.height * 0.8;
 
         }
 
@@ -706,12 +777,13 @@
                     weightFour.domElement.style.pointerEvents = "none";
                     //weightFour.domElement.parentElement.style.visibility = "hidden";
                     weightFour.domElement.style.opacity = 0.5;
-
+                    /*
                     pointTwoX.domElement.style.pointerEvents = "none";
                     pointTwoX.domElement.style.opacity = 0.5;
 
                     pointTwoY.domElement.style.pointerEvents = "none";
                     pointTwoY.domElement.style.opacity = 0.5;
+                    */
 
                 }
 
@@ -720,12 +792,13 @@
                     weightFour.domElement.style.pointerEvents = "auto";
                     //weightFour.domElement.parentElement.style.visibility = "visible";
                     weightFour.domElement.style.opacity = 1.0;
-
+                    /*
                     pointTwoX.domElement.style.pointerEvents = "auto";
                     pointTwoX.domElement.style.opacity = 1.0;
 
                     pointTwoY.domElement.style.pointerEvents = "auto";
                     pointTwoY.domElement.style.opacity = 1.0;
+                    */
 
                 }
 
@@ -743,11 +816,13 @@
                     //weightThree.domElement.parentElement.style.visibility = "hidden";
                     weightOne.domElement.style.opacity = 0.5;
                     */
+                    /*
                     pointThreeX.domElement.style.pointerEvents = "none";
                     pointThreeX.domElement.style.opacity = 0.5;
 
                     pointThreeY.domElement.style.pointerEvents = "none";
                     pointThreeY.domElement.style.opacity = 0.5;
+                    */
 
                 }
 
@@ -765,13 +840,47 @@
                     //weightThree.domElement.parentElement.style.visibility = "hidden";
                     weightOne.domElement.style.opacity = 1.0;
                     */
+                    /*
                     pointThreeX.domElement.style.pointerEvents = "auto";
                     pointThreeX.domElement.style.opacity = 1.0;
 
                     pointThreeY.domElement.style.pointerEvents = "auto";
                     pointThreeY.domElement.style.opacity = 1.0;
+                    */
 
                 }
+
+                //if( uniforms.iMouse.value.z > 0.5 && Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < 1 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+                //{
+        
+                //    uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
+                //    uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
+        
+                //}
+
+                //else if( uniforms.iMouse.value.z > 0.5 && Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < 1 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                //{
+        
+                //    uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
+                //    uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+        
+                //}
+    
+                //else if( uniforms.iMouse.value.z > 0.5 && Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < 1 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                //{
+        
+                //    uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
+                //    uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+        
+                //}
+
+                //else if( uniforms.iMouse.value.z > 0.5 && Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < 1 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                //{
+        
+                //    uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
+                //    uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
+        
+                //}
 
             });
             var manualTime = gui.add(uniforms.iManual, "value", 0, 1, 1).name("Manual Time");
@@ -807,19 +916,23 @@
             var iterationBlur = gui.add(uniforms.iBlurIteration, "value", 0.01, 0.4, 0.01).name("Blur Of Iterations");
             var pointBlur = gui.add(uniforms.iBlurPoint, "value", 0.001, 0.01, 0.001).name("Blur Of Points");
 
+            /*
             var pointsFolder = gui.addFolder("Points");
-            var pointOneX = pointsFolder.add(uniforms.iPointOne.value, "x", 0.0, aspectRatio, 0.01).name("Point One X");
-            var pointOneY = pointsFolder.add(uniforms.iPointOne.value, "y", 0.0, 1.0, 0.01).name("Point One Y");
-            var pointTwoX = pointsFolder.add(uniforms.iPointTwo.value, "x", 0.0, aspectRatio, 0.01).name("Point Two X");
-            var pointTwoY = pointsFolder.add(uniforms.iPointTwo.value, "y", 0.0, 1.0, 0.01).name("Point Two Y")
-            var pointThreeX = pointsFolder.add(uniforms.iPointThree.value, "x", 0.0, aspectRatio, 0.01).name("Point Three X");
-            var pointThreeY = pointsFolder.add(uniforms.iPointThree.value, "y", 0.0, 1.0, 0.01).name("Point Three Y");
+            var pointOneX = pointsFolder.add(uniforms.iPointOne.value, "x", 0.0, renderer.domElement.width, 1).name("Point One X");
+            var pointOneY = pointsFolder.add(uniforms.iPointOne.value, "y", 0.0, renderer.domElement.height, 1).name("Point One Y");
+            var pointTwoX = pointsFolder.add(uniforms.iPointTwo.value, "x", 0.0, renderer.domElement.width, 1).name("Point Two X");
+            var pointTwoY = pointsFolder.add(uniforms.iPointTwo.value, "y", 0.0, renderer.domElement.height, 1).name("Point Two Y")
+            var pointThreeX = pointsFolder.add(uniforms.iPointThree.value, "x", 0.0, renderer.domElement.width, 1).name("Point Three X");
+            var pointThreeY = pointsFolder.add(uniforms.iPointThree.value, "y", 0.0, renderer.domElement.height, 1).name("Point Three Y");
+            var pointFourX = pointsFolder.add(uniforms.iPointFour.value, "x", 0.0, renderer.domElement.width, 1).name("Point Four X");
+            var pointFourY = pointsFolder.add(uniforms.iPointFour.value, "y", 0.0, renderer.domElement.height, 1).name("Point Four Y");
+            */
 
             var weightsFolder = gui.addFolder("Weights");
-            var weightOne = weightsFolder.add(uniforms.iWeightOne, "value", 0, 5).name("Weight One");
-            var weightTwo = weightsFolder.add(uniforms.iWeightTwo, "value", 0, 5).name("Weight Two");
-            var weightThree = weightsFolder.add(uniforms.iWeightThree, "value", 0, 5).name("Weight Three");
-            var weightFour = weightsFolder.add(uniforms.iWeightFour, "value", 0, 5).name("Weight Four");
+            var weightOne = weightsFolder.add(uniforms.iWeightOne, "value", 0.1, 5).name("Weight One");
+            var weightTwo = weightsFolder.add(uniforms.iWeightTwo, "value", 0.1, 5).name("Weight Two");
+            var weightThree = weightsFolder.add(uniforms.iWeightThree, "value", 0.1, 5).name("Weight Three");
+            var weightFour = weightsFolder.add(uniforms.iWeightFour, "value", 0.1, 5).name("Weight Four");
 
             var customContainer = document.getElementById("GUIContainer");
             customContainer.appendChild(gui.domElement);
