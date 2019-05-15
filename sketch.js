@@ -12,6 +12,7 @@ var off = 30;
 var wei;
 var deg;
 var steps = 0.01;
+var scale;
 
 p5.disableFriendlyErrors = true; // disables FES
 
@@ -19,6 +20,8 @@ function setup()
 {
 
     frameRate( rate );
+
+    scale = window.devicePixelRatio;
 
     A = createVector( windowWidth * 0.1, windowHeight * 0.1 );
     B = createVector( windowWidth * 0.1, windowHeight * 0.3 );
@@ -398,31 +401,33 @@ function Degree()
 function touchMoved()
 {
 
+    var sizeF = scale + sizT;
+
     if( deg.value === 4 )
     {
 
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
         {
         
             C = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
+        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < D.x + off && mouseX > D.x - off && mouseY < D.y + off && mouseY > D.y - off  )
         {
         
             D = createVector( mouseX, mouseY );
@@ -453,21 +458,21 @@ function touchMoved()
     if( deg.value === 3 )
     {
         
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF  && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );
         
         }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
+        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < C.x + off && mouseX > C.x - off && mouseY < C.y + off && mouseY > C.y - off  )
         {
         
             C = createVector( mouseX, mouseY );
@@ -491,14 +496,14 @@ function touchMoved()
     if( deg.value === 2 )
     {
         
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
         {
         
             A = createVector( mouseX, mouseY );
         
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizTh && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
         {
         
             B = createVector( mouseX, mouseY );

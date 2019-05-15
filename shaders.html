@@ -536,7 +536,7 @@
                 iWeightFour: { type: "f", value: 1.0 },
                 iShow: { type: "i", value: 1 },
                 iIterationsSize: { type: "f", value: 0.008 },
-                iPointSize: { type: "f", value: 0.013 },
+                iPointSize: { type: "f", value: 0.01 },
                 iBlurIteration: { type: "f", value: 0.01 },
                 iBlurPoint: { type: "f", value: 0.005 },
                 iSpeed: { type: "f", value: 0.4 },
@@ -566,7 +566,7 @@
 
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
-                    var scaleO = scale * 30; 
+                    var scaleO = scale + 30; 
 
                     if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < scaleO )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
                     {
@@ -648,6 +648,7 @@
             var touches = evt.changedTouches;
             var x = touches[0].pageX * scale;
             var y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
+            var scaleO = scale * 30; 
             /*
             var currentElement;
 
@@ -670,7 +671,7 @@
                 uniforms.iMouse.value.x = x;
                 uniforms.iMouse.value.y = y;
 
-                if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < 30 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+                if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < scaleO )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
                 {
         
                     uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
@@ -678,7 +679,7 @@
         
                 }
                     
-                else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < scaleO )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
                 {
         
                     uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
@@ -686,7 +687,7 @@
         
                 }
     
-                else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < scaleO )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
                 {
         
                     uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
@@ -694,7 +695,7 @@
         
                 }
 
-                else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < scaleO )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
                 {
         
                     uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
