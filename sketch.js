@@ -178,7 +178,7 @@ function lineLinear( A, B )
     {
         
         lInterp( A, B, i );
-        lInterpO( A, B, ( i + steps ) );
+        lInterpO( A, B, i + steps );
         line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
@@ -222,7 +222,7 @@ function lineQuadB( A, B, C )
     {
         
         quadB( A, B, C, i );
-        quadBO( A, B, C, ( i + steps ) );
+        quadBO( A, B, C, i + steps );
         line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
@@ -282,7 +282,7 @@ function lineCubicB( A, B, C, D )
     {
 
         cubicB( A, B, C, D, i );
-        cubicBO( A, B, C, D, ( i + steps ) );
+        cubicBO( A, B, C, D, i + steps );
         line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
