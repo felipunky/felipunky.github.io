@@ -240,7 +240,7 @@ function quadB( A, B, C, t )
                         /
                         ( ber * ber * wei.wO                      +
                         2.0 * ( t * wei.wT ) * ber                +
-                        berO * wei.wF ),
+                        berO * wei.wTh ),
                         ( ber * ber * wei.wO * A.y                +
                         2.0 * ( t * B.y * wei.wT ) * ber          +
                         berO * C.y * wei.wTh ) 
@@ -263,14 +263,14 @@ function quadBO( A, B, C, t )
                          /
                          ( ber * ber * wei.wO                      +
                          2.0 * ( t * wei.wT ) * ber                +
-                         berO * wei.wF ),
+                         berO * wei.wTh ),
                          ( ber * ber * wei.wO * A.y                +
                          2.0 * ( t * B.y * wei.wT ) * ber          +
                          berO * C.y * wei.wTh ) 
                          /
                          ( ber * ber * wei.wO                      +
                          2.0 * ( t * wei.wT ) * ber                +
-                         berO * wei.wF )
+                         berO * wei.wTh )
                     );
     
 }
