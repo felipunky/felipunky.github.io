@@ -499,7 +499,7 @@
         var camera, scene, renderer;
         var uniforms;
         var bool = 0;
-        var aspectRatio = 0;
+        //var aspectRatio = 0;
         var scale;
 
         init();
@@ -520,7 +520,7 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
 
-            aspectRatio = (window.innerWidth * scale) / (window.innerHeight * scale);
+            //aspectRatio = (window.innerWidth * scale) / (window.innerHeight * scale);
 
             var geometry = new THREE.PlaneBufferGeometry(2, 2);
 
@@ -535,9 +535,9 @@
                 iWeightThree: { type: "f", value: 1.0 },
                 iWeightFour: { type: "f", value: 1.0 },
                 iShow: { type: "i", value: 1 },
-                iIterationsSize: { type: "f", value: 0.02 },
-                iPointSize: { type: "f", value: 0.015 },
-                iBlurIteration: { type: "f", value: 0.03 },
+                iIterationsSize: { type: "f", value: 0.008 },
+                iPointSize: { type: "f", value: 0.013 },
+                iBlurIteration: { type: "f", value: 0.01 },
                 iBlurPoint: { type: "f", value: 0.005 },
                 iSpeed: { type: "f", value: 0.4 },
                 iPointOne: { type: "v2", value: new THREE.Vector2(renderer.domElement.width * 0.1, renderer.domElement.height * 0.2) },
@@ -566,8 +566,9 @@
 
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
+                    var scaleO = scale * 30; 
 
-                    if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < 30 )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
+                    if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < scaleO )//if( mouseIsPressed && mouseX < A.x + off && mouseX > A.x - off && mouseY < A.y + off && mouseY > A.y - off  )
                     {
         
                         uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
@@ -575,7 +576,7 @@
         
                     }
                     
-                    else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                    else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < scaleO )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
                     {
         
                         uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
@@ -583,7 +584,7 @@
         
                     }
     
-                    else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                    else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < scaleO )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
                     {
         
                         uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
@@ -591,7 +592,7 @@
         
                     }
 
-                    else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < 30 )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
+                    else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < scaleO )//else if( mouseIsPressed && mouseX < B.x + off && mouseX > B.x - off && mouseY < B.y + off && mouseY > B.y - off  )
                     {
         
                         uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
@@ -736,7 +737,7 @@
         function onWindowResize(event) {
 
             renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
-            aspectRatio = (renderer.domElement.width * scale) / (renderer.domElement.height * scale);
+            //aspectRatio = (renderer.domElement.width * scale) / (renderer.domElement.height * scale);
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
             uniforms.iPointOne.value.x = renderer.domElement.width * 0.1;
