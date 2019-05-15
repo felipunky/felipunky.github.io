@@ -247,7 +247,7 @@ function quadB( A, B, C, t )
                         /
                         ( ber * ber * wei.wO                      +
                         2.0 * ( t * wei.wT ) * ber                +
-                        berO * wei.wF )
+                        berO * wei.wTh )
                     );
     
 }
