@@ -50,7 +50,7 @@ function setup()
     degree.onChange( function( value )
     {
 
-        if( value === 3 || value == 2 )
+        if( value === 3 || value === 2 )
         {
 
             weightFour.domElement.style.pointerEvents = "none";
@@ -86,6 +86,7 @@ function setup()
 
     var pointsFolder = gui.addFolder( "Points" );
     pointsFolder.add( ite, "iterations", [ "Ten", "OneHundred" ] ).name( "Iterations" );
+    pointsFolder.add( ite, "line", 0, 1, 1 ).name( "Lines" );
     pointsFolder.add( con, "value", 0, 1, 1 ).name( "ShowConstruction" );
     var times = gui.addFolder( "Time" );
     var manualTime = times.add( tim, "manual", 0, 1, 1 ).name( "ManualTime" );
@@ -214,15 +215,38 @@ function draw()
 
         // Cubic Bézier.
         strokeWeight( 3 );
+        if( ite.line === 1 )
+        {
 
-        if( ite.iterations === "OneHundred" )
+            if( ite.iterations === "OneHundred" )
 
-            lineCubicB( A, B, C, D );
+                lineCubicB( A, B, C, D );
+
+            else
+            {
+
+                lineCubicBT( A, B, C, D );
+
+            }
+
+        }
 
         else
         {
 
-            lineCubicBT( A, B, C, D );
+            noStroke();
+            fill( 255 );
+
+            if( ite.iterations === "OneHundred" )
+
+                lineCubicBL( A, B, C, D );
+
+            else
+            {
+
+                lineCubicBTL( A, B, C, D );
+
+            }
 
         }
 
@@ -292,15 +316,38 @@ function draw()
 
         // Bézier.
         strokeWeight( 3 );
+        if( ite.line === 1 )
+        {
 
-        if( ite.iterations === "OneHundred" )
+            if( ite.iterations === "OneHundred" )
 
-            lineQuadB( A, C, D, wei.wO, wei.wT, wei.wTh, wei.wF );
+                lineQuadB( A, C, D, wei.wO, wei.wT, wei.wTh, wei.wF );
+
+            else
+            {
+
+                lineQuadBT( A, C, D, wei.wO, wei.wT, wei.wTh, wei.wF );
+
+            }
+
+        }
 
         else
         {
 
-            lineQuadBT( A, C, D, wei.wO, wei.wT, wei.wTh, wei.wF );
+            noStroke();
+            fill( 255 );
+
+            if( ite.iterations === "OneHundred" )
+
+                lineQuadBL( A, C, D, wei.wO, wei.wT, wei.wTh, wei.wF );
+
+            else
+            {
+
+                lineQuadBTL( A, C, D, wei.wO, wei.wT, wei.wTh, wei.wF );
+
+            }
 
         }
 
@@ -336,14 +383,39 @@ function draw()
         }
 
         strokeWeight( 3 );
-        line( A.x, A.y, B.x, B.y, siz, siz );
+        if( ite.line === 1 )
+        {
+
+            line( A.x, A.y, B.x, B.y, siz, siz );
+
+        }
+
+        else
+        {
+
+            noStroke();
+            fill( 255 );
+
+            if( ite.iterations === "OneHundred" )
+
+                lineLerp( A, B, 0.01 );
+
+            else
+            {
+
+                lineLerp( A, B, 0.1 );
+
+            }
+
+        }
+        
         fill( 255, 22, 255 );
         noStroke();
         ellipse( A.x, A.y, sizT, sizT );
-        fill( 0, 0, 255 )
+        fill( 0, 0, 255 );
         ellipse( B.x, B.y, sizT, sizT );
         lInterp( A, B, time );
-        fill( 255, 0, 0 )
+        fill( 255, 0, 0 );
         ellipse( W.x, W.y, sizT, sizT );
 
     }
@@ -367,6 +439,19 @@ function windowResized()
     C = createVector( windowWidth * 0.7, windowHeight * 0.1 );
     D = createVector( windowWidth * 0.5, windowHeight * 0.2 );
 
+}
+
+function lineLerp( A, B, t )
+{
+
+    for( var i = 0.0; i <= 1.0; i += t )
+    {
+
+        lInterp( A, B, i );
+        ellipse( W.x, W.y, siz, siz );
+        
+    }
+    
 }
 
 function lInterp( A, B, t )
@@ -529,6 +614,36 @@ function lineQuadBT( A, B, C, W0, W1, W2 )
     
 }
 
+function lineQuadBL( A, B, C, W0, W1, W2 )
+{
+
+    for( var i = 0.0; i <= 1.0; i += 0.01 )
+    {
+        
+        quadB( A, B, C, W0, W1, W2, i );
+        ellipse( W.x, W.y, siz, siz );
+        //quadBO( A, B, C, W0, W1, W2, i + 0.01 );
+        //line( W.x, W.y, WO.x, WO.y, siz, siz );
+        
+    }
+    
+}
+
+function lineQuadBTL( A, B, C, W0, W1, W2 )
+{
+
+    for( var i = 0.0; i <= 1.0; i += 0.1 )
+    {
+        
+        quadB( A, B, C, W0, W1, W2, i );
+        ellipse( W.x, W.y, siz, siz );
+        //quadBO( A, B, C, W0, W1, W2, i + 0.1 );
+        //line( W.x, W.y, WO.x, WO.y, siz, siz );
+        
+    }
+    
+}
+
 function quadB( A, B, C, W0, W1, W2, t )
 {
     
@@ -598,6 +713,36 @@ function lineCubicBT( A, B, C, D )
         cubicB( A, B, C, D, i );
         cubicBO( A, B, C, D, i + 0.1 );
         line( W.x, W.y, WO.x, WO.y, siz, siz );
+        
+    }
+    
+}
+
+function lineCubicBL( A, B, C, D )
+{
+
+    for( var i = 0.0; i < 1.0; i += 0.01 )
+    {
+
+        cubicB( A, B, C, D, i );
+        ellipse( W.x, W.y, siz, siz );
+        //cubicBO( A, B, C, D, i + 0.01 );
+        //line( W.x, W.y, WO.x, WO.y, siz, siz );
+        
+    }
+    
+}
+
+function lineCubicBTL( A, B, C, D )
+{
+
+    for( var i = 0.0; i < 1.0; i += 0.1 )
+    {
+
+        cubicB( A, B, C, D, i );
+        ellipse( W.x, W.y, siz, siz );
+        //cubicBO( A, B, C, D, i + 0.1 );
+        //line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
     
@@ -702,5 +847,6 @@ function Iterations()
 {
 
     this.iterations = "OneHundred";
+    this.line = 1;
 
 }

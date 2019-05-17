@@ -25,7 +25,6 @@
 <body onload="startup()">
     <div id="container"></div>
     <h1 id="GUIContainer">
-        Rational Bézier Curves
     </h1>
     <h2>
         Bézier curves
@@ -80,7 +79,7 @@
         $$W = A(1-t)^2+2t(1-t)B + t^2C$$
     </p>
     <p>
-        Case 3: Parametric Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
+        Case 3: Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
     </p>
     <p>
         $$E = (1-t)A + tB$$
@@ -139,8 +138,8 @@
     </script>
 
     <!--
-    <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
-    <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\dat.gui.min.js"></script>
+    <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
+    <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>
     -->
 
     <script id="vertexShader" type="x-shader/x-vertex">
@@ -183,6 +182,7 @@
         uniform vec2 iPointFour;
         uniform int iManual;
         uniform float iT;
+        uniform int iLine;
 
         float lerp( float a, float b, float t )
         {
@@ -310,44 +310,101 @@
         // Okay, now I loop on floats :D Turns out the casting is way too expensive.
         float wT = 0.0;
 
+        if( iLine == 1 )
+        {
+
         if( iIterations == 10 )
         {
 
-        for( float i = 0.0; i <= 1.0; i+=0.1 )
-        {
-
         if( iDegree == 2 )
-        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
-        else if( iDegree == 3 )
-        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
-        else if( iDegree == 4 )
-        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        //col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
+        col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.1, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
-        }
+        if( iDegree == 3 )
+        //col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
+        col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.1 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+
+        if( iDegree == 4 )
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.1 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
         }
 
         if( iIterations == 100 )
         {
 
-        for( float i = 0.0; i <= 1.0; i+=0.01 )
+        if( iDegree == 2 )
+        //col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        for( float i = 0.0; i < 0.999; i+=0.01 )
+        col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.01, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.7 ) );
+
+        if( iDegree == 3 )
+        //col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        for( float i = 0.0; i < 0.999; i+=0.01 )
+        col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.01 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.7 ) );
+
+        if( iDegree == 4 )
+        for( float i = 0.0; i < 0.999; i+=0.01 )
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.01 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.7 ) );
+
+        }
+
+        }
+
+        else
+        {
+
+        if( iIterations == 10 )
         {
 
         if( iDegree == 2 )
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
         col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
-        else if( iDegree == 3 )
+        //col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.096, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+
+        if( iDegree == 3 )
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
         col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
-        else if( iDegree == 4 )
+        //col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+
+        if( iDegree == 4 )
+        for( float i = 0.0; i <= 1.0; i+=0.1 )
         col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        //col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+
+        }
+
+        if( iIterations == 100 )
+        {
+
+        if( iDegree == 2 )
+        for( float i = 0.0; i <= 1.0; i+=0.01 )
+        //col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.0096, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+
+        if( iDegree == 3 )
+        for( float i = 0.0; i <= 1.0; i+=0.01 )
+        //col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.0096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+
+        if( iDegree == 4 )
+        for( float i = 0.0; i <= 1.0; i+=0.01 )
+        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        //col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.0096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
         }
 
         }
 
+        /*
         if( iIterations == 1000 )
         {
 
-        for( float i = 0.0; i <= 0.99; i+=0.001 )
+        for( float i = 0.0; i <= 1.0; i+=0.001 )
         {
 
         if( iDegree == 2 )
@@ -377,6 +434,7 @@
         }
 
         }
+        */
 
         // Visualizing time t parameter of the basis-functions ( we have to reparametrize our t from 0 to 1, so + 0.5 amplitude and * 0.5 ):
         float t = 0.0;
@@ -545,7 +603,8 @@
                 iPointThree: { type: "v2", value: new THREE.Vector2() },
                 iPointFour: { type: "v2", value: new THREE.Vector2() },
                 iManual: { type: "i", value: 0 },
-                iT: { type: "f", value: 0.5 }
+                iT: { type: "f", value: 0.5 },
+                iLine: { type: "i", value: 0 }
             };
 
             var material = new THREE.ShaderMaterial({
@@ -795,8 +854,9 @@
             t.domElement.style.pointerEvents = "none";
             t.domElement.style.opacity = 0.5;
             var pointsFolder = gui.addFolder("Points");
-            var iterations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100, OneThousand: 1000, TenThousand: 10000 }).name("Iterations");
+            var iterations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100 }).name("Iterations");
             var construction = pointsFolder.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
+            var lines = pointsFolder.add(uniforms.iLine, "value", 0, 1, 1).name("Lines");
             var iterationSize = pointsFolder.add(uniforms.iIterationsSize, "value", 0.0025, 0.03, 0.001).name("Size Of Iterations");
             var pointSize = pointsFolder.add(uniforms.iPointSize, "value", 0.010, 0.1, 0.001).name("Size Of Points");
             var iterationBlur = pointsFolder.add(uniforms.iBlurIteration, "value", 0.01, 0.4, 0.01).name("Blur Of Iterations");
