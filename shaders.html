@@ -1,9 +1,8 @@
 ﻿<!DOCTYPE html>
-<!--<html lang="fr">-->
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Bézier Curves</title>
+    <title>Bézier Curves Interactive GPU Demo</title>
     <style>
         body {
             margin: 0;
@@ -15,128 +14,14 @@
             width: 100%;
             height: 100%
         }
-
-        GUIContainer {
-            position: absolute;
-            top: 0px;
-            left: 20px;
-            z-index: 10;
-        }
     </style>
 </head>
 <body onload="startup()">
     <div id="container"></div>
-    <h1 id="GUIContainer"></h1>
-    <h2>
-        Bézier curves
-    </h2>
-    <p>
-        Bézier curves are parametric curves resulting from parametric equations.
-    </p>
-    <p>
-        Parametric equations express a set of quantities as explicit functions of a number of "parameters".
-    </p>
-    <p>
-        A Bézier curve takes as input the coordinates in x and y, and z (3D case) plus the variable t (time it takes to traverse the curve), and outputs a new point (red dot).
-    </p>
-    <p>
-        Case 1: A linear Bézier takes as input two points (A (magenta dot)
-        and B (blue dot)) and outputs a new point W (red dot) (linear interpolation).
-    </p>
-    <p>
-        The equation to get a third point C in the middle of A and B:
-    </p>
-    <p>
-        $$W = {1\over 2}A + {1\over 2}B$$
-    </p>
-    <p>
-        The parametric expression of C results in the graphing of the parametric curve at points (x, y) regarding various t's:
-    </p>
-    <p>
-        $$W = (1-t)A + tB$$
-    </p>
-    <p>
-        Case 2: A Quadratic or 3rd degree Bézier results from extrapolating case 1, where a new control point C (cyan) is added, and the interpolation happens between A and B, and B and C. A further step of interpolation between the new points D and E (orange) result in the t parameter W (red dot).
-    </p>
-    <p>
-        We could take what we learnt from the 2nd degree Bézier and apply it to higher degrees, but what we need is the interpolation of the interpolation of the interpolation.
-    </p>
-    <p>
-        $$D = (1-t)A + tB$$
-    </p>
-    <p>
-        $$E = (1-t)B + tC$$
-    </p>
-    <p>
-        $$W = (1-t)D + tE$$
-    </p>
-    <p>
-        This is a system of equations, so we can substitute D and E directly into W without having to precompute them:
-    </p>
-    <p>
-        $$W = (1-t)[(1-t)A + tB] + t[(1-t)B+tC]$$
-    </p>
-    <p>
-        $$W = A(1-t)^2+2t(1-t)B + t^2C$$
-    </p>
-    <p>
-        Case 3: Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
-    </p>
-    <p>
-        $$E = (1-t)A + tB$$
-    </p>
-    <p>
-        $$F = (1-t)B + tC$$
-    </p>
-    <p>
-        $$G = (1-t)C + tD$$
-    </p>
-    <p>
-        $$H = (1-t)E + tF$$
-    </p>
-    <p>
-        $$I = (1-t)F + tG$$
-    </p>
-    <p>
-        $$W = (1-t)H + tI$$
-    </p>
-    <p>
-        This is a system of equations, so we can substitute the previous interpolations into the last ones:
-    </p>
-    <p>
-        $$W = (1-t)[(1-t)(1-t)A + tB + (1-t)B + tC] + t[(1-t)(1-t)B+tC+(1-t)C+tD]$$
-    </p>
-    <p>
-        That corresponds to:
-    </p>
-    <p>
-        $$W = A(1-t)^3+3Bt(1-t)^2+3Ct^2(1-t)+Dt^3$$
-    </p>
-    <h3>
-        Rational Bézier Curves
-    </h3>
-    <p>
-        We could add another parameter called "weight" to the equations, which corresponds to the strength each t point is discretely pulled towards the control point.
-        The equation reflects the transformed t parameter regarding both the calculations on the effect of weighted control points (control point * weight * t), and the
-        parametrized (between 0 and 1) calculations amongst the weights and the parameter t (w * t), for each t being evaluated.
-    </p>
-    <p>
-        $$W = {(1-t)Aw1 + tBw2\over (1-t)w1 + tw2}$$
-    </p>
-    <p>
-        Higher degree (Quadratic):
-    </p>
-    <p>
-        $$W = {Aw1(1-t)^2+2t(1-t)Bw2 + t^2Cw3\over w1(1-t)^2+2t(1-t)w2 + t^2w3}$$
-    </p>
 
     <script src="felipunky.github.io/three.min.js"></script>
 
     <script src="felipunky.github.io/dat.gui.min.js"></script>
-
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
-    </script>
 
     <!--
     <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
@@ -625,7 +510,7 @@
                 if (uniforms.iMouse.value.z === 1) {
 
                     uniforms.iMouse.value.x = e.pageX * scale;
-                    uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
+                    uniforms.iMouse.value.y = (window.innerHeight - e.pageY) * scale;
                     var scaleO = scale * 30;
 
                     if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
@@ -698,7 +583,7 @@
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
             var x = touches[0].pageX * scale;
-            var y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
+            var y = (window.innerHeight - touches[0].pageY) * scale;
             var scaleO = scale * 30;
 
             if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX > 0.0 && touches[0].pageX < renderer.domElement.width / scale && touches[0].pageY < renderer.domElement.height / scale) {
@@ -755,7 +640,7 @@
 
         function onWindowResize(event) {
 
-            renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
+            renderer.setSize(window.innerWidth, window.innerHeight);
             uniforms.iResolution.value.x = renderer.domElement.width;
             uniforms.iResolution.value.y = renderer.domElement.height;
             uniforms.iPointOne.value.x = renderer.domElement.width * 0.1;
@@ -847,8 +732,8 @@
             t.domElement.style.pointerEvents = "none";
             t.domElement.style.opacity = 0.5;
             var pointsFolder = gui.addFolder("Points");
-            var iterations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100 }).name("Iterations");
-            var construction = pointsFolder.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
+            terations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100 }).name("Iterations");
+            construction = pointsFolder.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
             var lines = pointsFolder.add(uniforms.iLine, "value", 0, 1, 1).name("Lines");
             lines.onChange(function (value) {
 
@@ -857,14 +742,8 @@
                     iterationSize.domElement.style.pointerEvents = "none";
                     iterationSize.domElement.style.opacity = 0.5;
 
-                    pointSize.domElement.style.pointerEvents = "none";
-                    pointSize.domElement.style.opacity = 0.5;
-
                     iterationBlur.domElement.style.pointerEvents = "none";
                     iterationBlur.domElement.style.opacity = 0.5;
-
-                    pointBlur.domElement.style.pointerEvents = "none";
-                    pointBlur.domElement.style.opacity = 0.5;
 
                 }
 
@@ -873,31 +752,21 @@
                     iterationSize.domElement.style.pointerEvents = "auto";
                     iterationSize.domElement.style.opacity = 1.0;
 
-                    pointSize.domElement.style.pointerEvents = "none";
-                    pointSize.domElement.style.opacity = 0.5;
-
                     iterationBlur.domElement.style.pointerEvents = "auto";
                     iterationBlur.domElement.style.opacity = 1.0;
-
-                    pointBlur.domElement.style.pointerEvents = "none";
-                    pointBlur.domElement.style.opacity = 0.5;
-
                 }
 
             });
             var iterationSize = pointsFolder.add(uniforms.iIterationsSize, "value", 0.0025, 0.03, 0.001).name("Size Of Iterations");
-            var pointSize = pointsFolder.add(uniforms.iPointSize, "value", 0.010, 0.1, 0.001).name("Size Of Points");
+            pointSize = pointsFolder.add(uniforms.iPointSize, "value", 0.010, 0.1, 0.001).name("Size Of Points");
             var iterationBlur = pointsFolder.add(uniforms.iBlurIteration, "value", 0.01, 0.4, 0.01).name("Blur Of Iterations");
-            var pointBlur = pointsFolder.add(uniforms.iBlurPoint, "value", 0.001, 0.01, 0.001).name("Blur Of Points");
+            pointBlur = pointsFolder.add(uniforms.iBlurPoint, "value", 0.001, 0.01, 0.001).name("Blur Of Points");
 
             var weightsFolder = gui.addFolder("Weights");
-            var weightOne = weightsFolder.add(uniforms.iWeightOne, "value", 0.1, 5).name("Weight One");
-            var weightTwo = weightsFolder.add(uniforms.iWeightTwo, "value", 0.1, 5).name("Weight Two");
+            weightOne = weightsFolder.add(uniforms.iWeightOne, "value", 0.1, 5).name("Weight One");
+            weightTwo = weightsFolder.add(uniforms.iWeightTwo, "value", 0.1, 5).name("Weight Two");
             var weightThree = weightsFolder.add(uniforms.iWeightThree, "value", 0.1, 5).name("Weight Three");
             var weightFour = weightsFolder.add(uniforms.iWeightFour, "value", 0.1, 5).name("Weight Four");
-
-            var customContainer = document.getElementById("GUIContainer");
-            customContainer.appendChild(gui.domElement);
 
         }
 

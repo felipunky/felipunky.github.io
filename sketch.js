@@ -36,7 +36,7 @@ function setup()
     C = createVector( windowWidth * 0.7, windowHeight * 0.1 );
     D = createVector( windowWidth * 0.9, windowHeight * 0.2 );
     
-    var canvas = createCanvas( windowWidth, windowHeight * 0.5 );
+    var canvas = createCanvas( windowWidth, windowHeight );
     canvas.parent( "container" );
 
     tim = new Time();
@@ -123,9 +123,6 @@ function setup()
     weightTwo = weights.add( wei, "wT", 0.1, 5.0 ).name( "WeightTwo" );
     var weightThree = weights.add( wei, "wTh", 0.1, 5.0 ).name( "WeightThree" );
     var weightFour = weights.add( wei, "wF", 0.1, 5.0 ).name( "WeightFour" );
-
-    var customContainer = document.getElementById( "GUIContainer" );
-    customContainer.appendChild(gui.domElement);
         
 }
 
@@ -433,7 +430,7 @@ function draw()
 function windowResized()
 {
     
-    resizeCanvas( windowWidth, windowHeight * 0.5 );
+    resizeCanvas( windowWidth, windowHeight );
     A = createVector( windowWidth * 0.1, windowHeight * 0.1 );
     B = createVector( windowWidth * 0.1, windowHeight * 0.3 );
     C = createVector( windowWidth * 0.7, windowHeight * 0.1 );
@@ -622,8 +619,6 @@ function lineQuadBL( A, B, C, W0, W1, W2 )
         
         quadB( A, B, C, W0, W1, W2, i );
         ellipse( W.x, W.y, siz, siz );
-        //quadBO( A, B, C, W0, W1, W2, i + 0.01 );
-        //line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
     
@@ -637,8 +632,6 @@ function lineQuadBTL( A, B, C, W0, W1, W2 )
         
         quadB( A, B, C, W0, W1, W2, i );
         ellipse( W.x, W.y, siz, siz );
-        //quadBO( A, B, C, W0, W1, W2, i + 0.1 );
-        //line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
     
@@ -726,8 +719,6 @@ function lineCubicBL( A, B, C, D )
 
         cubicB( A, B, C, D, i );
         ellipse( W.x, W.y, siz, siz );
-        //cubicBO( A, B, C, D, i + 0.01 );
-        //line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
     
@@ -741,8 +732,6 @@ function lineCubicBTL( A, B, C, D )
 
         cubicB( A, B, C, D, i );
         ellipse( W.x, W.y, siz, siz );
-        //cubicBO( A, B, C, D, i + 0.1 );
-        //line( W.x, W.y, WO.x, WO.y, siz, siz );
         
     }
     
