@@ -24,8 +24,7 @@
 </head>
 <body onload="startup()">
     <div id="container"></div>
-    <h1 id="GUIContainer">
-    </h1>
+    <h1 id="GUIContainer"></h1>
     <h2>
         Bézier curves
     </h2>
@@ -625,40 +624,36 @@
 
                     uniforms.iMouse.value.x = e.pageX * scale;
                     uniforms.iMouse.value.y = (window.innerHeight * 0.5 - e.pageY) * scale;
-                    var scaleO = scale * 30; 
+                    var scaleO = scale * 30;
 
-                    if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < scaleO )
-                    {
-        
+                    if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
+
                         uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
                         uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
-        
-                    }
-                    
-                    else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < scaleO )
-                    {
-        
-                        uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
-                        uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
-        
-                    }
-    
-                    else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < scaleO )
-                    {
-        
-                        uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
-                        uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
-        
+
                     }
 
-                    else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < scaleO )
-                    {
-        
+                    else if (Math.hypot(uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y) < scaleO) {
+
+                        uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
+                        uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+
+                    }
+
+                    else if (Math.hypot(uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y) < scaleO) {
+
+                        uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
+                        uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+
+                    }
+
+                    else if (Math.hypot(uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y) < scaleO) {
+
                         uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
                         uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
-        
+
                     }
-                    
+
                 }
 
             }
@@ -702,43 +697,39 @@
             var touches = evt.changedTouches;
             var x = touches[0].pageX * scale;
             var y = (window.innerHeight * 0.5 - touches[0].pageY) * scale;
-            var scaleO = scale * 30; 
+            var scaleO = scale * 30;
 
             if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX > 0.0 && touches[0].pageX < renderer.domElement.width / scale && touches[0].pageY < renderer.domElement.height / scale) {
 
                 uniforms.iMouse.value.x = x;
                 uniforms.iMouse.value.y = y;
 
-                if( Math.hypot( uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y ) < scaleO )
-                {
-        
+                if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
+
                     uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
                     uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
-        
-                }
-                    
-                else if( Math.hypot( uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y ) < scaleO )
-                {
-        
-                    uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
-                    uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
-        
-                }
-    
-                else if( Math.hypot( uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y ) < scaleO )
-                {
-        
-                    uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
-                    uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
-        
+
                 }
 
-                else if( Math.hypot( uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y ) < scaleO )
-                {
-        
+                else if (Math.hypot(uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y) < scaleO) {
+
+                    uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
+                    uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+
+                }
+
+                else if (Math.hypot(uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y) < scaleO) {
+
+                    uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
+                    uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+
+                }
+
+                else if (Math.hypot(uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y) < scaleO) {
+
                     uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
                     uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
-        
+
                 }
 
             }
@@ -857,6 +848,41 @@
             var iterations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100 }).name("Iterations");
             var construction = pointsFolder.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
             var lines = pointsFolder.add(uniforms.iLine, "value", 0, 1, 1).name("Lines");
+            lines.onChange(function (value) {
+
+                if (value === 1) {
+
+                    iterationSize.domElement.style.pointerEvents = "none";
+                    iterationSize.domElement.style.opacity = 0.5;
+
+                    pointSize.domElement.style.pointerEvents = "none";
+                    pointSize.domElement.style.opacity = 0.5;
+
+                    iterationBlur.domElement.style.pointerEvents = "none";
+                    iterationBlur.domElement.style.opacity = 0.5;
+
+                    pointBlur.domElement.style.pointerEvents = "none";
+                    pointBlur.domElement.style.opacity = 0.5;
+
+                }
+
+                else {
+
+                    iterationSize.domElement.style.pointerEvents = "auto";
+                    iterationSize.domElement.style.opacity = 1.0;
+
+                    pointSize.domElement.style.pointerEvents = "none";
+                    pointSize.domElement.style.opacity = 0.5;
+
+                    iterationBlur.domElement.style.pointerEvents = "auto";
+                    iterationBlur.domElement.style.opacity = 1.0;
+
+                    pointBlur.domElement.style.pointerEvents = "none";
+                    pointBlur.domElement.style.opacity = 0.5;
+
+                }
+
+            });
             var iterationSize = pointsFolder.add(uniforms.iIterationsSize, "value", 0.0025, 0.03, 0.001).name("Size Of Iterations");
             var pointSize = pointsFolder.add(uniforms.iPointSize, "value", 0.010, 0.1, 0.001).name("Size Of Points");
             var iterationBlur = pointsFolder.add(uniforms.iBlurIteration, "value", 0.01, 0.4, 0.01).name("Blur Of Iterations");
