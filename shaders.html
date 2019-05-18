@@ -582,14 +582,12 @@
             evt.preventDefault();
             var el = document.getElementById("container");
             var touches = evt.changedTouches;
-            var x = touches[0].pageX * scale;
-            var y = (window.innerHeight - touches[0].pageY) * scale;
             var scaleO = scale * 30;
 
             if (uniforms.iMouse.value.z === 1) {
 
-                uniforms.iMouse.value.x = x;
-                uniforms.iMouse.value.y = y;
+                uniforms.iMouse.value.x = touches[0].pageX * scale;
+                uniforms.iMouse.value.y = (window.innerHeight - touches[0].pageY) * scale;
 
                 if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
 
