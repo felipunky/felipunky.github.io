@@ -586,10 +586,10 @@
             var y = (window.innerHeight - touches[0].pageY) * scale;
             var scaleO = scale * 30;
 
-            if (uniforms.iMouse.value.z === 1) {
+            /*if (uniforms.iMouse.value.z === 1) {
 
                 uniforms.iMouse.value.x = x;
-                uniforms.iMouse.value.y = y;
+                uniforms.iMouse.value.y = y;*/
 
                 if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
 
@@ -619,7 +619,7 @@
 
                 }
 
-            }
+            //}
 
         }
 
