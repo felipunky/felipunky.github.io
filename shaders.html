@@ -23,10 +23,10 @@
 
     <script src="felipunky.github.io/dat.gui.min.js"></script>
 
-    <!--
+   
     <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
     <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>
-    -->
+    
 
     <script id="vertexShader" type="x-shader/x-vertex">
         void main()
@@ -584,12 +584,12 @@
             var touches = evt.changedTouches;
             var x = touches[0].pageX * scale;
             var y = (window.innerHeight - touches[0].pageY) * scale;
-            var scaleO = scale * 30;
+            var scaleO = scale * 90;
 
-            /*if (uniforms.iMouse.value.z === 1) {
+            if (uniforms.iMouse.value.z === 1 && touches[0].pageY > 0.0 && touches[0].pageX > 0.0 && touches[0].pageX < renderer.domElement.width / scale && touches[0].pageY < renderer.domElement.height / scale) {
 
                 uniforms.iMouse.value.x = x;
-                uniforms.iMouse.value.y = y;*/
+                uniforms.iMouse.value.y = y;
 
                 if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
 
@@ -619,7 +619,7 @@
 
                 }
 
-            //}
+            }
 
         }
 
