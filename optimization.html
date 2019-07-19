@@ -41,6 +41,9 @@
             <br>
             specifically: the mathematical procedures (such as finding the maximum of a function) involved in this”
         </p>
+        <h1>
+            Analytical Solutions
+        </h1>
         <p>
             Mathematically (using differential calculus) we could solve an <a href="https://www.youtube.com/watch?v=Ef22yTJDUZI">easy problem</a> such as:
             Two numbers whose product $xy=-16$, and the sum of their squares $S(x)=x^2+y^2$ is at it's $Minimum$.
@@ -124,6 +127,12 @@
         <br>
         There are many techniques for iterative numerical optimization, but we are going to look at the following heuristics (a <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)">heuristic</a> (from Greek εὑρίσκω "I find, discover") is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution.) <a href="https://www.geeksforgeeks.org/gradient-descent-algorithm-and-its-variants/">Gradient Descent</a>, <a href="http://www.mit.edu/~dbertsim/papers/Optimization/Simulated%20annealing.pdf">Simulated Annealing</a> and <a href="http://www.ra.cs.uni-tuebingen.de/mitarb/streiche/publications/Introduction_to_Evolutionary_Algorithms.pdf">Evolutionary Algorithms</a>.
         </p>
+        <h1>
+            Numerical Solutions
+        </h1>
+        <h2>
+            Gradient Ascent/Descent
+        </h2>
         <p>
         Gradient ascent/descent is an optimization algorithm that minimizes/maximizes the cost function of another algorithm by modifying the parameters of the given algorithm. It works by taking steps toward the positive/negative of the gradient to find local minima/maxima.
         <br>
@@ -133,8 +142,11 @@
         <img src="felipunky.github.io/Images/Optimization/Gradient_ascent_(contour).png" alt="GradientAscentCountour">
         <img src="felipunky.github.io/Images/Optimization/Gradient_ascent_(surface).png" alt="GradientAscentSurface">
         <br>
-        The problem with this heuristic is that the solution probably won't be the global minima/maxima. One variant of this algorithm, <a href="https://stats.stackexchange.com/questions/90874/how-can-stochastic-gradient-descent-avoid-the-problem-of-a-local-minimum">Stochastich Gradient Descent or (SG)</a> can <a href="https://stats.stackexchange.com/questions/90874/how-can-stochastic-gradient-descent-avoid-the-problem-of-a-local-minimum">escape local maxima/minima</a> by the randomness introduced between "tracks" or iterations. However the "step size" (Learning Rate or (LR)) has to be tweaked according to the problem for full convergence.
+        The problem with this heuristic is that the solution probably won't be the global minima/maxima. One variant of this algorithm, <a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastich Gradient Descent or (SG)</a> can <a href="https://stats.stackexchange.com/questions/90874/how-can-stochastic-gradient-descent-avoid-the-problem-of-a-local-minimum">escape local maxima/minima</a> by the randomness introduced between "tracks" or iterations. However the "step size" (Learning Rate or (LR)) has to be tweaked according to the problem for full convergence.
         </p>
+        <h2>
+            Simulated Annealing
+        </h2>
         <p>
         SG is actually very similar to Simulated Annealing or (SA), the difference is that instead of a "Learning Rate" or "Gamma", we refer to a "Temperature".
         <br>
@@ -145,6 +157,10 @@
         Here's a visualization of the process stolen from wikipedia
         <img src="felipunky.github.io/Images/Optimization/Hill_Climbing_with_Simulated_Annealing.gif" title="SimulatedAnnealingHillClimbing" />
         </p>
+        <h2>
+            Evolutionary Algorithms
+        </h2>
+        
     </div>
 </body>
 </html>
