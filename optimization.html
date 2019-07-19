@@ -81,7 +81,7 @@
         </p>
         <img src="felipunky.github.io/Images/Optimization/LagrangeMultipliers2D.svg" alt="LagrangeMultipliers">
         <p>
-        Figure 1: The red curve shows the constraint $g(x, y) = c$. The blue curves are contours of $f(x, y)$. The point where the red constraint tangentially touches a blue contour is the maximum of $f(x, y)$ along the constraint, since $d1 > d2$.
+        The red curve shows the constraint $g(x, y) = c$. The blue curves are contours of $f(x, y)$. The point where the red constraint tangentially touches a blue contour is the maximum of $f(x, y)$ along the constraint, since $d1 > d2$.
         </p>
         <p>
         Let's solve the same problem $S(x,y)=x^2+y^2$ with constraint $g(x,y)=xy=-16$ with Lagrange multipliers
@@ -122,14 +122,15 @@
         </p>
         <p>
         To recap, we have done analytical (through algebraic manipulation) optimization. This is very handy if we have a problem that we have already approximated as a function and even a constraint that we also have approximated as a function. But there are cases in which we don't have a function that defines the problem, matter of fact it is generally easier to create a function that tests whether the answer is right or wrong (there are many names to this types of functions, fitness/cost function are some of them), this is actually the way that problems are ranked in computer science according to their <a href="https://en.wikipedia.org/wiki/Time_complexity#Complexity_classes">complexity classes</a>.
-        <br>
-        On top of that we have computers, which are excellent at iterating as they are fast at crunching numbers. So sometimes a numerical approach at optimization seems sound.
-        <br>
-        There are many techniques for iterative numerical optimization, but we are going to look at the following heuristics (a <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)">heuristic</a> (from Greek εὑρίσκω "I find, discover") is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution.) <a href="https://www.geeksforgeeks.org/gradient-descent-algorithm-and-its-variants/">Gradient Descent</a>, <a href="http://www.mit.edu/~dbertsim/papers/Optimization/Simulated%20annealing.pdf">Simulated Annealing</a> and <a href="http://www.ra.cs.uni-tuebingen.de/mitarb/streiche/publications/Introduction_to_Evolutionary_Algorithms.pdf">Evolutionary Algorithms</a>.
         </p>
         <h1>
             Numerical Solutions
         </h1>
+        <p>
+        Computers are excellent at iterating as they are fast at crunching numbers. So sometimes a numerical approach at optimization seems sound.
+        <br>
+        There are many techniques for iterative numerical optimization, but we are going to look at the following heuristics (a <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)">heuristic</a> (from Greek εὑρίσκω "I find, discover") is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution.) <a href="https://www.geeksforgeeks.org/gradient-descent-algorithm-and-its-variants/">Gradient Descent</a>, <a href="http://www.mit.edu/~dbertsim/papers/Optimization/Simulated%20annealing.pdf">Simulated Annealing</a> and <a href="http://www.ra.cs.uni-tuebingen.de/mitarb/streiche/publications/Introduction_to_Evolutionary_Algorithms.pdf">Evolutionary Algorithms</a>.
+        </p>
         <h2>
             Gradient Ascent/Descent
         </h2>
@@ -150,7 +151,7 @@
         <p>
         SG is actually very similar to Simulated Annealing or (SA), the difference is that instead of a "Learning Rate" or "Gamma", we refer to a "Temperature".
         <br>
-        The temperature comes from the inspiration from the <a href="https://en.wikipedia.org/wiki/Annealing_(metallurgy)">process</a> used in metallurgy to heat into a melted state the material and then cool it slowly to increase the size of crystals while reducing the number of imperfections.
+        The temperature variable is inspired by the <a href="https://en.wikipedia.org/wiki/Annealing_(metallurgy)">process</a> used in metallurgy to heat into a melted state the material and then cool it slowly to increase the size of crystals while reducing the number of imperfections.
         <br>
         We use a probability function $A=\exp{ ( -\Delta f/kT)}$ to accept a state. Where $\Delta f$ is the rate of change from the energy of the previous iteration to the current one ($E_{current}-E_{previous}$), $k$ is the <a href="https://www.britannica.com/science/Boltzmann-constant">Boltzmann constant</a> and $T$ is the temperature (that is decreased every iteration, when this reaches the desired threshold it will also act as an exit condition for the iteration loop).
         <br>
@@ -160,7 +161,40 @@
         <h2>
             Evolutionary Algorithms
         </h2>
+        <p>
+            There has been active research in genetic algorithms from the 1960's and they have been widely used by STEM professionals over the years to solve problems with many variables. Although there are a lot of implementations of Genetic Algorithms, we are going to use <a href="https://ieatbugsforbreakfast.wordpress.com/2011/03/04/epatps01/">David Rutten's</a> one as we are mostly concerned with CAD/CAE problems and the Galapagos solver is embedded in Grasshopper for Rhino3d, which is a great 3D tool that enables even non-programmers to program through visual scripting. Note that although Gradient Ascent/Descent is not implemented in Grasshopper, Simulated Annealing is in fact an extra solver in the Galapagos component.
+        </p>
+        <p>
+        Rutten states that his solver consists of four mechanisms
+        </p>
+        <h3>
+            Selection
+        </h3>
+        <p>
+            When the genetic algorithm runs, it has to go somewhere from the results it has received.
+            <br>
+            Selection roughly means that from the Fitness (don't worry we will dive deeper into what a Fitness function means and how to create one) we are going to pick the best results to continue for the next round.
+            <br>
+            The term comes from the biological term Natural Selection, in which only the best offsprings will get the chance to reproduce.
+        </p>
+        <h3>
+            Coupling
+        </h3>
+        <p>
         
+        </p>
+        <h3>
+            Coalescence
+        </h3>
+        <p>
+        
+        </p>
+        <h3>
+            Mutation
+        </h3>
+        <p>
+        
+        </p>
     </div>
 </body>
 </html>
