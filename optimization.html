@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 <head>
     <title>Optimization</title>
     <style>
@@ -68,12 +68,82 @@
             $$S^{\prime\prime}(4)=2+1536\cdot\frac{1}{256}$$
             $$S^{\prime\prime}(4)=8$$
             $8$ is a positive number, so $x=4$ is positive upwards $S^{\prime\prime}(4)=\cup$ meaning we are at a $Minimum$
+            Why does this work? The derivative $f^{\prime}(x)$ of a function gives us the slope/tangent, that means that when the function's slope is at $0$, we are at a local minimum or maximum.
         </p>
         <img src="felipunky.github.io/Images/Optimization/x2y2.png" alt="x2y2">
         <p>
-            In the example above, we are only dealing with one variable $x$, but what happens if we have a function that we want to optimize that has more than one variable?
+            In the example above, we are only dealing with one variable $x$ (although we are solving a two variable problem we are substituting to only solve for one variable), but what happens if we have a function that we want to optimize that has more than one variable?
             <br>
-            We need multi-variable calculus, and that means we need to use partial derivatives $\frac{\partial f}{\partial x}$ to evaluate the tangent of the function at each input.
+            We need multi-variable calculus, and that means we need to use partial derivatives $\frac{\partial f}{\partial x}$ to evaluate the tangent of the function at each input. If we want to solve the problem above $x^2+y^2$ with the constraints $xy=-16$ we can use <a href="http://www.math.harvard.edu/archive/21a_spring_09/PDF/11-08-Lagrange-Multipliers.pdf">Lagrange multipliers</a> to minimize or maximize the functions according to the constraint $\lambda$. The intuition for the Lagrange multipliers is best explained by this image:
+        </p>
+        <img src="felipunky.github.io/Images/Optimization/LagrangeMultipliers2D.svg" alt="LagrangeMultipliers">
+        <p>
+        Figure 1: The red curve shows the constraint $g(x, y) = c$. The blue curves are contours of $f(x, y)$. The point where the red constraint tangentially touches a blue contour is the maximum of $f(x, y)$ along the constraint, since $d1 > d2$.
+        </p>
+        <p>
+        Let's solve the same problem $S(x,y)=x^2+y^2$ with constraint $g(x,y)=xy=-16$ with Lagrange multipliers
+        <br>
+        First we have to state the problem in terms of the Lagrangian $\mathcal{L}(x,y,\lambda)$, where $\lambda$ means that the gradient of $g(x,y)$ and $S(x,y)$ are proportional.
+        $$\mathcal{L}(x,y,\lambda)=x^2+y^2-\lambda(xy-(-16))$$
+        $$\mathcal{L}(x,y,\lambda)=x^2+y^2-{\lambda}x-{\lambda}y-{\lambda}16$$
+        Now we need to find the partial derivatives of each of the inputs of our function $\mathcal{L}(x,y,\lambda)$ to find $\lambda$
+        $$\frac{\partial \mathcal{L}}{\partial x}=2x-\lambda$$
+        $$x=\dfrac{\lambda}{2}$$
+        $$\frac{\partial \mathcal{L}}{\partial y}=2y-\lambda$$
+        $$y=\dfrac{\lambda}{2}$$
+        We know substitute our partial derivatives $\frac{\partial \mathcal{L}}{\partial x}$ and $\frac{\partial \mathcal{L}}{\partial y}$ into the constraint function $g(x,y)$
+        $$g(x,y)=xy=-16$$
+        $$\dfrac{\lambda}{2}^2=-16$$
+        $$\dfrac{\lambda}{4}=-16$$
+        $$\lambda^2=-64$$
+        $$\lambda\pm\sqrt{64}$$
+        $$\lambda\pm8$$
+        Having solved $\lambda$ we can plug the value into $\frac{\partial \mathcal{L}}{\partial x}$
+        $$\frac{\partial \mathcal{L}}{\partial x}=\dfrac{-8}{2}=-4\lor{\dfrac{8}{2}=4}$$
+        And into $\frac{\partial \mathcal{L}}{\partial y}$
+        $$\frac{\partial \mathcal{L}}{\partial y}=\dfrac{-8}{2}=-4\lor{\dfrac{8}{2}=4}$$
+        We know we want to get $-16$ from $g(x,y)=xy$ so we have to choose either
+        $$x=4$$
+        $$y=-4$$
+        $$\lor$$
+        $$x=-4$$
+        $$y=4$$
+        We can also check with a higher order partial derivative, to see if we are $\cup$ or $\cap$
+        $$\frac{\partial^2 \mathcal{L}}{\partial x^2}=2$$
+        $$\frac{\partial^2 \mathcal{L}}{\partial y^2}=2$$
+        As both second order partial derivatives are $\cup$ we are at a minimum.
+        <br>
+        We could also compute the <a href="https://en.wikipedia.org/wiki/Hessian_matrix">Hessian</a> to test our result, but let's leave that as an excercise for the reader.
+        <br>
+        We can use this technique to optimize more inputs and even more constraints.
+        </p>
+        <p>
+        To recap, we have done analytical (through algebraic manipulation) optimization. This is very handy if we have a problem that we have already approximated as a function and even a constraint that we also have approximated as a function. But there are cases in which we don't have a function that defines the problem, matter of fact it is generally easier to create a function that tests whether the answer is right or wrong (there are many names to this types of functions, fitness/cost function are some of them), this is actually the way that problems are ranked in computer science according to their <a href="https://en.wikipedia.org/wiki/Time_complexity#Complexity_classes">complexity classes</a>.
+        <br>
+        On top of that we have computers, which are excellent at iterating as they are fast at crunching numbers. So sometimes a numerical approach at optimization seems sound.
+        <br>
+        There are many techniques for iterative numerical optimization, but we are going to look at the following heuristics (a <a href="https://en.wikipedia.org/wiki/Heuristic_(computer_science)">heuristic</a> (from Greek εὑρίσκω "I find, discover") is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution.) <a href="https://www.geeksforgeeks.org/gradient-descent-algorithm-and-its-variants/">Gradient Descent</a>, <a href="http://www.mit.edu/~dbertsim/papers/Optimization/Simulated%20annealing.pdf">Simulated Annealing</a> and <a href="http://www.ra.cs.uni-tuebingen.de/mitarb/streiche/publications/Introduction_to_Evolutionary_Algorithms.pdf">Evolutionary Algorithms</a>.
+        </p>
+        <p>
+        Gradient ascent/descent is an optimization algorithm that minimizes/maximizes the cost function of another algorithm by modifying the parameters of the given algorithm. It works by taking steps toward the positive/negative of the gradient to find local minima/maxima.
+        <br>
+        It is widely used to optimize the parameters of machine learning algorithms.
+        <br>
+        Let's visualize the algorithm on ${\displaystyle F(x,y)=\sin \left({\frac {1}{2}}x^{2}-{\frac {1}{4}}y^{2}+3\right)\cos \left(2x+1-e^{y}\right).}$
+        <img src="felipunky.github.io/Images/Optimization/Gradient_ascent_(contour).png" alt="GradientAscentCountour">
+        <img src="felipunky.github.io/Images/Optimization/Gradient_ascent_(surface).png" alt="GradientAscentSurface">
+        <br>
+        The problem with this heuristic is that the solution probably won't be the global minima/maxima. One variant of this algorithm, <a href="https://stats.stackexchange.com/questions/90874/how-can-stochastic-gradient-descent-avoid-the-problem-of-a-local-minimum">Stochastich Gradient Descent or (SG)</a> can <a href="https://stats.stackexchange.com/questions/90874/how-can-stochastic-gradient-descent-avoid-the-problem-of-a-local-minimum">escape local maxima/minima</a> by the randomness introduced between "tracks" or iterations. However the "step size" (Learning Rate or (LR)) has to be tweaked according to the problem for full convergence.
+        </p>
+        <p>
+        SG is actually very similar to Simulated Annealing or (SA), the difference is that instead of a "Learning Rate" or "Gamma", we refer to a "Temperature".
+        <br>
+        The temperature comes from the inspiration from the <a href="https://en.wikipedia.org/wiki/Annealing_(metallurgy)">process</a> used in metallurgy to heat into a melted state the material and then cool it slowly to increase the size of crystals while reducing the number of imperfections.
+        <br>
+        We use a probability function $A=\exp{ ( -\Delta f/kT)}$ to accept a state. Where $\Delta f$ is the rate of change from the energy of the previous iteration to the current one ($E_{current}-E_{previous}$), $k$ is the <a href="https://www.britannica.com/science/Boltzmann-constant">Boltzmann constant</a> and $T$ is the temperature (that is decreased every iteration, when this reaches the desired threshold it will also act as an exit condition for the iteration loop).
+        <br>
+        Here's a visualization of the process stolen from wikipedia
+        <img src="Hill_Climbing_with_Simulated_Annealing.gif" title="SimulatedAnnealingHillClimbing">
         </p>
     </div>
 </body>
