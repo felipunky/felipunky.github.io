@@ -142,8 +142,11 @@
         It is widely used to optimize the parameters of machine learning algorithms.
         <br>
         Let's visualize the algorithm on ${\displaystyle F(x,y)=\sin \left({\frac {1}{2}}x^{2}-{\frac {1}{4}}y^{2}+3\right)\cos \left(2x+1-e^{y}\right).}$
+        <br>
         <img src="felipunky.github.io/Images/Optimization/Gradient_ascent_(contour).png" alt="GradientAscentCountour">
+        <br>
         <img src="felipunky.github.io/Images/Optimization/Gradient_ascent_(surface).png" alt="GradientAscentSurface">
+        <br>
         The red line is the "path" that the algorithm is taking, as you can guess, smaller step size generally means a better run.
         <br>
         The problem with this heuristic is that the solution probably won't be the global optima, but a local optima. One variant of this algorithm, <a href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent">Stochastich Gradient Descent or (SG)</a> can <a href="https://stats.stackexchange.com/questions/90874/how-can-stochastic-gradient-descent-avoid-the-problem-of-a-local-minimum">escape local maxima/minima</a> by the randomness introduced between "tracks" or iterations. However the "step size" (Learning Rate or (LR)) has to be tweaked according to the problem for full convergence.
@@ -159,7 +162,9 @@
         We use a probability function $A=\exp{ ( -\Delta f/kT)}$ to accept a state. Where $\Delta f$ is the rate of change from the energy of the previous iteration to the current one ($E_{current}-E_{previous}$), $k$ is the <a href="https://www.britannica.com/science/Boltzmann-constant">Boltzmann constant</a> and $T$ is the temperature (that is decreased every iteration, when this reaches the desired threshold it will also act as an exit condition for the iteration loop).
         <br>
         Here's a visualization of the process stolen from wikipedia
+        <br>
         <img src="felipunky.github.io/Images/Optimization/Hill_Climbing_with_Simulated_Annealing.gif" title="SimulatedAnnealingHillClimbing" />
+        <br>
         When the temperature is hot, the algorithm can shuffle much more. When the temperature is cool, the algorithm will not shuffle/randomize that much allowing it to find the local optima of the peak it's at.
         <br>
         After running multiple "tracks" or iterations, we can almost be sure, that if the cost/fitness function was properly setup, we would arrive at an approximate global optima.
@@ -190,13 +195,17 @@
             If we are dealing with a natural inspiration for our algorithm, coupling will literally mean the process of mating.
             <br>
             The gene map (or our representation) of our fitness function can have many dimensions, so a real representation is impossible. But we can approximate some projection into a 2D world
+            <br>
             <img src="felipunky.github.io/Images/Optimization/genomegraph_00.png" title="GeneMap">
+            <br>
             According to our "Gene Map" we can define two types of mating:
             <br>
             Incestous:
             <br>
             Means that we choose partners that are very much like us
+            <br>
             <img src="felipunky.github.io/Images/Optimization/genomegraph_02.png" title="Incestous">
+            <br>
             Or if you like graphic representations, that are "close" enough to us in the "Gene map".
             <br>
             Incestous behaviour prevents the algorithm to "explore" different possibilities and can give an erronous local minima/maxima solution.
@@ -204,12 +213,17 @@
             Zoophilic:
             <br>
             Means the opposite of incestous, or in other words, that are either far away in the "Gene map" or that are really different from us
+            <br>
             <img src="felipunky.github.io/Images/Optimization/genomegraph_03.png" title="Zoophilic">
+            <br>
             Extreme zoophilic behaviour can also damage the chances of finding an optimum solution as the incompatibility of the genomes can give a result that is not near any local optima.
+            <br>
             <img src="felipunky.github.io/Images/Optimization/subpopulation_00.png" title="LocalOptima">
+            <br>
             Imagine extremely zoophilic behaviour on the graph above, we would end up in solutions that are not even close to any local optima.
             <br>
             Having an understanding of zoophilic and incestous behaviour, it seems like the lesser of the two evils is to find a spot between the two of them
+            <br>
             <img src="felipunky.github.io/Images/Optimization/genomegraph_04.png" title="LesserOfTwoEvils">
         </p>
         <h3>
@@ -217,7 +231,9 @@
         </h3>
         <p>
             Once the coupling phase has been achieved, we need to define a way in which we would recombine the genes of the selected genomes.
+            <br>
             <img src="felipunky.github.io/Images/Optimization/coalescence_algorithms.png" title="Coalescense">
+            <br>
             We can go "nature's way" and recombine genes in a "Crossover" fashion (the first image on the left), this is a good option if the genomes are already similiar, if they are not, we risk creating a genome in which the genes do not produce a better fitness.
             <br>
             Or we can go the "silicon's way" and do some interpolation to the values (the second image from the left) and we can even add some "weight" to the genes so that we end up with a "Preferenced-blend" of the genomes.
