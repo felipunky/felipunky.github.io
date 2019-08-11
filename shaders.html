@@ -23,10 +23,10 @@
 
     <script src="felipunky.github.io/dat.gui.min.js"></script>
 
-    <!--
-     <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
-     <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>
-     -->
+    
+     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>
+     <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>-->
+    
 
     <script id="vertexShader" type="x-shader/x-vertex">
         void main()
@@ -239,6 +239,26 @@
 
         }
 
+        if( iIterations == 1000 )
+        {
+
+        if( iDegree == 2 )
+        //col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        for( float i = 0.0; i <= 0.99; i+=0.001 )
+        col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.01, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.7 ) );
+
+        if( iDegree == 3 )
+        //col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        for( float i = 0.0; i <= 0.99; i+=0.001 )
+        col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.01 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.7 ) );
+
+        if( iDegree == 4 )
+        for( float i = 0.0; i <= 0.99; i+=0.001 )
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.01 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.7 ) );
+
+        }
+
         }
 
         else
@@ -249,17 +269,20 @@
 
         if( iDegree == 2 )
         for( float i = 0.0; i <= 1.0; i+=0.1 )
-        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        col = mix( col, vec3( 1 ), cir( lerp( A, C, w0, w1, i, wT ), r, b ) );
+        //col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
         //col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.096, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
         if( iDegree == 3 )
         for( float i = 0.0; i <= 1.0; i+=0.1 )
-        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        col = mix( col, vec3( 1 ), cir( quad( A, C, D, w0, w1, w2, i ), r, b ) );
+        //col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
         //col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
         if( iDegree == 4 )
         for( float i = 0.0; i <= 1.0; i+=0.1 )
-        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        col = mix( col, vec3( 1 ), cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b ) );
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
         //col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
         }
@@ -269,58 +292,48 @@
 
         if( iDegree == 2 )
         for( float i = 0.0; i <= 1.0; i+=0.01 )
+        col = mix( col, vec3( 1 ), cir( lerp( A, C, w0, w1, i, wT ), r, b ) );
         //col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.0096, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
-        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+        //col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
 
         if( iDegree == 3 )
         for( float i = 0.0; i <= 1.0; i+=0.01 )
+        col = mix( col, vec3( 1 ), cir( quad( A, C, D, w0, w1, w2, i ), r, b ) );
         //col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.0096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
-        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+        //col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
 
         if( iDegree == 4 )
         for( float i = 0.0; i <= 1.0; i+=0.01 )
-        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        col = mix( col, vec3( 1 ), cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b ) );
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
+        //col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.0096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+
+        }
+
+        if( iIterations == 1000 )
+        {
+
+        if( iDegree == 2 )
+        for( float i = 0.0; i <= 0.995; i+=0.001 )
+        col = mix( col, vec3( 1 ), cir( lerp( A, C, w0, w1, i, wT ), r, b ) );
+        //col = line( col, lerp( A, C, w0, w1, i, wT ), lerp( A, C, w0, w1, i + 0.0096, wT ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+        //col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
+
+        if( iDegree == 3 )
+        for( float i = 0.0; i <= 0.995; i+=0.001 )
+        col = mix( col, vec3( 1 ), cir( quad( A, C, D, w0, w1, w2, i ), r, b ) );
+        //col = line( col, quad( A, C, D, w0, w1, w2, i ), quad( A, C, D, w0, w1, w2, i + 0.0096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
+        //col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
+
+        if( iDegree == 4 )
+        for( float i = 0.0; i <= 0.995; i+=0.001 )
+        col = mix( col, vec3( 1 ), cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b ) );
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
         //col = line( col, cub( A, B, C, D, w0, w1, w2, w3, i ), cub( A, B, C, D, w0, w1, w2, w3, i + 0.0096 ), vec2( 0.0005 ), vec2( 0.005, 2.0 ), vec4( 0.8 ) );
 
         }
 
         }
-
-        /*
-        if( iIterations == 1000 )
-        {
-
-        for( float i = 0.0; i <= 1.0; i+=0.001 )
-        {
-
-        if( iDegree == 2 )
-        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
-        else if( iDegree == 3 )
-        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
-        else if( iDegree == 4 )
-        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
-
-        }
-
-        }
-
-        if( iIterations == 10000 )
-        {
-
-        for( float i = 0.0; i <= 1.0; i+=0.0001 )
-        {
-
-        if( iDegree == 2 )
-        col += cir( lerp( A, C, w0, w1, i, wT ), r, b );
-        else if( iDegree == 3 )
-        col += cir( quad( A, C, D, w0, w1, w2, i ), r, b );
-        else if( iDegree == 4 )
-        col += cir( cub( A, B, C, D, w0, w1, w2, w3, i ), r, b );
-
-        }
-
-        }
-        */
 
         // Visualizing time t parameter of the basis-functions ( we have to reparametrize our t from 0 to 1, so + 0.5 amplitude and * 0.5 ):
         float t = 0.0;
@@ -342,13 +355,16 @@
         {
 
         // PointA.
-        col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+        //col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+        col = mix( col, vec3( 1, 0, 1 ), cir( A, rO, bO ) );
 
         // PointC.
-        col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+        //col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+        col = mix( col, vec3( 0, 0, 1 ), cir( C, rO, bO ) );
 
         // PointT.
-        col += cir( lerp( A, C, w0, w1, t, wT ), rO, bO ) * vec3( 1, 0, 0 );
+        //col += cir( lerp( A, C, w0, w1, t, wT ), rO, bO ) * vec3( 1, 0, 0 );
+        col = mix( col, vec3( 1, 0, 0 ), cir( lerp( A, C, w0, w1, t, wT ), rO, bO ) );
 
         }
 
@@ -362,25 +378,31 @@
         float wOut = 0.0, wOutOne = 0.0;
         col = line( col, A, C, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.6) );
         vec2 inter = lerp( A, C, w0, w1, t, wOut );
-        col += cir( inter, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        //col += cir( inter, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        col = mix( col, vec3( 1, 0.25, 0 ), cir( inter, rOO, bOO ) );
         col = line( col, D, C, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.6) );
         vec2 interT = lerp( D, C, w2, w1, tO, wOutOne );
-        col += cir( interT, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        //col += cir( interT, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        col = mix( col, vec3( 1, 0.25, 0 ), cir( interT, rOO, bOO ) );
         col = line( col, inter, interT, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.6) );
 
         }
 
         // PointA.
-        col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+        //col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+        col = mix( col, vec3( 1, 0, 1 ), cir( A, rO, bO ) );
 
         // PointC.
-        col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+        //col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+        col = mix( col, vec3( 0, 0, 1 ), cir( C, rO, bO ) );
 
         // PointD.
-        col += cir( D, rO, bO ) * vec3( 0, 1, 1 );
+        //col += cir( D, rO, bO ) * vec3( 0, 1, 1 );
+        col = mix( col, vec3( 0, 1, 1 ), cir( D, rO, bO ) );
 
         // PointT.
-        col += cir( quad( A, C, D, w0, w1, w2, t ), rO, bO ) * vec3( 1, 0, 0 );
+        //col += cir( quad( A, C, D, w0, w1, w2, t ), rO, bO ) * vec3( 1, 0, 0 );
+        col = mix( col, vec3( 1, 0, 0 ), cir( quad( A, C, D, w0, w1, w2, t ), rO, bO ) );
 
         }
 
@@ -395,41 +417,51 @@
 
         col = line( col, A, B, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
         vec2 inter = lerp( A, B, w0, w1, t, wOut );
-        col += cir( inter, rOO, bOO ) * vec3( 1, 1, 0 );
+        //col += cir( inter, rOO, bOO ) * vec3( 1, 1, 0 );
+        col = mix( col, vec3( 1, 1, 0 ), cir( inter, rOO, bOO ) );
         col = line( col, B, C, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
 
         vec2 interT = lerp( B, C, w1, w2, t, wOutOne );
-        col += cir( interT, rOO, bOO ) * vec3( 1, 1, 0 );
+        //col += cir( interT, rOO, bOO ) * vec3( 1, 1, 0 );
+        col = mix( col, vec3( 1, 1, 0 ), cir( interT, rOO, bOO ) );
         col = line( col, C, D, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
 
         vec2 interTh = lerp( C, D, w2, w3, t, wOutTwo );
-        col += cir( interTh, rOO, bOO ) * vec3( 1, 1, 0 );
+        //col += cir( interTh, rOO, bOO ) * vec3( 1, 1, 0 );
+        col = mix( col, vec3( 1, 1, 0 ), cir( interTh, rOO, bOO ) );
 
         vec2 interN = lerp( inter, interT, wOut, wOutOne, t, wOutThree );
         col = line( col, inter, interT, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
-        col += cir( interN, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        //col += cir( interN, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        col = mix( col, vec3( 1, 0.25, 0 ), cir( interN, rOO, bOO ) );
 
         vec2 interNT = lerp( interT, interTh, wOutOne, wOutTwo, t, wOutFour );
         col = line( col, interT, interTh, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
-        col += cir( interNT, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        //col += cir( interNT, rOO, bOO ) * vec3( 1, 0.25, 0 );
+        col = mix( col, vec3( 1, 0.25, 0 ), cir( interNT, rOO, bOO ) );
         col = line( col, interN, interNT, vec2( 0.0005 ), vec2(0.0025,2.0), vec4(0.65) );
 
         }
 
         // PointA.
-        col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+        //col += cir( A, rO, bO ) * vec3( 1, 0, 1 );
+        col = mix( col, vec3( 1, 0, 1 ), cir( A, rO, bO ) );
 
         // PointB.
-        col += cir( B, rO, bO ) * vec3( 0, 1, 0 );
+        //col += cir( B, rO, bO ) * vec3( 0, 1, 0 );
+        col = mix( col, vec3( 0, 1, 0 ), cir( B, rO, bO ) );
 
         // PointC.
-        col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+        //col += cir( C, rO, bO ) * vec3( 0, 0, 1 );
+        col = mix( col, vec3( 0, 0, 1 ), cir( C, rO, bO ) );
 
         // PointD.
-        col += cir( D, rO, bO ) * vec3( 0, 1, 1 );
+        //col += cir( D, rO, bO ) * vec3( 0, 1, 1 );
+        col = mix( col, vec3( 0, 1, 1 ), cir( D, rO, bO ) );
 
         // PointT.
-        col += cir( cub( A, B, C, D, w0, w1, w2, w3, t ), rO, bO ) * vec3( 1, 0, 0 );
+        //col += cir( cub( A, B, C, D, w0, w1, w2, w3, t ), rO, bO ) * vec3( 1, 0, 0 );
+        col = mix( col, vec3( 1, 0, 0 ), cir( cub( A, B, C, D, w0, w1, w2, w3, t ), rO, bO ) );
 
         }
 
@@ -445,7 +477,10 @@
         var camera, scene, renderer;
         var uniforms;
         var bool = 0;
-        //var aspectRatio = 0;
+        var pointOneMove = 0;
+        var pointTwoMove = 0;
+        var pointThreeMove = 0;
+        var pointFourMove = 0;
         var scale;
 
         init();
@@ -473,15 +508,15 @@
                 iResolution: { type: "v2", value: new THREE.Vector2() },
                 iMouse: { type: "v3", value: new THREE.Vector3() },
                 iDegree: { type: "i", value: 4 },
-                iIterations: { type: "i", value: 10 },
+                iIterations: { type: "i", value: 1000 },
                 iWeightOne: { type: "f", value: 1.0 },
                 iWeightTwo: { type: "f", value: 1.0 },
                 iWeightThree: { type: "f", value: 1.0 },
                 iWeightFour: { type: "f", value: 1.0 },
                 iShow: { type: "i", value: 1 },
-                iIterationsSize: { type: "f", value: 0.008 },
+                iIterationsSize: { type: "f", value: 0.007 },
                 iPointSize: { type: "f", value: 0.01 },
-                iBlurIteration: { type: "f", value: 0.01 },
+                iBlurIteration: { type: "f", value: 0.02 },
                 iBlurPoint: { type: "f", value: 0.005 },
                 iSpeed: { type: "f", value: 0.1 },
                 iPointOne: { type: "v2", value: new THREE.Vector2() },
@@ -513,33 +548,47 @@
                     uniforms.iMouse.value.y = (window.innerHeight - e.pageY) * scale;
                     var scaleO = scale * 30;
 
-                    if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
+                    if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO && pointTwoMove !== 1 && pointThreeMove !== 1 && pointFourMove !== 1) {
 
                         uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
                         uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
+                        pointOneMove = 1;
 
                     }
 
-                    else if (Math.hypot(uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y) < scaleO) {
+                    if (Math.hypot(uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y) < scaleO && pointOneMove !== 1 && pointThreeMove !== 1 && pointFourMove !== 1) {
 
                         uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
                         uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+                        pointTwoMove = 1;
 
                     }
 
-                    else if (Math.hypot(uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y) < scaleO) {
+                    if (Math.hypot(uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y) < scaleO && pointOneMove !== 1 && pointTwoMove !== 1 && pointFourMove !== 1) {
 
                         uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
                         uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+                        pointThreeMove = 1;
 
                     }
 
-                    else if (Math.hypot(uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y) < scaleO) {
+                    if (Math.hypot(uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y) < scaleO && pointOneMove !== 1 && pointTwoMove !== 1 && pointThreeMove !== 1) {
 
                         uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
                         uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
+                        pointFourMove = 1;
 
                     }
+
+                }
+
+                else
+                {
+
+                    pointOneMove = 0;
+                    pointTwoMove = 0;
+                    pointThreeMove = 0;
+                    pointFourMove = 0;
 
                 }
 
@@ -589,33 +638,47 @@
                 uniforms.iMouse.value.x = touches[0].pageX * scale;
                 uniforms.iMouse.value.y = (window.innerHeight - touches[0].pageY) * scale;
 
-                if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO) {
+                if (Math.hypot(uniforms.iPointOne.value.x - uniforms.iMouse.value.x, uniforms.iPointOne.value.y - uniforms.iMouse.value.y) < scaleO && pointTwoMove !== 1 && pointThreeMove !== 1 && pointFourMove !== 1) {
 
                     uniforms.iPointOne.value.x = uniforms.iMouse.value.x;
                     uniforms.iPointOne.value.y = uniforms.iMouse.value.y;
+                    pointOneMove = 1;
 
                 }
 
-                else if (Math.hypot(uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y) < scaleO) {
+                if (Math.hypot(uniforms.iPointTwo.value.x - uniforms.iMouse.value.x, uniforms.iPointTwo.value.y - uniforms.iMouse.value.y) < scaleO && pointOneMove !== 1 && pointThreeMove !== 1 && pointFourMove !== 1) {
 
                     uniforms.iPointTwo.value.x = uniforms.iMouse.value.x;
                     uniforms.iPointTwo.value.y = uniforms.iMouse.value.y;
+                    pointTwoMove = 1;
 
                 }
 
-                else if (Math.hypot(uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y) < scaleO) {
+                if (Math.hypot(uniforms.iPointThree.value.x - uniforms.iMouse.value.x, uniforms.iPointThree.value.y - uniforms.iMouse.value.y) < scaleO && pointOneMove !== 1 && pointTwoMove !== 1 && pointFourMove !== 1) {
 
                     uniforms.iPointThree.value.x = uniforms.iMouse.value.x;
                     uniforms.iPointThree.value.y = uniforms.iMouse.value.y;
+                    pointThreeMove = 1;
 
                 }
 
-                else if (Math.hypot(uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y) < scaleO) {
+                if (Math.hypot(uniforms.iPointFour.value.x - uniforms.iMouse.value.x, uniforms.iPointFour.value.y - uniforms.iMouse.value.y) < scaleO && pointOneMove !== 1 && pointTwoMove !== 1 && pointThreeMove !== 1) {
 
                     uniforms.iPointFour.value.x = uniforms.iMouse.value.x;
                     uniforms.iPointFour.value.y = uniforms.iMouse.value.y;
+                    pointFourMove = 1;
 
                 }
+
+            }
+
+            else
+            {
+
+                pointOneMove = 0;
+                pointTwoMove = 0;
+                pointThreeMove = 0;
+                pointFourMove = 0;
 
             }
 
@@ -730,7 +793,7 @@
             t.domElement.style.pointerEvents = "none";
             t.domElement.style.opacity = 0.5;
             var pointsFolder = gui.addFolder("Points");
-            terations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100 }).name("Iterations");
+            iterations = pointsFolder.add(uniforms.iIterations, "value", { Ten: 10, OneHundred: 100, OneThousand: 1000 }).name("Iterations");
             construction = pointsFolder.add(uniforms.iShow, "value", { No: 0, Yes: 1 }).name("ShowConstruction");
             var lines = pointsFolder.add(uniforms.iLine, "value", 0, 1, 1).name("Lines");
             lines.onChange(function (value) {

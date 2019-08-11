@@ -23,6 +23,10 @@ var tim;
 var ite;
 var scale;
 var steps;
+var AMove = 0;
+var BMove = 0;
+var CMove = 0;
+var DMove = 0;
 
 function setup()
 {
@@ -152,33 +156,51 @@ function draw()
     if( deg.value === 4 )
     {
 
-        
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
-        {
-        
-            A = createVector( mouseX, mouseY );
-        
-        }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
+        if( mouseIsPressed )
         {
         
-            B = createVector( mouseX, mouseY );
+            if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && BMove !== 1 && CMove !== 1 && DMove !== 1 )
+            {
         
-        }
+                A = createVector( mouseX, mouseY );
+                AMove = 1;
+        
+            }
+
+            if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && AMove !== 1 && CMove !== 1 && DMove !== 1 )
+            {
+        
+                B = createVector( mouseX, mouseY );
+                BMove = 1;
+        
+            }
     
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
-        {
+            if( dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && AMove !== 1 && BMove !== 1 && DMove !== 1 )
+            {
         
-            C = createVector( mouseX, mouseY );
+                C = createVector( mouseX, mouseY );
+                CMove = 1;
         
+            }
+
+            if( dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && AMove !== 1 && BMove !== 1 && CMove !== 1 )
+            {
+        
+                D = createVector( mouseX, mouseY );
+                DMove = 1;
+        
+            }
+
         }
 
-        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
+        else
         {
-        
-            D = createVector( mouseX, mouseY );
-        
+
+            AMove = 0;
+            BMove = 0;
+            CMove = 0;
+            DMove = 0;
         }
 
         // Construction.
@@ -270,26 +292,43 @@ function draw()
     if( deg.value === 3 )
     {
 
-        
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
+
+        if( mouseIsPressed )
         {
+
+            if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && CMove !== 1 && DMove !== 1 )
+            {
         
-            A = createVector( mouseX, mouseY );
+                A = createVector( mouseX, mouseY );
+                AMove = 1;
         
+            }
+
+            if( dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && AMove !== 1 && DMove !== 1 )
+            {
+        
+                C = createVector( mouseX, mouseY );
+                CMove = 1;
+        
+            }
+    
+            if( dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && AMove !== 1 && CMove !== 1 )
+            {
+        
+                D = createVector( mouseX, mouseY );
+                DMove = 1;
+        
+            }
+
         }
 
-        else if( mouseIsPressed && dist( C.x, C.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
+        else
         {
-        
-            C = createVector( mouseX, mouseY );
-        
-        }
-    
-        else if( mouseIsPressed && dist( D.x, D.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
-        {
-        
-            D = createVector( mouseX, mouseY );
-        
+
+            AMove = 0;
+            CMove = 0;
+            DMove = 0;
+
         }
 
         // Construction.
@@ -364,19 +403,34 @@ function draw()
     if( deg.value === 2 )
     {
 
-        
-        if( mouseIsPressed && dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
+
+        if( mouseIsPressed )
         {
+
+            if( dist( A.x, A.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && BMove !== 1 )
+            {
         
-            A = createVector( mouseX, mouseY );
+                A = createVector( mouseX, mouseY );
+                AMove = 1;
         
+            }
+
+            if( dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 && AMove !== 1 )
+            {
+        
+                B = createVector( mouseX, mouseY );
+                BMove = 1;
+
+            }
+
         }
 
-        else if( mouseIsPressed && dist( B.x, B.y, mouseX, mouseY ) < sizeF && mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0 )
+        else
         {
-        
-            B = createVector( mouseX, mouseY );
-        
+
+            AMove = 0;
+            BMove = 0;
+
         }
 
         strokeWeight( 3 );
