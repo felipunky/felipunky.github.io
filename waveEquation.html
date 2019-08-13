@@ -18,8 +18,8 @@
 </head>
 <body onload="startup()">
     <div id="container"></div>
-    <!-- Main THREE includes
-    <script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
+    <!-- Main THREE includes-->
+    <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
     <script src="felipunky.github.io/three.min.js"></script>
     <!-------------------->
     <!-- Shaders        -->
@@ -210,12 +210,6 @@
         var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, BufferCQuad, ImageQuad;
         var BufferAMat, BufferBMat, BufferCMat, ImageMat;
         var timeDelta = 0.0;
-        //var loopRes = new THREE.Vector2(64.0, 64.0);
-        var even = true;
-        //var outputRes = new THREE.Vector2(512.0, 512.0);
-
-        //var doLoad = 0.0;
-        //          var onOpen = 0.0;
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilder,
@@ -261,9 +255,6 @@
             BufferB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferC = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferImage = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-
-            // Setup algorithm camera
-            //cameraLoop = new THREE.OrthographicCamera( loopRes.x / - 2, loopRes.x / 2, loopRes.y / 2, loopRes.y / - 2, -10000, 10000 );
 
             // Setup output camera
             camera = new THREE.Camera();
@@ -362,11 +353,11 @@
 
                 if (BufferAUniforms.iMouse.value.z === 1) {
 
-                    x = e.pageX;
-                    y = window.innerHeight - e.pageY;
+                    x = e.clientX;//e.pageX;
+                    y = window.innerHeight - e.clientY;//window.innerHeight - e.pageY;
 
-                    BufferAUniforms.iMouse.value.x = x;
-                    BufferAUniforms.iMouse.value.y = y;
+                    BufferAUniforms.iMouse.value.x = x * scale
+                    BufferAUniforms.iMouse.value.y = y * scale;
 
                 }
 
@@ -416,12 +407,8 @@
             BufferAUniforms.iChannel0.value = BufferAFeedBack;
             renderer.setRenderTarget(null);
 
-            //renderer.setRenderTarget(BufferImage);
             ImageUniforms.iTime.value += 0.05;
             renderer.render(BufferImageScene, camera);
-            //renderer.setRenderTarget(null);
-
-            even = !even;
 
         }
 
@@ -455,8 +442,8 @@
                 x = touches[0].pageX;
                 y = window.innerHeight - touches[0].pageY;
 
-                BufferAUniforms.iMouse.value.x = x;
-                BufferAUniforms.iMouse.value.y = y;
+                BufferAUniforms.iMouse.value.x = x * scale;
+                BufferAUniforms.iMouse.value.y = y * scale;
 
             }
 
@@ -483,6 +470,8 @@
             BufferAUniforms.iResolution.value.y = renderer.domElement.height;
             ImageUniforms.iResolution.value.x = renderer.domElement.width;
             ImageUniforms.iResolution.value.y = renderer.domElement.height;
+            BufferA.setSize(renderer.domElement.width, renderer.domElement.height);
+            BufferAFeedBack.setSize(renderer.domElement.width, renderer.domElement.height);
 
         }
 
