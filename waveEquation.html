@@ -215,15 +215,16 @@
         // Globals
         //------------------------------------------
         var cameraLoop, camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferCScene, BufferImageScene, renderer;
-        var BufferA, BufferAFeedBack, BufferB, BufferC, Image;
+        var BufferA, BufferAFeedBack, BufferB, BufferC, BufferImage;
         var BufferAUniforms, BufferBUniforms, BufferCUniforms, ImageUniforms;
         var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, BufferCQuad, ImageQuad;
         var BufferAMat, BufferBMat, BufferCMat, ImageMat;
         var timeDelta = 0.0;
+        var even = true;
 
         var renderTargetNearestFloatParams = {
-            minFilter: THREE.LinearFilder,
-            magFilter: THREE.NearestFilter,
+            minFilter: THREE.LinearFilter,
+            magFilter: THREE.LinearFilter,
             wrapS: THREE.ClampToEdgeWrapping,
             wrapT: THREE.ClampToEdgeWrapping,
             format: THREE.RGBAFormat,
@@ -402,24 +403,21 @@
         //------------------------------------------
         function render() {
 
-
             renderer.setRenderTarget(BufferA);
             renderer.render(BufferAScene, camera);
-            ImageUniforms.iChannel0.value = BufferA;
             renderer.setRenderTarget(null);
+            renderer.clear();
 
-            renderer.setRenderTarget(BufferAFeedBack);
-            renderer.render(BufferAFeedBackScene, camera);
+            let temp = BufferA;
+            BufferA = BufferAFeedBack;
+            BufferAFeedBack = temp;
 
-            var feedBack = BufferAFeedBack;
-            BufferAFeedBack = BufferA;
-            BufferA = feedBack;
-
-            BufferAUniforms.iChannel0.value = BufferAFeedBack;
-            renderer.setRenderTarget(null);
+            BufferAUniforms.iChannel0.value = temp.texture;
 
             ImageUniforms.iTime.value += 0.05;
             renderer.render(BufferImageScene, camera);
+
+            even = !even;
 
         }
 

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Navier-Stokes</title>
+    <title>Modified Wave Equation</title>
     <style>
         body {
             margin: 0;
@@ -19,8 +19,9 @@
 <body onload="startup()">
     <div id="container"></div>
     <!-- Main THREE includes-->
-    <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
-    <!--<script src="felipunky.github.io/three.min.js"></script>-->
+    <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
+    <script src="felipunky.github.io/three.min.js"></script>
+    <!--<script src="D:\SSS\three.js\build\three.min.js"></script>-->
     <!-------------------->
     <!-- Shaders        -->
     <!-------------------->
@@ -36,10 +37,13 @@
 
     <!-- BufferA. -->
     <script id="BufferAFrag" type="x-shader/x-fragment">
-        // switch on high precision floats
+
         #ifdef GL_ES
-        precision highp float;
+        precision mediump float;
         #endif
+
+        #extension GL_OES_standard_derivatives : enable
+
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
         uniform vec2 iResolution;
@@ -47,98 +51,104 @@
         uniform float iTimeDelta;
         uniform vec3 iMouse;
 
-        mat2 rot( float a )
+        const float siz = 0.025;
+        const float dx = 0.5;
+        const float dt = dx * dx * 0.5;
+        const float ColourForce = 0.8;
+        const float ForceVector = 8.0;
+        const float Viscocity = 0.3;
+        const float K = 0.2;
+        const float Time = 2.0;
+
+        float hash( vec2 a )
         {
 
-        return mat2( cos( a ), -sin( a ),
-        sin( a ),  cos( a )
-        );
+            return fract( sin( a.x * 3433.8 + a.y * 3843.98 ) * 45933.8 );
 
         }
 
-        // This function returns the center of the uv coordinates and relates it to the mouse position
+        float noise( vec2 uv )
+        {
+    
+            vec2 lv = fract( uv );
+            lv = lv * lv * ( 3.0 - 2.0 * lv );
+            vec2 id = floor( uv );
+    
+            float bl = hash( id );
+            float br = hash( id + vec2( 1, 0 ) );
+            float b = mix( bl, br, lv.x );
+    
+            float tl = hash( id + vec2( 0, 1 ) );
+            float tr = hash( id + vec2( 1 ) );
+            float t = mix( tl, tr, lv.x );
+    
+            float c = mix( b, t, lv.y );
+    
+            return c;
+
+        }
+
         float dis( vec2 uv, vec2 mou )
         {
 
-        return 0.03 * cos( atan( uv.x - mou.x, uv.y - mou.y ) * 10.0 );
+            return length( uv - mou );
 
         }
 
-        float hash( float a )
+        float cir( vec2 uv, vec2 mou, float r )
         {
 
-        return fract( sin( a * 46354.93 ) * 37394.45 );
+            float o = smoothstep( r, r - 0.05, dis( uv, mou ) );
+    
+            return o;
 
         }
 
-        float cir( vec2 uv, vec2 mou )
+        vec4 forc( vec2 uv, vec2 p, vec2 mou )
         {
+    
+            vec4 col = vec4( 0 );
 
-        float a = length( uv - mou );
-
-        uv *= rot( iTime );
-        mou *= rot( iTime );
-
-        float dist = dis( uv, mou );
-
-        float r = hash( iTime ) * 0.1 + dist;
-
-        a = smoothstep( r, r - 0.0001, a );
-
-        return a;
+            float tim = iTime * Time;
+            if( iMouse.z > 0.5 && cir( p, mou, siz ) > 0.05 )
+	        col += ColourForce * vec4( noise( uv + tim ), noise( uv + tim + 1.0 ), 
+                                       noise( uv + tim + 2.0 ), 1 );
+    
+            float dist = 0.0;
+    
+            return col;
 
         }
 
         void main()
         {
+    
+            vec2 uv = gl_FragCoord.xy / iResolution.xy;
+    
+            vec2 p = gl_FragCoord.xy / iResolution.y;
+            vec2 mou = iMouse.xy / iResolution.y;
 
-        vec2 p = gl_FragCoord.xy / iResolution.y;
-        vec2 uv = gl_FragCoord.xy / iResolution.xy;
-        vec3 col = vec3( 0 );
-        vec2 mou = iMouse.xy / iResolution.y;
+            vec4 sim = texture2D( iChannel1, uv, 0.0 );
 
-        float c = cir( p, mou );
+            uv -= dt * iTimeDelta * sim.xy;
 
-        // Thanks PatricioGonzalezVivo
-        vec3 diff = vec3( vec2(1.0) / iResolution.xy, 0.0);
-
-        vec4 center = texture2D(iChannel0, uv);
-        float top = texture2D(iChannel0, uv - diff.zy).r;
-        float left = texture2D(iChannel0, uv - diff.xz).r;
-        float right = texture2D(iChannel0, uv + diff.xz).r;
-        float bottom = texture2D(iChannel0, uv + diff.zy).r;
-
-        vec3 red = vec3( -(center.a - 0.5) * 2.0 + (top + left + right + bottom - 2.0) );
-
-        /*if( iMouse.z < 0.5 )
-        {
-
-        c = cir( p, vec2( 0.9 + sin( iTime * 5.0 ) * 0.5, 0.5 - cos( iTime * 5.0 ) * 0.5 ) );
-
-        }*/
-
-        vec3 ran = vec3( c * hash( iTimeDelta + 5.0 ), c * hash( iTimeDelta + 2.0 ), c * hash( iTimeDelta + 1.0 ) );
-
-        red += c; // mouse
-        red *= 0.98; // damping
-        red *= step(0.1, iTime); // hacky way of clearing the buffer
-        red = 0.5 + red * 0.5;
-        red = clamp(red, 0., 1.);
-
-        gl_FragColor = vec4(red, center.r);
-        gl_FragColor += 0.05 * texture2D( iChannel0, uv );
-        gl_FragColor *= vec4( 1.0, 1.5, 1.3, 1.0 );
-
+            vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou ) * sim.z;
+    
+            gl_FragColor = self;
+    
         }
+
     </script>
 
     <!-- BufferB. -->
     <script id="BufferBFrag" type="x-shader/x-fragment">
 
-        // switch on high precision floats
         #ifdef GL_ES
-        precision highp float;
+        precision mediump float;
         #endif
+
+        #extension GL_OES_standard_derivatives : enable
+
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
         uniform vec2 iResolution;
@@ -146,19 +156,77 @@
         uniform float iTimeDelta;
         uniform vec3 iMouse;
 
-        void main (void)
+        const float siz = 0.025;
+        const float dx = 0.5;
+        const float dt = dx * dx * 0.5;
+        const float ColourForce = 0.8;
+        const float ForceVector = 8.0;
+        const float Viscocity = 0.3;
+        const float K = 0.2;
+        const float Time = 2.0;
+
+        void main()
         {
-        vec4 col = texture2D(fb2output, texCoord);
-        gl_FragColor = col;
+
+            vec2 uv = gl_FragCoord.xy / iResolution.xy;
+
+            vec2 p = gl_FragCoord.xy / iResolution.y;
+            vec2 mou = iMouse.xy / iResolution.y;
+
+            vec2 cScale = vec2( 0.5 );
+
+            vec2 Step = 1.0 / iResolution.xy;
+
+            float S = K / dt;
+
+            vec4 FC = texture2D( iChannel0, uv, 0.0 );
+            vec3 FR = texture2D( iChannel0, uv + vec2( Step.x, 0 ), 0.0 ).xyz;
+            vec3 FL = texture2D( iChannel0, uv - vec2( Step.x, 0 ), 0.0 ).xyz;
+            vec3 FT = texture2D( iChannel0, uv + vec2( 0, Step.y ), 0.0 ).xyz;
+            vec3 FD = texture2D( iChannel0, uv - vec2( 0, Step.y ), 0.0 ).xyz;
+
+            vec3 UdX = ( FR - FL ) * 0.5;
+            vec3 UdY = ( FT - FD ) * 0.5;
+
+            float Udiv = UdX.x + UdY.y;
+
+            vec2 DdX = vec2( UdX.z, UdY.z );
+
+            // Solve for density.
+            FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz );
+
+            // Stability.
+            FC.z = clamp( FC.z, 0.5, 3.0 );
+
+            // Solve for velocity.
+            vec2 PdX = S * DdX;
+            vec2 Laplacian = FR.xy + FL.xy + FT.xy + FD.xy - 4.0 * FC.xy;
+            vec2 ViscocityForce = Viscocity * Laplacian;
+
+            // Semi-Lagrangian advection.
+            vec2 Was = uv - dt * FC.xy * Step;
+            FC.xy = texture2D( iChannel0, Was, 0.0 ).xy;
+
+            vec2 ExternalForce = vec2( 0 );
+            ExternalForce += ForceVector * texture2D( iChannel1, uv, 0.0 ).xy;
+
+            FC.xy += dt * ( ViscocityForce - PdX + ExternalForce );
+
+            if( uv.y < 0.01 || uv.x < 0.01 || uv.x > 0.99 || uv.y > 0.99 ) FC.xy *= 0.0;
+
+            gl_FragColor = FC;
+
         }
     </script>
     <!-- BufferC. -->
     <script id="BufferCFrag" type="x-shader/x-fragment">
 
-        // switch on high precision floats
         #ifdef GL_ES
-        precision highp float;
+        precision mediump float;
         #endif
+
+        #extension GL_OES_standard_derivatives : enable
+
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
         uniform vec2 iResolution;
@@ -166,19 +234,52 @@
         uniform float iTimeDelta;
         uniform vec3 iMouse;
 
-        void main (void)
+        const float ForceVector = 8.0;
+        const float siz = 0.025;
+
+        float dis( vec2 uv, vec2 mou )
         {
-        vec4 col = texture2D(fb2output, texCoord);
-        gl_FragColor = col;
+
+            return length( uv - mou );
+
+        }
+
+        float cir( vec2 uv, vec2 mou, float r )
+        {
+
+            float o = smoothstep( r, r - 0.05, dis( uv, mou ) );
+    
+            return o;
+
+        }
+
+        void main()
+        {
+
+            vec2 p = gl_FragCoord.xy / iResolution.y;
+            vec2 uv = gl_FragCoord.xy / iResolution.xy;
+            vec2 mou = iMouse.xy / iResolution.y;
+            vec2 last = texture2D( iChannel0, uv, 0.0 ).zw;
+    
+            vec2 acc = vec2( 0 );
+    
+            if( cir( p, mou, siz ) > 0.05 )
+    
+    	        acc += ( mou - last ) * ForceVector;
+    
+            gl_FragColor = vec4( acc, mou );
+    
         }
     </script>
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
 
-        // switch on high precision floats
         #ifdef GL_ES
-        precision highp float;
+        precision mediump float;
         #endif
+
+        #extension GL_OES_standard_derivatives : enable
+
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
         uniform float iTime;
@@ -188,11 +289,11 @@
         void main()
         {
 
-        vec2 uv = gl_FragCoord.xy / iResolution.xy;
+            vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
-        vec4 col = texture2D( iChannel0, uv );
+            gl_FragColor = texture2D( iChannel0, uv );
 
-        gl_FragColor = col;
+            gl_FragColor *= sqrt( gl_FragColor );
 
         }
     </script>
@@ -205,21 +306,17 @@
         // Globals
         //------------------------------------------
         var cameraLoop, camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferCScene, BufferImageScene, renderer;
-        var BufferA, BufferAFeedBack, BufferB, BufferC, Image;
+        var BufferA, BufferAFeedBack, BufferB, BufferC, BufferImage;
         var BufferAUniforms, BufferBUniforms, BufferCUniforms, ImageUniforms;
         var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, BufferCQuad, ImageQuad;
         var BufferAMat, BufferBMat, BufferCMat, ImageMat;
+        var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        //var loopRes = new THREE.Vector2(64.0, 64.0);
         var even = true;
-        //var outputRes = new THREE.Vector2(512.0, 512.0);
-
-        //var doLoad = 0.0;
-        //          var onOpen = 0.0;
 
         var renderTargetNearestFloatParams = {
-            minFilter: THREE.LinearFilder,
-            magFilter: THREE.NearestFilter,
+            minFilter: THREE.LinearFilter,
+            magFilter: THREE.LinearFilter,
             wrapS: THREE.ClampToEdgeWrapping,
             wrapT: THREE.ClampToEdgeWrapping,
             format: THREE.RGBAFormat,
@@ -246,7 +343,9 @@
             BufferAScene = new THREE.Scene();
             BufferAFeedBackScene = new THREE.Scene();
             BufferBScene = new THREE.Scene();
+            BufferBFeedBackScene = new THREE.Scene();
             BufferCScene = new THREE.Scene();
+            BufferCFeedBackScene = new THREE.Scene();
             BufferImageScene = new THREE.Scene();
 
             //setup renderer
@@ -259,11 +358,10 @@
             BufferA = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferAFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
+            BufferBFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferC = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
+            BufferCFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferImage = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-
-            // Setup algorithm camera
-            //cameraLoop = new THREE.OrthographicCamera( loopRes.x / - 2, loopRes.x / 2, loopRes.y / 2, loopRes.y / - 2, -10000, 10000 );
 
             // Setup output camera
             camera = new THREE.Camera();
@@ -276,7 +374,7 @@
                 iTime: { value: 1.0 },
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
+                iTimeDelta: { value: 1.0 }
             };
             BufferAMat = new THREE.ShaderMaterial({
                 uniforms: BufferAUniforms,
@@ -295,10 +393,10 @@
             BufferBUniforms = {
                 iChannel0: { value: BufferB },
                 iChannel1: { value: BufferC },
-                iTime: { value: 1.0 },
+                iTime: { value: 0.0 },
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
+                iTimeDelta: { value: 0.0 }
             };
             BufferBMat = new THREE.ShaderMaterial({
                 uniforms: BufferBUniforms,
@@ -309,22 +407,30 @@
             BufferBQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
             BufferBScene.add(BufferBQuad);
 
+            // BufferBFeedBack.
+            BufferBFeedBackQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
+            BufferBFeedBackScene.add(BufferBFeedBackQuad);
+
             // BufferC.
             BufferCUniforms = {
                 iChannel0: { value: BufferC },
                 iTime: { value: 1.0 },
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
+                iTimeDelta: { value: 0.0 }
             };
             BufferCMat = new THREE.ShaderMaterial({
                 uniforms: BufferCUniforms,
                 vertexShader: document.getElementById('VertShader').textContent,
-                fragmentShader: document.getElementById('BufferBFrag').textContent,
+                fragmentShader: document.getElementById('BufferCFrag').textContent,
             });
             var BufferCGeo = new THREE.PlaneBufferGeometry(2, 2);
             BufferCQuad = new THREE.Mesh(BufferCGeo, BufferCMat);
             BufferCScene.add(BufferCQuad);
+
+            // BufferCFeedBack.
+            BufferCFeedBackQuad = new THREE.Mesh(BufferCGeo, BufferCMat);
+            BufferCFeedBackScene.add(BufferCFeedBackQuad);
 
             // Image Loader.
             /*const loader = new THREE.TextureLoader();
@@ -342,7 +448,7 @@
                 iTime: { value: 0.0 },
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
+                iTimeDelta: { value: 0.0 }
             };
             ImageMat = new THREE.ShaderMaterial({
                 uniforms: ImageUniforms,
@@ -362,11 +468,14 @@
 
                 if (BufferAUniforms.iMouse.value.z === 1) {
 
-                    x = e.pageX;
-                    y = window.innerHeight - e.pageY;
+                    x = e.clientX * scale;//e.pageX;
+                    y = ( window.innerHeight - e.clientY ) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
+
+                    BufferCUniforms.iMouse.value.x = x;
+                    BufferCUniforms.iMouse.value.y = y;
 
                 }
 
@@ -391,7 +500,8 @@
         //------------------------------------------
         function update() {
             requestAnimationFrame(update);
-            timeDelta += update;
+            //timeDelta += update;
+            //BufferAUniforms.iTimeDelta.value += update;
             render();
         }
 
@@ -400,26 +510,49 @@
         //------------------------------------------
         function render() {
 
-
             renderer.setRenderTarget(BufferA);
             renderer.render(BufferAScene, camera);
-            ImageUniforms.iChannel0.value = BufferA;
             renderer.setRenderTarget(null);
+            renderer.clear();
 
-            renderer.setRenderTarget(BufferAFeedBack);
-            renderer.render(BufferAFeedBackScene, camera);
+            let tempA = BufferA;
+            BufferA = BufferAFeedBack;
+            BufferAFeedBack = tempA;
 
-            var feedBack = BufferAFeedBack;
-            BufferAFeedBack = BufferA;
-            BufferA = feedBack;
-
-            BufferAUniforms.iChannel0.value = BufferAFeedBack;
+            renderer.setRenderTarget(BufferB);
+            renderer.render(BufferBScene, camera);
             renderer.setRenderTarget(null);
+            renderer.clear();
 
-            //renderer.setRenderTarget(BufferImage);
+            let tempB = BufferB;
+            BufferB = BufferBFeedBack;
+            BufferBFeedBack = tempB;
+
+            renderer.setRenderTarget(BufferC);
+            renderer.render(BufferCScene, camera);
+            renderer.setRenderTarget(null);
+            renderer.clear();
+
+            let tempC = BufferC;
+            BufferC = BufferCFeedBack;
+            BufferCFeedBack = tempC;
+
+            timeDelta = clock.getDelta();
+
+            BufferAUniforms.iTime.value += 0.05;
+            BufferAUniforms.iTimeDelta.value = timeDelta;
+            BufferAUniforms.iChannel0.value = tempA.texture;
+            BufferAUniforms.iChannel1.value = tempB.texture;
+            
+            BufferBUniforms.iChannel0.value = tempB.texture;
+            BufferBUniforms.iChannel1.value = tempC.texture;
+
+            BufferCUniforms.iTime.value += 0.05;
+            BufferCUniforms.iChannel0.value = tempC.texture;
+            
             ImageUniforms.iTime.value += 0.05;
+            ImageUniforms.iChannel0.value = tempA.texture;
             renderer.render(BufferImageScene, camera);
-            //renderer.setRenderTarget(null);
 
             even = !even;
 
@@ -452,11 +585,14 @@
 
             if (BufferAUniforms.iMouse.value.z === 1) {
 
-                x = touches[0].pageX;
-                y = window.innerHeight - touches[0].pageY;
+                x = touches[0].pageX * scale;
+                y = ( window.innerHeight - touches[0].pageY ) * scale;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
+
+                BufferCUniforms.iMouse.value.x = x;
+                BufferCUniforms.iMouse.value.y = y;
 
             }
 
@@ -465,24 +601,45 @@
         function handleEnd(evt) {
 
             evt.preventDefault();
-            ImageUniforms.iMouse.value.z = 0;
+            BufferAUniforms.iMouse.value.z = 0;
 
         }
 
         function handleCancel(evt) {
 
             evt.preventDefault();
-            ImageUniforms.iMouse.value.z = 0;
+            BufferAUniforms.iMouse.value.z = 0;
 
         }
 
         function onWindowResize(event) {
 
+            var x = 0;
+            var y = 0;
+
             renderer.setSize(window.innerWidth, window.innerHeight);
-            BufferAUniforms.iResolution.value.x = renderer.domElement.width;
-            BufferAUniforms.iResolution.value.y = renderer.domElement.height;
-            ImageUniforms.iResolution.value.x = renderer.domElement.width;
-            ImageUniforms.iResolution.value.y = renderer.domElement.height;
+
+            x = renderer.domElement.width;
+            y = renderer.domElement.height;
+
+            BufferAUniforms.iResolution.value.x = x;
+            BufferAUniforms.iResolution.value.y = y;
+            BufferA.setSize(x, y);
+            BufferAFeedBack.setSize(x, y);
+
+            BufferBUniforms.iResolution.value.x = x;
+            BufferBUniforms.iResolution.value.y = y;
+            BufferB.setSize(x, y);
+            BufferBFeedBack.setSize(x, y);
+
+            BufferCUniforms.iResolution.value.x = x;
+            BufferCUniforms.iResolution.value.y = y;
+            BufferC.setSize(x, y);
+            BufferCFeedBack.setSize(x, y);
+
+            ImageUniforms.iResolution.value.x = x;
+            ImageUniforms.iResolution.value.y = y;
+            
 
         }
 
