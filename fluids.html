@@ -278,6 +278,10 @@
 
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
+        uniform float iColourForce;
+        uniform int iRandom;
+        uniform vec3 iColourOne;
+        uniform vec3 iColourTwo;
 
         void main()
         {
@@ -286,11 +290,25 @@
 
         vec4 tex = texture2D( iChannel0, uv );
 
-        gl_FragColor = tex;
+        if( iRandom == 1 )
+        {
 
-        //gl_FragColor = vec4( mix( vec3( 0 ), tex.rgb, tex.z ), 1 );
+        tex = vec4( mix( vec3( 0 ), mix( tex.rgb, tex.rgb * iColourForce, tex.z ), tex.z ), 1 );
 
-        gl_FragColor *= sqrt( gl_FragColor );
+        gl_FragColor = pow( tex, vec4( 0.4545 ) );
+
+        }
+
+        else
+        {
+
+        vec4 col = vec4( mix( vec3( 0 ), mix( iColourTwo, iColourOne, tex.z ), tex.z ), 1 );
+
+        col = pow( col, vec4( 0.4545 ) );
+
+        gl_FragColor = col;
+
+        }
 
         }
     </script>
@@ -309,7 +327,8 @@
         var BufferAMat, BufferBMat, BufferCMat, ImageMat;
         var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var even = true;
+        var colourOne = new THREE.Color( 1, 1, 0 );
+        var colourTwo = new THREE.Color( 1, 0, 0 );
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -450,7 +469,11 @@
             ImageUniforms = {
                 //iChannel0: { type: "t", value: BufferA },
                 iChannel0: { value: BufferA },
-                iResolution: { value: new THREE.Vector2() }
+                iResolution: { value: new THREE.Vector2() },
+                iColourForce: { value: 2.0 },
+                iRandom: { value: 1 },
+                iColourOne: { value: colourOne },
+                iColourTwo: { value: colourTwo }
             };
             ImageMat = new THREE.ShaderMaterial({
                 uniforms: ImageUniforms,
@@ -555,9 +578,8 @@
             BufferCUniforms.iSize.value = BufferAUniforms.iSize.value;
 
             ImageUniforms.iChannel0.value = tempA.texture;
+            ImageUniforms.iColourForce.value = BufferAUniforms.iColourForce.value;
             renderer.render(BufferImageScene, camera);
-
-            even = !even;
 
         }
 
@@ -571,8 +593,38 @@
             var force = fluidParams.add(BufferBUniforms.iForce, "value", 2, 12, 0.01).name("Force Velocity");
             var size = fluidParams.add(BufferAUniforms.iSize, "value", 0.01, 0.1, 0.01).name("Size");
             var gridSize = fluidParams.add(BufferAUniforms.iDx, "value", 0.2, 1.0, 0.1).name("Grid Size");
-            var speed = fluidParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
-            var colourStrength = fluidParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
+
+            var colourParams = gui.addFolder("Colours");
+            var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
+            var colourStrength = colourParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
+            var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colour");
+            randomColour.onChange(function (value) 
+            {
+
+                if (value === 1) {
+
+                    firstColour.domElement.style.pointerEvents = "none";
+                    firstColour.domElement.style.opacity = 0.5;
+
+                    secondColour.domElement.style.pointerEvents = "none";
+                    secondColour.domElement.style.opacity = 0.5;
+
+                }
+
+                else
+                {
+
+                    firstColour.domElement.style.pointerEvents = "auto";
+                    firstColour.domElement.style.opacity = 1.0;
+
+                    secondColour.domElement.style.pointerEvents = "auto";
+                    secondColour.domElement.style.opacity = 1.0;
+
+                }
+
+            });
+            var firstColour = colourParams.addColor(ImageUniforms.iColourOne, "value", colourOne).name("First Colour");
+            var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo).name("Second Colour");
 
         }
 
@@ -657,7 +709,6 @@
 
             ImageUniforms.iResolution.value.x = x;
             ImageUniforms.iResolution.value.y = y;
-
 
         }
 
