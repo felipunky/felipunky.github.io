@@ -595,8 +595,8 @@
             var gridSize = fluidParams.add(BufferAUniforms.iDx, "value", 0.2, 1.0, 0.1).name("Grid Size");
 
             var colourParams = gui.addFolder("Colours");
-            var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
             var colourStrength = colourParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
+            var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
             var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colour");
             randomColour.onChange(function (value) 
             {
@@ -609,6 +609,9 @@
                     secondColour.domElement.style.pointerEvents = "none";
                     secondColour.domElement.style.opacity = 0.5;
 
+                    speed.domElement.style.pointerEvents = "auto";
+                    speed.domElement.style.opacity = 1.0;
+
                 }
 
                 else
@@ -619,6 +622,9 @@
 
                     secondColour.domElement.style.pointerEvents = "auto";
                     secondColour.domElement.style.opacity = 1.0;
+
+                    speed.domElement.style.pointerEvents = "none";
+                    speed.domElement.style.opacity = 0.5;
 
                 }
 
