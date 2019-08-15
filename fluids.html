@@ -23,6 +23,8 @@
     <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>-->
     <script src="felipunky.github.io/three.min.js"></script>
     <script src="felipunky.github.io/dat.gui.min.js"></script>
+    <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
+    <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\dat.gui.min.js"></script>-->
     <!-------------------->
     <!-- Shaders        -->
     <!-------------------->
@@ -368,15 +370,15 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
-        var cameraLoop, camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferCScene, BufferImageScene, renderer;
-        var BufferA, BufferAFeedBack, BufferB, BufferC, BufferImage;
+        var camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferCScene, BufferImageScene, renderer;
+        var BufferA, BufferAFeedBack, BufferB, BufferC;
         var BufferAUniforms, BufferBUniforms, BufferCUniforms, ImageUniforms;
         var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, BufferCQuad, ImageQuad;
         var BufferAMat, BufferBMat, BufferCMat, ImageMat;
         var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var colourOne = new THREE.Color( 1, 1, 0 );
-        var colourTwo = new THREE.Color( 1, 0, 0 );
+        var colourOne = new THREE.Color(1, 1, 0);
+        var colourTwo = new THREE.Color(1, 0, 0);
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -578,6 +580,7 @@
         function animate() {
 
             requestAnimationFrame(animate);
+            BufferAUniforms.iTime.value += 0.05;
             render();
 
         }
@@ -586,6 +589,17 @@
         // Main rendering
         //------------------------------------------
         function render() {
+
+            BufferAUniforms.iTimeDelta.value = timeDelta;
+            BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
+            BufferAUniforms.iChannel1.value = BufferBFeedBack.texture;
+
+            BufferBUniforms.iChannel0.value = BufferBFeedBack.texture;
+            BufferBUniforms.iChannel1.value = BufferCFeedBack.texture;
+
+            BufferCUniforms.iChannel0.value = BufferCFeedBack.texture;
+
+            ImageUniforms.iChannel0.value = BufferAFeedBack.texture;
 
             renderer.setRenderTarget(BufferA);
             renderer.render(BufferAScene, camera);
@@ -615,22 +629,7 @@
             BufferCFeedBack = tempC;
 
             timeDelta = clock.getDelta();
-
-            BufferAUniforms.iTime.value += 0.05;
-            BufferAUniforms.iTimeDelta.value = timeDelta;
-            BufferAUniforms.iChannel0.value = tempA.texture;
-            BufferAUniforms.iChannel1.value = tempB.texture;
-
-            BufferBUniforms.iChannel0.value = tempB.texture;
-            BufferBUniforms.iChannel1.value = tempC.texture;
-            BufferBUniforms.iDx.value = BufferAUniforms.iDx.value;
-
-            BufferCUniforms.iChannel0.value = tempC.texture;
-            BufferCUniforms.iForce.value = BufferBUniforms.iForce.value;
-            BufferCUniforms.iSize.value = BufferAUniforms.iSize.value;
-
-            ImageUniforms.iChannel0.value = tempA.texture;
-            ImageUniforms.iColourForce.value = BufferAUniforms.iColourForce.value;
+            
             renderer.render(BufferImageScene, camera);
 
         }
@@ -645,8 +644,7 @@
             var reac = fluidParams.add(BufferBUniforms.iReaction, "value", 0.1, 1.0, 0.01).name("Reaction Constant");
             state.onChange(function (value) {
 
-                if (value === 0)
-                {
+                if (value === 0) {
 
                     diff.domElement.style.pointerEvents = "none";
                     diff.domElement.style.opacity = 0.5;
@@ -656,8 +654,7 @@
 
                 }
 
-                if (value === 1)
-                {
+                if (value === 1) {
 
                     diff.domElement.style.pointerEvents = "auto";
                     diff.domElement.style.opacity = 1.0;
@@ -667,8 +664,7 @@
 
                 }
 
-                if (value === 2)
-                {
+                if (value === 2) {
 
                     diff.domElement.style.pointerEvents = "auto";
                     diff.domElement.style.opacity = 1.0;
@@ -690,8 +686,7 @@
             var colourStrength = colourParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
             var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
             var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colours");
-            randomColour.onChange(function (value) 
-            {
+            randomColour.onChange(function (value) {
 
                 if (value === 1) {
 
@@ -706,8 +701,7 @@
 
                 }
 
-                else
-                {
+                else {
 
                     firstColour.domElement.style.pointerEvents = "auto";
                     firstColour.domElement.style.opacity = 1.0;

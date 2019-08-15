@@ -21,6 +21,7 @@
     <!-- Main THREE includes-->
     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
     <script src="felipunky.github.io/three.min.js"></script>
+    <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>-->
     <!--<script src="D:\SSS\three.js\build\three.min.js"></script>-->
     <!-------------------->
     <!-- Shaders        -->
@@ -214,13 +215,13 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
-        var cameraLoop, camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferCScene, BufferImageScene, renderer;
-        var BufferA, BufferAFeedBack, BufferB, BufferC, BufferImage;
-        var BufferAUniforms, BufferBUniforms, BufferCUniforms, ImageUniforms;
-        var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, BufferCQuad, ImageQuad;
-        var BufferAMat, BufferBMat, BufferCMat, ImageMat;
+        var camera, BufferAScene, BufferAFeedBackScene, BufferImageScene, renderer;
+        var BufferA, BufferAFeedBack;
+        var BufferAUniforms, ImageUniforms;
+        var BufferAQuad, BufferAFeedBackQuad, ImageQuad;
+        var BufferAMat, ImageMat;
+        var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var even = true;
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -250,8 +251,6 @@
             //setup scenes
             BufferAScene = new THREE.Scene();
             BufferAFeedBackScene = new THREE.Scene();
-            BufferBScene = new THREE.Scene();
-            BufferCScene = new THREE.Scene();
             BufferImageScene = new THREE.Scene();
 
             //setup renderer
@@ -263,8 +262,6 @@
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferAFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferC = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferImage = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
 
             // Setup output camera
@@ -274,7 +271,6 @@
             // BufferA.
             BufferAUniforms = {
                 iChannel0: { value: BufferA },
-                iChannel1: { value: BufferB },
                 iTime: { value: 1.0 },
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
@@ -293,53 +289,8 @@
             BufferAFeedBackQuad = new THREE.Mesh(BufferAGeo, BufferAMat);
             BufferAFeedBackScene.add(BufferAFeedBackQuad);
 
-            // BufferB.
-            BufferBUniforms = {
-                iChannel0: { value: BufferB },
-                iChannel1: { value: BufferC },
-                iTime: { value: 1.0 },
-                iResolution: { value: new THREE.Vector2() },
-                iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
-            };
-            BufferBMat = new THREE.ShaderMaterial({
-                uniforms: BufferBUniforms,
-                vertexShader: document.getElementById('VertShader').textContent,
-                fragmentShader: document.getElementById('BufferBFrag').textContent,
-            });
-            var BufferBGeo = new THREE.PlaneBufferGeometry(2, 2);
-            BufferBQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
-            BufferBScene.add(BufferBQuad);
-
-            // BufferC.
-            BufferCUniforms = {
-                iChannel0: { value: BufferC },
-                iTime: { value: 1.0 },
-                iResolution: { value: new THREE.Vector2() },
-                iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
-            };
-            BufferCMat = new THREE.ShaderMaterial({
-                uniforms: BufferCUniforms,
-                vertexShader: document.getElementById('VertShader').textContent,
-                fragmentShader: document.getElementById('BufferBFrag').textContent,
-            });
-            var BufferCGeo = new THREE.PlaneBufferGeometry(2, 2);
-            BufferCQuad = new THREE.Mesh(BufferCGeo, BufferCMat);
-            BufferCScene.add(BufferCQuad);
-
-            // Image Loader.
-            /*const loader = new THREE.TextureLoader();
-            const url = 'https://s3.amazonaws.com/duhaime/blog/tsne-webgl/assets/cat.jpg';
-            const texture = loader.load(url);
-            texture.minFilter = THREE.NearestFilter;
-            texture.magFilter = THREE.NearestFilter;
-            texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;*/
-
             // Image.
             ImageUniforms = {
-                //iChannel0: { type: "t", value: BufferA },
                 iChannel0: { value: BufferA },
                 iTime: { value: 0.0 },
                 iResolution: { value: new THREE.Vector2() },
@@ -393,8 +344,8 @@
         //------------------------------------------
         function update() {
             requestAnimationFrame(update);
-            timeDelta += update;
             BufferAUniforms.iTime.value += 0.05;
+            ImageUniforms.iTime.value += 0.05;
             render();
         }
 
@@ -403,8 +354,14 @@
         //------------------------------------------
         function render() {
 
+            BufferAUniforms.iTimeDelta.value = timeDelta;
+
+            BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
+            ImageUniforms.iChannel0.value = BufferA.texture;
+
             renderer.setRenderTarget(BufferA);
             renderer.render(BufferAScene, camera);
+
             renderer.setRenderTarget(null);
             renderer.clear();
 
@@ -412,12 +369,10 @@
             BufferA = BufferAFeedBack;
             BufferAFeedBack = temp;
 
-            BufferAUniforms.iChannel0.value = temp.texture;
+            timeDelta = clock.getDelta();
 
-            ImageUniforms.iTime.value += 0.05;
             renderer.render(BufferImageScene, camera);
 
-            even = !even;
 
         }
 
