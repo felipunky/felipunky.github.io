@@ -382,7 +382,7 @@
                 */
 
                 x = touches[0].pageX - ( rect.left - bodyRect.left );
-                y = ( rect.top - bodyRect.top ) - touches[0].pageY;
+                y = touches[0].pageY - ( rect.top - bodyRect.top );
 
                 BufferAUniforms.iMouse.value.x = x * scale;
                 BufferAUniforms.iMouse.value.y = y * scale;
