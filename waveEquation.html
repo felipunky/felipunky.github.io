@@ -14,14 +14,23 @@
             width: 100%;
             height: 100%
         }
+        #container
+        {
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+        }
     </style>
 </head>
 <body onload="startup()">
     <div id="container"></div>
     <!-- Main THREE includes-->
     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
-    <script src="felipunky.github.io/three.min.js"></script>
-    <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>-->
+    <!--<script src="felipunky.github.io/three.min.js"></script>-->
+    <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
     <!--<script src="D:\SSS\three.js\build\three.min.js"></script>-->
     <!-------------------->
     <!-- Shaders        -->
@@ -137,50 +146,6 @@
         }
     </script>
 
-    <!-- BufferB. -->
-    <script id="BufferBFrag" type="x-shader/x-fragment">
-
-        #ifdef GL_ES
-        precision mediump float;
-        #endif
-
-        #extension GL_OES_standard_derivatives : enable
-
-        uniform sampler2D iChannel0;
-        uniform sampler2D iChannel1;
-        uniform vec2 iResolution;
-        uniform float iTime;
-        uniform float iTimeDelta;
-        uniform vec3 iMouse;
-
-        void main (void)
-        {
-        vec4 col = texture2D(fb2output, texCoord);
-        gl_FragColor = col;
-        }
-    </script>
-    <!-- BufferC. -->
-    <script id="BufferCFrag" type="x-shader/x-fragment">
-
-        #ifdef GL_ES
-        precision mediump float;
-        #endif
-
-        #extension GL_OES_standard_derivatives : enable
-
-        uniform sampler2D iChannel0;
-        uniform sampler2D iChannel1;
-        uniform vec2 iResolution;
-        uniform float iTime;
-        uniform float iTimeDelta;
-        uniform vec3 iMouse;
-
-        void main (void)
-        {
-        vec4 col = texture2D(fb2output, texCoord);
-        gl_FragColor = col;
-        }
-    </script>
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
 
@@ -274,7 +239,7 @@
             BufferAUniforms = {
                 iChannel0: { value: BufferA },
                 iTime: { value: 1.0 },
-                iResolution: { value: new THREE.Vector2() },
+                iResolution: { value: new THREE.Vector2( width, height ) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: timeDelta }
             };
@@ -295,7 +260,7 @@
             ImageUniforms = {
                 iChannel0: { value: BufferA },
                 iTime: { value: 0.0 },
-                iResolution: { value: new THREE.Vector2() },
+                iResolution: { value: new THREE.Vector2( width, height ) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: timeDelta }
             };
@@ -317,11 +282,13 @@
 
                 if (BufferAUniforms.iMouse.value.z === 1) {
 
-                    x = e.clientX;//e.pageX;
-                    y = window.innerHeight - e.clientY;//window.innerHeight - e.pageY;
+                    var element = document.getElementById("container").getBoundingClientRect();
 
-                    BufferAUniforms.iMouse.value.x = x * scale
-                    BufferAUniforms.iMouse.value.y = y * scale;
+                    x = (e.offsetX) * scale;//e.pageX;
+                    y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
+
+                    BufferAUniforms.iMouse.value.x = x;
+                    BufferAUniforms.iMouse.value.y = y;
 
                 }
 
@@ -405,8 +372,13 @@
 
             if (BufferAUniforms.iMouse.value.z === 1) {
 
+                /*
+                x = (e.offsetX) * scale;//e.pageX;
+                y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
+                */
+
                 x = touches[0].pageX;
-                y = window.innerHeight - touches[0].pageY;
+                y = el.height - touches[0].pageY;
 
                 BufferAUniforms.iMouse.value.x = x * scale;
                 BufferAUniforms.iMouse.value.y = y * scale;
@@ -431,13 +403,13 @@
 
         function onWindowResize(event) {
 
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            BufferAUniforms.iResolution.value.x = renderer.domElement.width;
-            BufferAUniforms.iResolution.value.y = renderer.domElement.height;
-            ImageUniforms.iResolution.value.x = renderer.domElement.width;
-            ImageUniforms.iResolution.value.y = renderer.domElement.height;
-            BufferA.setSize(renderer.domElement.width, renderer.domElement.height);
-            BufferAFeedBack.setSize(renderer.domElement.width, renderer.domElement.height);
+            renderer.setSize(512,512);
+            //BufferAUniforms.iResolution.value.x = renderer.domElement.width;
+            //BufferAUniforms.iResolution.value.y = renderer.domElement.height;
+            //ImageUniforms.iResolution.value.x = renderer.domElement.width;
+            //ImageUniforms.iResolution.value.y = renderer.domElement.height;
+            //BufferA.setSize(renderer.domElement.width, renderer.domElement.height);
+            //BufferAFeedBack.setSize(renderer.domElement.width, renderer.domElement.height);
 
         }
 
