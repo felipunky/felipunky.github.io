@@ -372,7 +372,6 @@
             var rect = el.getBoundingClientRect();
             var touches = evt.changedTouches;
             var x = 0, y = 0;
-            var bodyRect = document.body.getBoundingClientRect();
 
             if (BufferAUniforms.iMouse.value.z === 1) {
 
@@ -381,8 +380,8 @@
                 y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
                 */
 
-                x = touches[0].pageX - ( rect.left - bodyRect.left );
-                y = touches[0].pageY - ( rect.top - bodyRect.top );
+                x = touches[0].pageX - el.clientX;
+                y = ( el.clientY ) - touches[0].pageY;
 
                 BufferAUniforms.iMouse.value.x = x * scale;
                 BufferAUniforms.iMouse.value.y = y * scale;
