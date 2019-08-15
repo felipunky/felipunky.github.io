@@ -20,7 +20,7 @@
     <div id="container"></div>
     <!-- Main THREE includes-->
     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
-    <script src="felipunky.github.io/three.min.js"></script>
+    "felipunky.github.io/three.min.js"></script>
     <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>-->
     <!--<script src="D:\SSS\three.js\build\three.min.js"></script>-->
     <!-------------------->
@@ -259,10 +259,12 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
 
+            var width = 512, height = 512;
+
             // create buffers
-            BufferA = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferAFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferImage = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
+            BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferAFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferImage = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
 
             // Setup output camera
             camera = new THREE.Camera();
