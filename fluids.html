@@ -158,6 +158,10 @@
         uniform float iDensity;
         uniform float iForce;
         uniform float iDx;
+        uniform int iState;
+        uniform float iDiffusion;
+        uniform float iReaction;
+        uniform float iVorticity;
 
         //const float dx = 0.5;
         float dt = iDx * iDx * 0.5;
@@ -165,12 +169,41 @@
         //const float Viscocity = 0.3;
         //const float K = 0.2;
 
+        // https://www.youtube.com/watch?v=TxxZ8gkGNAc
+        float cur( vec2 uv, vec2 Step )
+        {
+
+        float FR = texture2D( iChannel0, uv + vec2( Step.x, 0 ), 0.0 ).x;
+        float FL = texture2D( iChannel0, uv - vec2( Step.x, 0 ), 0.0 ).x;
+        float FT = texture2D( iChannel0, uv + vec2( 0, Step.y ), 0.0 ).y;
+        float FD = texture2D( iChannel0, uv - vec2( 0, Step.y ), 0.0 ).y;
+
+        float UdX = ( FR - FL ) * 0.5;
+        float UdY = ( FT - FD ) * 0.5;
+
+        return UdX + UdY;
+
+        }
+
+        vec2 vor( vec2 uv, vec2 Step )
+        {
+
+        vec2 dir = vec2( 0 );
+        dir.x = ( cur( uv - vec2( 0, Step.y ), Step ) ) - ( cur( uv + vec2( 0, Step.y ), Step ) );
+        dir.y = ( cur( uv + vec2( Step.x, 0 ), Step ) ) - ( cur( uv - vec2( Step.x, 0 ), Step ) );
+
+        dir = normalize( dir );
+
+        return dir;
+
+        }
+
         void main()
         {
 
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
-        vec2 cScale = vec2( 0.5 );
+        vec2 cScale = vec2( iDx );
 
         vec2 Step = 1.0 / iResolution.xy;
 
@@ -182,15 +215,26 @@
         vec3 FT = texture2D( iChannel0, uv + vec2( 0, Step.y ), 0.0 ).xyz;
         vec3 FD = texture2D( iChannel0, uv - vec2( 0, Step.y ), 0.0 ).xyz;
 
-        vec3 UdX = ( FR - FL ) * 0.5;
-        vec3 UdY = ( FT - FD ) * 0.5;
+        vec3 UdX = ( FR - FL ) * iDx;
+        vec3 UdY = ( FT - FD ) * iDx;
 
         float Udiv = UdX.x + UdY.y;
 
         vec2 DdX = vec2( UdX.z, UdY.z );
 
         // Solve for density.
+
+        // Fluid.
+        if( iState == 0 )
         FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz );
+
+        // Smoke.
+        if( iState == 1 )
+        FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz ) + iDiffusion * dot( vec3( DdX * DdX, Udiv ), FC.xyz );
+
+        // Fire.
+        if( iState == 2 )
+        FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz ) + iDiffusion * dot( vec3( DdX * DdX, Udiv ), FC.xyz ) - iReaction;
 
         // Stability.
         FC.z = clamp( FC.z, 0.5, 3.0 );
@@ -201,11 +245,19 @@
         vec2 ViscocityForce = iViscocity * Laplacian;
 
         // Semi-Lagrangian advection.
-        vec2 Was = uv - dt * FC.xy * Step;
+        vec2 Was = uv - dt * FC.xy * vor( uv, Step ) * FC.w * Step;
         FC.xy = texture2D( iChannel0, Was, 0.0 ).xy;
 
+        // Forces.
         vec2 ExternalForce = vec2( 0 );
         ExternalForce += iForce * texture2D( iChannel1, uv, 0.0 ).xy;
+        vec2 dir = vor( Was, Step );
+
+        // Vorticity confinement.
+        FC.w = cur( uv, Step );
+        if( length( dir ) > 0.0 )
+
+        FC.xy += dt * iVorticity * dir * FC.w;
 
         FC.xy += dt * ( ViscocityForce - PdX + ExternalForce );
 
@@ -295,20 +347,16 @@
 
         tex = vec4( mix( vec3( 0 ), mix( tex.rgb, tex.rgb * iColourForce, tex.z ), tex.z ), 1 );
 
-        gl_FragColor = pow( tex, vec4( 0.4545 ) );
-
         }
 
         else
         {
 
-        vec4 col = vec4( mix( vec3( 0 ), mix( iColourTwo, iColourOne, tex.z ), tex.z ), 1 );
-
-        col = pow( col, vec4( 0.4545 ) );
-
-        gl_FragColor = col;
+        tex = vec4( mix( vec3( 0 ), mix( iColourTwo, iColourOne, tex.z ), tex.z ), 1 );
 
         }
+
+        gl_FragColor = pow( tex, vec4( 0.4545 ) );
 
         }
     </script>
@@ -401,7 +449,7 @@
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: 1.0 },
-                iSize: { value: 0.025 },
+                iSize: { value: 0.0175 },
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
                 iColourForce: { value: 2.0 }
@@ -427,7 +475,11 @@
                 iViscocity: { value: 0.3 },
                 iDensity: { value: 0.2 },
                 iForce: { value: 8.0 },
-                iDx: { value: 0.5 }
+                iDx: { value: 0.5 },
+                iState: { value: 0 },
+                iDiffusion: { value: 0.2 },
+                iReaction: { value: 0.1 },
+                iVorticity: { value: 3.5 }
             };
             BufferBMat = new THREE.ShaderMaterial({
                 uniforms: BufferBUniforms,
@@ -450,7 +502,7 @@
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: 0.0 },
                 iForce: { value: 8.0 },
-                iSize: { value: 0.025 }
+                iSize: { value: 0.0175 }
             };
             BufferCMat = new THREE.ShaderMaterial({
                 uniforms: BufferCUniforms,
@@ -588,16 +640,56 @@
             var gui = new dat.GUI();
 
             var fluidParams = gui.addFolder("Fluid");
+            var state = fluidParams.add(BufferBUniforms.iState, "value", 0, 2, 1).name("State");
+            var diff = fluidParams.add(BufferBUniforms.iDiffusion, "value", 0.1, 1.0, 0.01).name("Diffusion Coefficient");
+            var reac = fluidParams.add(BufferBUniforms.iReaction, "value", 0.1, 1.0, 0.01).name("Reaction Constant");
+            state.onChange(function (value) {
+
+                if (value === 0)
+                {
+
+                    diff.domElement.style.pointerEvents = "none";
+                    diff.domElement.style.opacity = 0.5;
+
+                    reac.domElement.style.pointerEvents = "none";
+                    reac.domElement.style.opacity = 0.5;
+
+                }
+
+                if (value === 1)
+                {
+
+                    diff.domElement.style.pointerEvents = "auto";
+                    diff.domElement.style.opacity = 1.0;
+
+                    reac.domElement.style.pointerEvents = "none";
+                    reac.domElement.style.opacity = 0.5;
+
+                }
+
+                if (value === 2)
+                {
+
+                    diff.domElement.style.pointerEvents = "auto";
+                    diff.domElement.style.opacity = 1.0;
+
+                    reac.domElement.style.pointerEvents = "auto";
+                    reac.domElement.style.opacity = 1.0;
+
+                }
+
+            });
+            var vorty = fluidParams.add(BufferBUniforms.iVorticity, "value", 0.0, 5.0, 0.01).name("Vorticity Confinement");
             var visco = fluidParams.add(BufferBUniforms.iViscocity, "value", 0.05, 1, 0.01).name("Viscocity");
             var densi = fluidParams.add(BufferBUniforms.iDensity, "value", 0.05, 1, 0.01).name("Density");
             var force = fluidParams.add(BufferBUniforms.iForce, "value", 2, 12, 0.01).name("Force Velocity");
-            var size = fluidParams.add(BufferAUniforms.iSize, "value", 0.01, 0.1, 0.01).name("Size");
-            var gridSize = fluidParams.add(BufferAUniforms.iDx, "value", 0.2, 1.0, 0.1).name("Grid Size");
+            var size = fluidParams.add(BufferAUniforms.iSize, "value", 0.01, 0.1, 0.0001).name("Size");
+            var gridSize = fluidParams.add(BufferAUniforms.iDx, "value", 0.2, 0.5, 0.01).name("Grid Size");
 
             var colourParams = gui.addFolder("Colours");
             var colourStrength = colourParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
             var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
-            var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colour");
+            var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colours");
             randomColour.onChange(function (value) 
             {
 
