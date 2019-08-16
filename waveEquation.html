@@ -224,11 +224,10 @@
             renderer = new THREE.WebGLRenderer();
             scale = window.devicePixelRatio;
             renderer.setPixelRatio(scale);
-            renderer.setSize(width, height);
             container.appendChild(renderer.domElement);
 
-            width = 512 * scale;
-            height = 512 * scale;
+            width = 512;
+            height = 512;
 
             /*if (scale > 1.0) {
 
@@ -341,6 +340,8 @@
         //------------------------------------------
         function render() {
 
+            renderer.setSize(width, height);
+
             BufferAUniforms.iTimeDelta.value = timeDelta;
 
             BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
@@ -405,8 +406,8 @@
                 x = evt.targetTouches[0].pageX;
                 y = element.height - evt.targetTouches[0].pageY;
 
-                BufferAUniforms.iMouse.value.x = ( x );
-                BufferAUniforms.iMouse.value.y = ( y );
+                BufferAUniforms.iMouse.value.x = ( x ) * scale;
+                BufferAUniforms.iMouse.value.y = ( y ) * scale;
 
             }
 
