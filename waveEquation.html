@@ -167,9 +167,11 @@
 
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
-        vec4 col = texture2D( iChannel0, uv );
+        //vec4 col = texture2D( iChannel0, uv );
 
-        gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
+        //gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
+
+        gl_FragColor = vec4( smoothstep( length( uv - 0.5 ) ) );
 
         }
     </script>
@@ -227,9 +229,7 @@
             container.appendChild(renderer.domElement);
 
             width = 512;
-            width *= scale;
             height = 512;
-            height *= scale;
 
             /*if (scale > 1.0) {
 
