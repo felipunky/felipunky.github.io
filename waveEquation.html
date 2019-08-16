@@ -227,7 +227,9 @@
             container.appendChild(renderer.domElement);
 
             width = 512;
+            width *= scale;
             height = 512;
+            height *= scale;
 
             /*if (scale > 1.0) {
 
@@ -256,7 +258,7 @@
             BufferAUniforms = {
                 iChannel0: { value: BufferA },
                 iTime: { value: 1.0 },
-                iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: timeDelta }
             };
@@ -277,7 +279,7 @@
             ImageUniforms = {
                 iChannel0: { value: BufferA },
                 iTime: { value: 0.0 },
-                iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: timeDelta }
             };
