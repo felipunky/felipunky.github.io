@@ -227,8 +227,9 @@
             container.appendChild(renderer.domElement);
 
             width = 512;
+            height = 512;
 
-            if (scale > 1.0) {
+            /*if (scale > 1.0) {
 
                 height = width * scale * 0.9;
 
@@ -240,7 +241,7 @@
 
             }
 
-            scaleRatio = width / height;
+            scaleRatio = width / height;*/
 
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
@@ -398,12 +399,10 @@
 
                 */
 
-                var element = document.getElementById("container");
-
-                var rect = element.getBoundingClientRect();
+                var element = document.getElementById("container").getBoundingClientRect();
 
                 x = evt.targetTouches[0].pageX;
-                y = rect.height - evt.targetTouches[0].pageY;
+                y = element.height - evt.targetTouches[0].pageY;
 
                 BufferAUniforms.iMouse.value.x = ( x ) * scale;
                 BufferAUniforms.iMouse.value.y = ( y ) * scale;
