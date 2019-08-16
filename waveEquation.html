@@ -248,7 +248,6 @@
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
             BufferAFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
-            BufferImage = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
 
             // Setup output camera
             camera = new THREE.Camera();
@@ -360,6 +359,8 @@
             BufferAFeedBack = temp;
 
             timeDelta = clock.getDelta();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
 
             renderer.render(BufferImageScene, camera);
 
