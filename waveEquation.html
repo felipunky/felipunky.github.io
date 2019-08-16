@@ -168,12 +168,12 @@
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
         vec2 mou = iMouse.xy / iResolution.y;
 
-        //vec4 col = texture2D( iChannel0, uv );
+        gl_FragColor = texture2D( iChannel0, uv );
 
         //gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
 
         // Output to screen
-        gl_FragColor = vec4( mix( vec4( 1 ), vec4( 1, 0, 0, 0 ), smoothstep( 0.1, 0.1 - 0.005, length( uv - mou ) ) ) );
+        //gl_FragColor = vec4( mix( vec4( 1 ), vec4( 1, 0, 0, 0 ), smoothstep( 0.1, 0.1 - 0.005, length( uv - mou ) ) ) );
         }
     </script>
 
@@ -409,7 +409,7 @@
                 var element = document.getElementById("container").getBoundingClientRect();
 
                 x = evt.changedTouches[0].clientX - element.left;
-                y = element.height * 2.0 + 1.0 - evt.changedTouches[0].clientY;
+                y = element.height * 2.0 + scale - evt.changedTouches[0].clientY;
 
                 BufferAUniforms.iMouse.value.x = ( x ) * scale;
                 BufferAUniforms.iMouse.value.y = ( y ) * scale;
