@@ -224,6 +224,7 @@
             renderer = new THREE.WebGLRenderer();
             scale = window.devicePixelRatio;
             renderer.setPixelRatio(scale);
+            renderer.setSize(width, height);
             container.appendChild(renderer.domElement);
 
             width = 512;
