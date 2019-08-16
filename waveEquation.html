@@ -402,8 +402,8 @@
 
                 var rect = element.getBoundingClientRect();
 
-                x = evt.targetTouches[0].pageX - rect.left;
-                y = rect.top - evt.targetTouches[0].pageY;
+                x = evt.targetTouches[0].pageX;
+                y = rect.height - evt.targetTouches[0].pageY;
 
                 BufferAUniforms.iMouse.value.x = ( x ) * scale;
                 BufferAUniforms.iMouse.value.y = ( y ) * scale;
