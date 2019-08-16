@@ -14,7 +14,7 @@
             width: 100%;
             height: 100%
         }
-        #container
+        /*#container
         {
 
             position: absolute;
@@ -22,7 +22,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
 
-        }
+        }*/
     </style>
 </head>
 <body onload="startup()">
@@ -405,8 +405,8 @@
                 x = evt.targetTouches[0].pageX - rect.left;
                 y = rect.top - evt.targetTouches[0].pageY;
 
-                BufferAUniforms.iMouse.value.x = ( x / scaleRatio ) * scale;
-                BufferAUniforms.iMouse.value.y = ( y / scaleRatio ) * scale;
+                BufferAUniforms.iMouse.value.x = ( x ) * scale;
+                BufferAUniforms.iMouse.value.y = ( y ) * scale;
 
             }
 
