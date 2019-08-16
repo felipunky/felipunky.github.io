@@ -409,7 +409,7 @@
                 var element = document.getElementById("container").getBoundingClientRect();
 
                 x = evt.touches[0].pageX - element.left;
-                y = element.height * 2.0 - evt.touches[0].pageY;
+                y = element.height * 2.0 + 1.0 - evt.touches[0].pageY;
 
                 BufferAUniforms.iMouse.value.x = ( x ) * scale;
                 BufferAUniforms.iMouse.value.y = ( y ) * scale;
