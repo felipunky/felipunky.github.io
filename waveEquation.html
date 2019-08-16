@@ -171,7 +171,7 @@
 
         //gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
 
-        gl_FragColor = vec4( smoothstep( 0.1, 0.1 - 0.005, length( uv - 0.5 ) ) );
+        gl_FragColor = vec4( mix( vec4( 1 ), vec4( 1, 0, 0 ), smoothstep( 0.1, 0.1 - 0.005, length( uv - 0.5 ) ) ) );
 
         }
     </script>
