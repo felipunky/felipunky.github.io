@@ -28,6 +28,7 @@
 <body onload="startup()">
     <div id="container"></div>
     <!-- Main THREE includes-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js"></script>-->
     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
     <script src="felipunky.github.io/three.min.js"></script>
     <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>-->
@@ -187,7 +188,7 @@
         var BufferAMat, ImageMat;
         var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var width = 0.0, height = 0.0;
+        var width = 0.0, height = 0.0, scaleRatio = 0.0;
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -226,7 +227,20 @@
             container.appendChild(renderer.domElement);
 
             width = 512;
-            height = width * scale;
+
+            if (scale > 1.0) {
+
+                height = width * scale * 0.9;
+
+            }
+
+            else {
+
+                height = width * scale;
+
+            }
+
+            scaleRatio = width / height;
 
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
@@ -241,7 +255,7 @@
             BufferAUniforms = {
                 iChannel0: { value: BufferA },
                 iTime: { value: 1.0 },
-                iResolution: { value: new THREE.Vector2( width, height ) },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: timeDelta }
             };
@@ -262,7 +276,7 @@
             ImageUniforms = {
                 iChannel0: { value: BufferA },
                 iTime: { value: 0.0 },
-                iResolution: { value: new THREE.Vector2( width, height ) },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: timeDelta }
             };
@@ -368,9 +382,9 @@
         function handleMove(evt) {
 
             evt.preventDefault();
-            var el = document.getElementById("container");
-            var rect = el.getBoundingClientRect();
-            var touches = evt.changedTouches;
+            //var el = document.getElementById("container");
+            //var rect = el.getBoundingClientRect();
+            //var touches = evt.changedTouches;
             var x = 0, y = 0;
 
             if (BufferAUniforms.iMouse.value.z === 1) {
@@ -378,13 +392,21 @@
                 /*
                 x = (e.offsetX) * scale;//e.pageX;
                 y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
+
+                x = touches[0].pageX * scale;
+                y = (window.innerHeight - touches[0].pageY) * scale;
+
                 */
 
-                x = touches[0].pageX - el.clientX;
-                y = ( el.clientY ) - touches[0].pageY;
+                var element = document.getElementById("container").getBoundingClientRect();
 
-                BufferAUniforms.iMouse.value.x = x * scale;
-                BufferAUniforms.iMouse.value.y = y * scale;
+                var rect = element.getBoundingClientRect();
+
+                x = evt.targetTouches[0].pageX - rect.left;
+                y = rect.top - evt.targetTouches[0].pageY;
+
+                BufferAUniforms.iMouse.value.x = ( x / scaleRatio ) * scale;
+                BufferAUniforms.iMouse.value.y = ( y / scaleRatio ) * scale;
 
             }
 
