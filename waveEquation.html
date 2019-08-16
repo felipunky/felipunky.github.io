@@ -172,8 +172,6 @@
 
         //gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
 
-        vec2 mou = iMouse.xy / iResolution.xy;
-
         // Output to screen
         gl_FragColor = vec4( mix( vec4( 1 ), vec4( 1, 0, 0, 0 ), smoothstep( 0.1, 0.1 - 0.005, length( uv - mou ) ) ) );
         }
@@ -311,6 +309,9 @@
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
 
+                    ImageUniforms.iMouse.value.x = ( x ) * scale;
+                    ImageUniforms.iMouse.value.y = ( y ) * scale;
+
                 }
 
             }
@@ -412,6 +413,9 @@
 
                 BufferAUniforms.iMouse.value.x = ( x ) * scale;
                 BufferAUniforms.iMouse.value.y = ( y ) * scale;
+
+                ImageUniforms.iMouse.value.x = (x) * scale;
+                ImageUniforms.iMouse.value.y = ( y ) * scale;
 
             }
 
