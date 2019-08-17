@@ -246,6 +246,9 @@
 
             scaleRatio = width / height;*/
 
+            container.width = width;
+            container.height = height;
+
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
             BufferAFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
@@ -408,8 +411,11 @@
 
                 var element = document.getElementById("container").getBoundingClientRect();
 
-                x = evt.changedTouches[0].clientX - element.left;
-                y = element.height * 2.0 + scale - evt.changedTouches[0].clientY;
+                //x = evt.changedTouches[0].clientX - element.left;
+                //y = element.height * 2.0 + scale - evt.changedTouches[0].clientY;
+
+                x = evt.changedTouches[0].clientX;
+                y = evt.changedTouches[0].clientY;
 
                 BufferAUniforms.iMouse.value.x = ( x ) * scale;
                 BufferAUniforms.iMouse.value.y = ( y ) * scale;
