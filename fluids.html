@@ -57,6 +57,7 @@
         uniform float iDx;
         uniform float iSpeed;
         uniform float iColourForce;
+        uniform int iRandom;
 
         //const float siz = 0.025;
         //const float dx = 0.5;
@@ -115,10 +116,21 @@
 
         float tim = iTime * iSpeed;
         if( iMouse.z > 0.5 && cir( p, mou, iSize ) > 0.05 )
+
+        if( iRandom == 1 )
+        {
+
         col += iColourForce * vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
         noise( uv + tim + 2.0 ), 1 );
 
-        float dist = 0.0;
+        }
+
+        else
+        {
+        
+        col += iColourForce;
+
+        }
 
         return col;
 
@@ -459,7 +471,8 @@
                 iSize: { value: 0.0135 },
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
-                iColourForce: { value: 1.1 }
+                iColourForce: { value: 1.1 },
+                iRandom: { value: 1 }
             };
             BufferAMat = new THREE.ShaderMaterial({
                 uniforms: BufferAUniforms,
@@ -714,6 +727,7 @@
             var colourStrength = colourParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
             var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
             var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colours");
+            BufferAUniforms.iRandom.value = ImageUniforms.iRandom.value;
             randomColour.onChange(function (value) {
 
                 if (value === 1) {
