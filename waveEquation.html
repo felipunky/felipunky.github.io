@@ -111,6 +111,7 @@
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
         vec3 col = vec3( 0 );
         vec2 mou = iMouse.xy / iResolution.y;
+        mou.y = -mou.y;
 
         float c = cir( p, mou );
 
@@ -243,8 +244,8 @@
                 height = width * scale;
 
             }
-
-            scaleRatio = width / height;*/
+*/
+            scaleRatio = width / height;
 
             container.width = width;
             container.height = height;
@@ -415,11 +416,11 @@
                 //y = element.height * 2.0 + scale - evt.changedTouches[0].clientY;
 
                 x = touches[0].pageX - element.left;
-                y = element.top * 2.0 + scale - touches[0].pageY;
-                //y = touches[0].pageY - element.top * 2.0;
+                //y = element.top * 2.0 + scale - touches[0].pageY;
+                y = touches[0].pageY - element.top;
 
                 BufferAUniforms.iMouse.value.x = ( x );
-                BufferAUniforms.iMouse.value.y = ( y );
+                BufferAUniforms.iMouse.value.y = ( -y );
 
                 ImageUniforms.iMouse.value.x = ( x ) * scale;
                 ImageUniforms.iMouse.value.y = ( y ) * scale;
