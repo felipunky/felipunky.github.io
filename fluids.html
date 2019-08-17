@@ -263,7 +263,7 @@
 
         FC.xy += dt * ( ViscocityForce - PdX + ExternalForce );
 
-        if( uv.y < 0.01 || uv.x < 0.01 || uv.x > 0.99 || uv.y > 0.99 ) FC.xy *= 0.0;
+        if( uv.y < 0.001 || uv.x < 0.001 || uv.x > 0.999 || uv.y > 0.999 ) FC.xy *= 0.0;
 
         gl_FragColor = FC;
 
@@ -358,7 +358,11 @@
 
         }
 
-        gl_FragColor = pow( tex, vec4( 0.4545 ) );
+        tex = pow( tex, vec4( 0.4545 ) );
+
+        if( uv.y < 0.001 || uv.x < 0.001 || uv.x > 0.999 || uv.y > 0.999 ) tex *= 0.0;
+
+        gl_FragColor = tex;
 
         }
     </script>
@@ -379,6 +383,7 @@
         var timeDelta = 0.0;
         var colourOne = new THREE.Color(1, 1, 0);
         var colourTwo = new THREE.Color(1, 0, 0);
+        var parameter = { iter: 1, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire" };
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -590,47 +595,61 @@
         //------------------------------------------
         function render() {
 
-            BufferAUniforms.iTimeDelta.value = timeDelta;
-            BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
-            BufferAUniforms.iChannel1.value = BufferBFeedBack.texture;
+            if (parameter.restart === true) {
 
-            BufferBUniforms.iChannel0.value = BufferBFeedBack.texture;
-            BufferBUniforms.iChannel1.value = BufferCFeedBack.texture;
+                renderer.dispose();
+                parameter.restart = false;
 
-            BufferCUniforms.iChannel0.value = BufferCFeedBack.texture;
+            }
 
-            ImageUniforms.iChannel0.value = BufferAFeedBack.texture;
+            else {
 
-            renderer.setRenderTarget(BufferA);
-            renderer.render(BufferAScene, camera);
-            renderer.setRenderTarget(null);
-            renderer.clear();
+                for (var i = 0; i < parameter.iter; ++i) {
 
-            let tempA = BufferA;
-            BufferA = BufferAFeedBack;
-            BufferAFeedBack = tempA;
+                    BufferAUniforms.iTimeDelta.value = timeDelta;
+                    BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
+                    BufferAUniforms.iChannel1.value = BufferBFeedBack.texture;
 
-            renderer.setRenderTarget(BufferB);
-            renderer.render(BufferBScene, camera);
-            renderer.setRenderTarget(null);
-            renderer.clear();
+                    BufferBUniforms.iChannel0.value = BufferBFeedBack.texture;
+                    BufferBUniforms.iChannel1.value = BufferCFeedBack.texture;
 
-            let tempB = BufferB;
-            BufferB = BufferBFeedBack;
-            BufferBFeedBack = tempB;
+                    BufferCUniforms.iChannel0.value = BufferCFeedBack.texture;
 
-            renderer.setRenderTarget(BufferC);
-            renderer.render(BufferCScene, camera);
-            renderer.setRenderTarget(null);
-            renderer.clear();
+                    ImageUniforms.iChannel0.value = BufferAFeedBack.texture;
 
-            let tempC = BufferC;
-            BufferC = BufferCFeedBack;
-            BufferCFeedBack = tempC;
+                    renderer.setRenderTarget(BufferA);
+                    renderer.render(BufferAScene, camera);
+                    renderer.setRenderTarget(null);
+                    renderer.clear();
 
-            timeDelta = clock.getDelta();
-            
-            renderer.render(BufferImageScene, camera);
+                    let tempA = BufferA;
+                    BufferA = BufferAFeedBack;
+                    BufferAFeedBack = tempA;
+
+                    renderer.setRenderTarget(BufferB);
+                    renderer.render(BufferBScene, camera);
+                    renderer.setRenderTarget(null);
+                    renderer.clear();
+
+                    let tempB = BufferB;
+                    BufferB = BufferBFeedBack;
+                    BufferBFeedBack = tempB;
+
+                    renderer.setRenderTarget(BufferC);
+                    renderer.render(BufferCScene, camera);
+                    renderer.setRenderTarget(null);
+                    renderer.clear();
+
+                    let tempC = BufferC;
+                    BufferC = BufferCFeedBack;
+                    BufferCFeedBack = tempC;
+
+                }
+
+                timeDelta = clock.getDelta();
+                renderer.render(BufferImageScene, camera);
+
+            }
 
         }
 
@@ -638,10 +657,19 @@
 
             var gui = new dat.GUI();
 
+            var rest = gui.add(parameter, "restart").name("Restart Simulation").listen();
+
             var fluidParams = gui.addFolder("Fluid");
+            var iter = fluidParams.add(parameter, "iter", 1, 10, 1).name("Iterations Per Frame");
+            var display = fluidParams.add(parameter, "text").name("States");
             var state = fluidParams.add(BufferBUniforms.iState, "value", 0, 2, 1).name("State");
             var diff = fluidParams.add(BufferBUniforms.iDiffusion, "value", 0.1, 1.0, 0.01).name("Diffusion Coefficient");
             var reac = fluidParams.add(BufferBUniforms.iReaction, "value", 0.1, 1.0, 0.01).name("Reaction Constant");
+            diff.domElement.style.pointerEvents = "none";
+            diff.domElement.style.opacity = 0.5;
+
+            reac.domElement.style.pointerEvents = "none";
+            reac.domElement.style.opacity = 0.5;
             state.onChange(function (value) {
 
                 if (value === 0) {
@@ -715,6 +743,7 @@
                 }
 
             });
+
             var firstColour = colourParams.addColor(ImageUniforms.iColourOne, "value", colourOne / 255).name("First Colour");
             var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo / 255).name("Second Colour");
 
