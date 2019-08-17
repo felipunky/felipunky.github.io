@@ -229,8 +229,10 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
 
+            scaleRatio = window.innerWidth / window.innerHeight;
+
             width = 512;
-            height = 512;
+            height = width * scaleRatio;
 
             /*if (scale > 1.0) {
 
@@ -244,7 +246,6 @@
 
             }
 */
-            scaleRatio = width / height;
 
             container.width = width;
             container.height = height;
