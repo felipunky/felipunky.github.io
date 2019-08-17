@@ -168,12 +168,12 @@
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
         vec2 mou = iMouse.xy / iResolution.y;
 
-        //gl_FragColor = texture2D( iChannel0, uv );
+        gl_FragColor = texture2D( iChannel0, uv );
 
         //gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
 
         // Output to screen
-        gl_FragColor = vec4( mix( vec4( 1 ), vec4( 1, 0, 0, 0 ), smoothstep( 0.1, 0.1 - 0.005, length( uv - mou ) ) ) );
+        //gl_FragColor = vec4( mix( vec4( 1 ), vec4( 1, 0, 0, 0 ), smoothstep( 0.1, 0.1 - 0.005, length( uv - mou ) ) ) );
         }
     </script>
 
