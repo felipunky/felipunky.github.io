@@ -125,13 +125,13 @@
 
         vec3 red = vec3( -(center.a - 0.5) * 2.0 + (top + left + right + bottom - 2.0) );
 
-        if( iMouse.z < 0.5 )
+        /*if( iMouse.z < 0.5 )
         {
 
         c = cir( p, vec2( 0.9 + sin( iTime * 5.0 ) * 0.5, 0.5 - cos( iTime * 5.0 ) * 0.5 ) );
 
         }
-
+        */
         vec3 ran = vec3( c * hash( iTimeDelta + 5.0 ), c * hash( iTimeDelta + 2.0 ), c * hash( iTimeDelta + 1.0 ) );
 
         red += c; // mouse
@@ -417,8 +417,8 @@
                 x = touches[0].pageX - element.left;
                 y = touches[0].pageY - element.top;
 
-                BufferAUniforms.iMouse.value.x = ( x ) * scale;
-                BufferAUniforms.iMouse.value.y = ( y ) * scale;
+                BufferAUniforms.iMouse.value.x = ( x );
+                BufferAUniforms.iMouse.value.y = ( y );
 
                 ImageUniforms.iMouse.value.x = ( x ) * scale;
                 ImageUniforms.iMouse.value.y = ( y ) * scale;
