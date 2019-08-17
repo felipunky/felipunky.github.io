@@ -231,21 +231,8 @@
 
             scaleRatio = window.innerWidth / window.innerHeight;
 
-            width = 512;
-            height = 512;
-
-            /*if (scale > 1.0) {
-
-                height = width * scale * 0.9;
-
-            }
-
-            else {
-
-                height = width * scale;
-
-            }
-*/
+            width = 720;
+            height = 720;
 
             container.width = width;
             container.height = height;
@@ -394,26 +381,14 @@
         function handleMove(evt) {
 
             evt.preventDefault();
-            //var el = document.getElementById("container");
-            //var rect = el.getBoundingClientRect();
             var touches = evt.targetTouches;
             var x = 0, y = 0;
 
-            if (BufferAUniforms.iMouse.value.z === 1) {
-
-                /*
-                x = (e.offsetX) * scale;//e.pageX;
-                y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
-
-                x = touches[0].pageX * scale;
-                y = (window.innerHeight - touches[0].pageY) * scale;
-
-                */
+            if (BufferAUniforms.iMouse.value.z === 1)
+            {
 
                 var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
-                //x = evt.changedTouches[0].clientX - element.left;
-                //y = element.height * 2.0 + scale - evt.changedTouches[0].clientY;
 
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
