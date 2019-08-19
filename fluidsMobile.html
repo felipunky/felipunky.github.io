@@ -361,19 +361,19 @@
 
         void main()
         {
-        /*
+        
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         vec4 tex = texture2D( iChannel0, uv );
 
-        if( iRandom == 1 )
+        /*if( iRandom == 1 )
         {
 
         tex = vec4( mix( vec3( 0 ), mix( tex.rgb, tex.rgb * iColourForce, tex.z ), tex.z ), 1 );
 
         }
 
-        else
+        else*/
         {
 
         tex = vec4( mix( vec3( 0 ), mix( iColourTwo, iColourOne, tex.z ), tex.z ), 1 );
@@ -385,9 +385,9 @@
         if( uv.y < 0.001 || uv.x < 0.001 || uv.x > 0.999 || uv.y > 0.999 ) tex *= 0.0;
 
         gl_FragColor = tex;
-        */
+        
 
-        gl_FragColor = vec4( 1, 0, 0, 1 );
+        //gl_FragColor = vec4( 1, 0, 0, 1 );
 
         }
     </script>
