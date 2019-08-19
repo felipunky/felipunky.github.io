@@ -158,7 +158,7 @@
 
         uv -= dt * iTimeDelta * sim.xy;
 
-        vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou );// * sim.z;
+        vec4 self = texture2D( iChannel0, uv, 0.0 );// + forc( uv, p, mou );// * sim.z;
 
         gl_FragColor = self;
 
