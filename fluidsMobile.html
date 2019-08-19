@@ -852,8 +852,12 @@
 
         function handleCancel(evt) {
 
-            //evt.preventDefault();
-            BufferAUniforms.iMouse.value.z = 0;
+            if (e.cancelable) {
+
+                evt.preventDefault();
+                BufferAUniforms.iMouse.value.z = 0;
+
+            }
 
         }
 
