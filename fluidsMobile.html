@@ -451,7 +451,8 @@
             BufferImageScene = new THREE.Scene();
 
             //setup renderer
-            renderer = new THREE.WebGLRenderer({ checkShaderErrors: false });
+            //renderer = new THREE.WebGLRenderer({ checkShaderErrors: false });
+            renderer = new THREE.WebGLRenderer();
             scale = window.devicePixelRatio;
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
@@ -638,6 +639,8 @@
             else {
 
                 for (var i = 0; i < parameter.iter; ++i) {
+
+                    renderer.setSize(width, height);
 
                     BufferAUniforms.iTimeDelta.value = timeDelta;
                     BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
