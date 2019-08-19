@@ -430,7 +430,7 @@
         // Main init, GUI and loop
         //------------------------------------------
         init();
-        //addGUI();
+        addGUI();
         animate();
 
         //------------------------------------------
@@ -440,8 +440,8 @@
 
             container = document.getElementById('container');
 
-            width = 520;
-            height = 520;
+            width = 720;
+            height = 720;
 
             container.width = width;
             container.height = height;
@@ -693,7 +693,7 @@
             }
 
         }
-        /*
+        
         function addGUI() {
 
             var gui = new dat.GUI();
@@ -790,7 +790,7 @@
             var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo / 255).name("Second Colour");
 
         }
-        */
+        
         function startup() {
 
             var el = document.getElementById("container");
