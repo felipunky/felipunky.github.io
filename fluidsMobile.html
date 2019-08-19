@@ -51,12 +51,6 @@
     <!-- BufferA. -->
     <script id="BufferAFrag" type="x-shader/x-fragment">
 
-        */#ifdef GL_ES
-        precision mediump float;
-        #endif*/
-
-        #extension GL_OES_standard_derivatives : enable
-
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
         uniform vec2 iResolution;
@@ -170,12 +164,6 @@
 
     <!-- BufferB. -->
     <script id="BufferBFrag" type="x-shader/x-fragment">
-
-        /*#ifdef GL_ES
-        precision mediump float;
-        #endif*/
-
-        #extension GL_OES_standard_derivatives : enable
 
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
@@ -296,12 +284,6 @@
     <!-- BufferC. -->
     <script id="BufferCFrag" type="x-shader/x-fragment">
 
-        /*#ifdef GL_ES
-        precision mediump float;
-        #endif*/
-
-        #extension GL_OES_standard_derivatives : enable
-
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
         uniform vec3 iMouse;
@@ -347,12 +329,6 @@
     </script>
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
-
-        /*#ifdef GL_ES
-        precision mediump float;
-        #endif*/
-
-        #extension GL_OES_standard_derivatives : enable
 
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
