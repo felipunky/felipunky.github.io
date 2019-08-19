@@ -29,10 +29,10 @@
 <body onload="startup()">
     <div id="container"></div>
     <!-- Main THREE includes-->
-    <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>
-    <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>-->
-    <script src="felipunky.github.io/three.min.js"></script>
-    <script src="felipunky.github.io/dat.gui.min.js"></script>
+    <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
+    <!--<script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>-->
+    <!--<script src="felipunky.github.io/three.min.js"></script>-->
+    <!--<script src="felipunky.github.io/dat.gui.min.js"></script>-->
     <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
     <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\dat.gui.min.js"></script>-->
     <!-------------------->
@@ -137,7 +137,7 @@
 
         else
         {
-        
+
         col += iColourForce;
 
         }
@@ -361,7 +361,7 @@
 
         void main()
         {
-        
+
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         vec4 tex = texture2D( iChannel0, uv );
@@ -385,7 +385,7 @@
         if( uv.y < 0.001 || uv.x < 0.001 || uv.x > 0.999 || uv.y > 0.999 ) tex *= 0.0;
 
         gl_FragColor = tex;
-        
+
 
         //gl_FragColor = vec4( 1, 0, 0, 1 );
 
@@ -428,7 +428,7 @@
         // Main init, GUI and loop
         //------------------------------------------
         init();
-        addGUI();
+        //addGUI();
         animate();
 
         //------------------------------------------
@@ -691,7 +691,7 @@
             }
 
         }
-
+        /*
         function addGUI() {
 
             var gui = new dat.GUI();
@@ -788,7 +788,7 @@
             var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo / 255).name("Second Colour");
 
         }
-
+        */
         function startup() {
 
             var el = document.getElementById("container");
