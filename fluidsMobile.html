@@ -162,7 +162,7 @@
 
         gl_FragColor = self;*/
 
-        gl_FragColor = smoothstep( 0.1, 0.1 - 0.005, length( p - mou ) );
+        gl_FragColor += smoothstep( 0.1, 0.1 - 0.005, length( p - mou ) );
 
         }
 
