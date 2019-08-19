@@ -834,10 +834,10 @@
                 y = touches[0].pageY - h;
 
                 BufferAUniforms.iMouse.value.x = x;
-                BufferAUniforms.iMouse.value.y = y;
+                BufferAUniforms.iMouse.value.y = height - y;
 
                 BufferCUniforms.iMouse.value.x = x;
-                BufferCUniforms.iMouse.value.y = y;
+                BufferCUniforms.iMouse.value.y = height - y;
 
             }
 
