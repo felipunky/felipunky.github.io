@@ -152,7 +152,7 @@
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         vec2 p = gl_FragCoord.xy / iResolution.y;
-        vec2 mou = iMouse.xy / iResolution.y;
+        vec2 mou = iMouse.xy / iResolution.y;/*
 
         vec4 sim = texture2D( iChannel1, uv, 0.0 );
 
@@ -160,7 +160,9 @@
 
         vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou );// * sim.z;
 
-        gl_FragColor = self;
+        gl_FragColor = self;*/
+
+        gl_FragColor = smoothstep( 0.1, 0.1 - 0.005, length( p - mou ) );
 
         }
 
