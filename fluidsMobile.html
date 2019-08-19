@@ -51,9 +51,9 @@
     <!-- BufferA. -->
     <script id="BufferAFrag" type="x-shader/x-fragment">
 
-        #ifdef GL_ES
+        */#ifdef GL_ES
         precision mediump float;
-        #endif
+        #endif*/
 
         #extension GL_OES_standard_derivatives : enable
 
@@ -171,9 +171,9 @@
     <!-- BufferB. -->
     <script id="BufferBFrag" type="x-shader/x-fragment">
 
-        #ifdef GL_ES
+        /*#ifdef GL_ES
         precision mediump float;
-        #endif
+        #endif*/
 
         #extension GL_OES_standard_derivatives : enable
 
@@ -296,9 +296,9 @@
     <!-- BufferC. -->
     <script id="BufferCFrag" type="x-shader/x-fragment">
 
-        #ifdef GL_ES
+        /*#ifdef GL_ES
         precision mediump float;
-        #endif
+        #endif*/
 
         #extension GL_OES_standard_derivatives : enable
 
@@ -348,9 +348,9 @@
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
 
-        #ifdef GL_ES
+        /*#ifdef GL_ES
         precision mediump float;
-        #endif
+        #endif*/
 
         #extension GL_OES_standard_derivatives : enable
 
@@ -496,7 +496,7 @@
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
                 iColourForce: { value: 1.1 },
-                iRandom: { value: 1 }
+                iRandom: { value: 0 }
             };
             BufferAMat = new THREE.ShaderMaterial({
                 uniforms: BufferAUniforms,
@@ -567,7 +567,7 @@
                 iChannel0: { value: BufferA },
                 iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
                 iColourForce: { value: 2.0 },
-                iRandom: { value: 1 },
+                iRandom: { value: 0 },
                 iColourOne: { value: colourOne },
                 iColourTwo: { value: colourTwo }
             };
