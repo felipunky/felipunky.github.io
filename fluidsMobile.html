@@ -29,10 +29,10 @@
 <body onload="startup()">
     <div id="container"></div>
     <!-- Main THREE includes-->
-    <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
-    <!--<script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>-->
-    <script src="felipunky.github.io/three.min.js"></script>
-    <script src="felipunky.github.io/dat.gui.min.js"></script>
+    <script src="D:\Programas\felipunky.github.io\three.min.js"></script>
+    <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>
+    <!--<script src="felipunky.github.io/three.min.js"></script>
+    <script src="felipunky.github.io/dat.gui.min.js"></script>-->
     <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
     <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\dat.gui.min.js"></script>-->
     <!-------------------->
@@ -155,8 +155,6 @@
         vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou );// * sim.z;
 
         gl_FragColor = self;
-
-        //gl_FragColor = texture2D( iChannel1, uv, 0.0 );
 
         }
 
@@ -364,9 +362,6 @@
 
         gl_FragColor = tex;
 
-
-        //gl_FragColor = vec4( 1, 0, 0, 1 );
-
         }
     </script>
 
@@ -420,7 +415,7 @@
             height = 720;
 
             container.width = width;
-            container.height = height;
+            container.height = width + (width / height) * width;
 
             //setup scenes
             BufferAScene = new THREE.Scene();
@@ -472,7 +467,7 @@
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
                 iColourForce: { value: 1.1 },
-                iRandom: { value: 0 }
+                iRandom: { value: 1 }
             };
             BufferAMat = new THREE.ShaderMaterial({
                 uniforms: BufferAUniforms,
@@ -543,7 +538,7 @@
                 iChannel0: { value: BufferA },
                 iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
                 iColourForce: { value: 2.0 },
-                iRandom: { value: 0 },
+                iRandom: { value: 1 },
                 iColourOne: { value: colourOne },
                 iColourTwo: { value: colourTwo }
             };
@@ -669,7 +664,7 @@
             }
 
         }
-        
+
         function addGUI() {
 
             var gui = new dat.GUI();
@@ -766,7 +761,7 @@
             var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo / 255).name("Second Colour");
 
         }
-        
+
         function startup() {
 
             var el = document.getElementById("container");
