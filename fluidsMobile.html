@@ -411,11 +411,11 @@
 
             container = document.getElementById('container');
 
-            width = 120;
-            height = 120;
+            width = 720;
+            height = width + (width / height) * width;
 
             container.width = width;
-            container.height = width + (width / height) * width;
+            container.height = height;
 
             //setup scenes
             BufferAScene = new THREE.Scene();
