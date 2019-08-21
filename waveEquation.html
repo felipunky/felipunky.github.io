@@ -179,8 +179,8 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
             scaleRatio = window.innerWidth / window.innerHeight;
-            width = 520;
-            height = 520;
+            width = 512;
+            height = 512;
             /*if (scale > 1.0) {
                 height = width * scale * 0.9;
             }
@@ -312,8 +312,8 @@
                 var w = (element.left - bodyRect.left);
                 x = touches[0].pageX - w;
                 y = touches[0].pageY - h;
-                BufferAUniforms.iMouse.value.x = (x) * scale;
-                BufferAUniforms.iMouse.value.y = ( height - (y) ) * scale;
+                BufferAUniforms.iMouse.value.x = (x);
+                BufferAUniforms.iMouse.value.y = height - (y);
                 ImageUniforms.iMouse.value.x = (x) * scale;
                 ImageUniforms.iMouse.value.y = (y) * scale;
             }
@@ -338,3 +338,4 @@
     </script>
 </body>
 </html>
+
