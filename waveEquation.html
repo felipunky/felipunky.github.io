@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -29,6 +29,7 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js"></script>-->
     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>-->
     <script src="felipunky.github.io/three.min.js"></script>
+    <!--<script src="/Users/Felipe/Documents/GitHub/felipunky.github.io/three.min.js"></script>-->
     <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>-->
     <!--<script src="D:\SSS\three.js\build\three.min.js"></script>-->
     <!-------------------->
@@ -237,8 +238,8 @@
             document.getElementById("container").onmousemove = function (e) {
                 if (BufferAUniforms.iMouse.value.z === 1) {
                     var element = document.getElementById("container").getBoundingClientRect();
-                    x = (e.offsetX) * scale;//e.pageX;
-                    y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
+                    x = (e.offsetX);//e.pageX;
+                    y = (element.height - e.offsetY);//window.innerHeight - e.pageY;
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
                     ImageUniforms.iMouse.value.x = (x) * scale;
