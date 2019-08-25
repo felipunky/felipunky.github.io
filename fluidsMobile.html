@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -264,7 +264,7 @@
 
         // Forces.
         vec2 ExternalForce = vec2( 0 );
-        ExternalForce += iForce * texture2D( iChannel1, uv, 0.0 ).xy;
+        ExternalForce += texture2D( iChannel1, uv, 0.0 ).xy * iForce;
         vec2 dir = vor( Was, Step );
 
         // Vorticity confinement.
@@ -318,10 +318,11 @@
         vec2 last = texture2D( iChannel0, uv, 0.0 ).zw;
 
         vec2 acc = vec2( 0 );
+        vec2 vel = mou - last;
 
-        if( cir( p, mou, iSize ) > 0.05 )
+        if( length( vel ) < 0.1 && cir( p, mou, siz ) > 0.05 )
 
-        acc += ( mou - last ) * iForce;
+        acc += vel;
 
         gl_FragColor = vec4( acc, mou );
 
@@ -491,7 +492,7 @@
                 iResolution: { value: new THREE.Vector2(width, height) },
                 iViscocity: { value: 0.3 },
                 iDensity: { value: 0.2 },
-                iForce: { value: 8.0 },
+                iForce: { value: 25.0 },
                 iDx: { value: 0.5 },
                 iState: { value: 0 },
                 iDiffusion: { value: 0.2 },
