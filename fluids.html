@@ -41,12 +41,6 @@
     <!-- BufferA. -->
     <script id="BufferAFrag" type="x-shader/x-fragment">
 
-        #ifdef GL_ES
-        precision mediump float;
-        #endif
-
-        #extension GL_OES_standard_derivatives : enable
-
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
         uniform vec2 iResolution;
@@ -58,6 +52,8 @@
         uniform float iSpeed;
         uniform float iColourForce;
         uniform int iRandom;
+        uniform int iGrid;
+        uniform int iFrame;
 
         //const float siz = 0.025;
         //const float dx = 0.5;
@@ -112,25 +108,52 @@
         vec4 forc( vec2 uv, vec2 p, vec2 mou )
         {
 
-        vec4 col = vec4( 0 );
+        vec4 col = vec4( 0 ), colO = vec4( 0 );;
 
         float tim = iTime * iSpeed;
-        if( iMouse.z > 0.5 && cir( p, mou, iSize ) > 0.05 )
 
         if( iRandom == 1 )
         {
 
-        col += iColourForce * vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
-        noise( uv + tim + 2.0 ), 1 );
+            colO = vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
+            noise( uv + tim + 2.0 ), 1 );
 
         }
 
         else
         {
-        
-        col += iColourForce;
+
+            colO += 1.0;
 
         }
+
+        if( iGrid == 1 )
+        {
+
+            if( iFrame < 30 )
+            {
+
+                if( mod( max( uv.x, 0.01 ), 0.02 ) > 0.005  )
+                {
+
+                    col += 0.1;
+
+                }
+
+                else
+                {
+
+                    col -= 0.1;
+
+                }
+
+            }
+
+        }
+
+        if( iMouse.z > 0.5 && cir( p, mou, iSize ) > 0.05 )
+
+        col -= iColourForce * colO;
 
         return col;
 
@@ -148,7 +171,7 @@
 
         uv -= dt * iTimeDelta * sim.xy;
 
-        vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou );// * sim.z;
+        vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou ) * sim.z;
 
         gl_FragColor = self;
 
@@ -158,12 +181,6 @@
 
     <!-- BufferB. -->
     <script id="BufferBFrag" type="x-shader/x-fragment">
-
-        #ifdef GL_ES
-        precision mediump float;
-        #endif
-
-        #extension GL_OES_standard_derivatives : enable
 
         uniform sampler2D iChannel0;
         uniform sampler2D iChannel1;
@@ -244,11 +261,11 @@
 
         // Smoke.
         if( iState == 1 )
-        FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz ) + iDiffusion * dot( vec3( DdX * DdX, Udiv ), FC.xyz );
+        FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz ) + iDiffusion * dt * dot( vec3( DdX * DdX, Udiv ), FC.xyz );
 
         // Fire.
         if( iState == 2 )
-        FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz ) + iDiffusion * dot( vec3( DdX * DdX, Udiv ), FC.xyz ) - iReaction;
+        FC.z -= dt * dot( vec3( DdX, Udiv ), FC.xyz ) + iDiffusion * dt * dot( vec3( DdX * DdX, Udiv ), FC.xyz ) + iReaction;
 
         // Stability.
         FC.z = clamp( FC.z, 0.5, 3.0 );
@@ -283,12 +300,6 @@
     </script>
     <!-- BufferC. -->
     <script id="BufferCFrag" type="x-shader/x-fragment">
-
-        #ifdef GL_ES
-        precision mediump float;
-        #endif
-
-        #extension GL_OES_standard_derivatives : enable
 
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
@@ -337,18 +348,19 @@
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
 
-        #ifdef GL_ES
-        precision mediump float;
-        #endif
-
-        #extension GL_OES_standard_derivatives : enable
-
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
         uniform float iColourForce;
         uniform int iRandom;
         uniform vec3 iColourOne;
         uniform vec3 iColourTwo;
+        uniform int iBumpMap;
+
+        float bumpFunc(vec2 p){
+
+        return texture2D( iChannel0, p, 0.0 ).w; // Range: [0, 1]
+
+        }
 
         void main()
         {
@@ -356,26 +368,76 @@
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         vec4 tex = texture2D( iChannel0, uv );
+        
+        if( iBumpMap == 1 )
+        {
+
+            vec3 sp = vec3(uv, 0); // Surface posion. Hit point, if you prefer. Essentially, a screen at the origin.
+            vec3 rd = normalize(vec3(uv, 1.)); // Unit direction vector. From the origin to the screen plane.
+            vec3 lp = vec3(0.9, 1.5, -5.0); // Light position - Back from the screen.
+            vec3 sn = vec3(0., 0., -1); // Plane normal. Z pointing toward the viewer.
+
+            vec2 eps = vec2(4./iResolution.y, 0.);
+
+            float f = bumpFunc(sp.xy); // Sample value multiplied by the amplitude.
+            float fx = bumpFunc(sp.xy-eps.xy); // Same for the nearby sample in the X-direction.
+            float fy = bumpFunc(sp.xy-eps.yx); // Same for the nearby sample in the Y-direction.
+
+            // Controls how much the bump is accentuated.
+            const float bumpFactor = 0.1;
+
+            // Using the above to determine the dx and dy function gradients.
+            fx = (fx-f)/eps.x; // Change in X
+            fy = (fy-f)/eps.x; // Change in Y.
+            sn = normalize( sn + vec3(fx, fy, 0)*bumpFactor );
+
+
+            // LIGHTING
+            //
+            // Determine the light direction vector, calculate its distance, then normalize it.
+            vec3 ld = lp - sp;
+            float lDist = max(length(ld), 0.001);
+            ld /= lDist;
+
+            // Light attenuation.
+            float atten = 1./(1.0 + lDist*lDist*0.15);
+            //float atten = min(1./(lDist*lDist*1.), 1.);
+
+            // Using the bump function, "f," to darken the crevices. Completely optional, but I
+            // find it gives extra depth.
+            atten *= f*.9 + .1; // Or... f*f*.7 + .3; //  pow(f, .75); // etc.
+
+
+
+            // Diffuse value.
+            float diff = max(dot(sn, ld), 0.);
+            // Enhancing the diffuse value a bit. Made up.
+            diff = pow(diff, 4.)*0.66 + pow(diff, 8.)*0.34;
+            // Specular highlighting.
+            float spec = pow(max(dot( reflect(-ld, sn), -rd), 0.), 12.);
+
+            vec3 col = (tex.rgb * (diff*vec3(1, .97, .92)*2. + 0.5) + vec3(1., .6, .2)*spec*2.)*atten;
+            tex.rgb = col;
+
+        }
 
         if( iRandom == 1 )
         {
 
-        tex = vec4( mix( vec3( 0 ), mix( tex.rgb, tex.rgb * iColourForce, tex.z ), tex.z ), 1 );
+            tex = vec4( mix( tex.rgb * iColourForce, tex.rgb, tex.z ), 1 );
 
         }
 
         else
         {
 
-        tex = vec4( mix( vec3( 0 ), mix( iColourTwo, iColourOne, tex.z ), tex.z ), 1 );
+            tex = vec4( mix( iColourOne, iColourTwo, tex.z ), 1 );
 
         }
 
-        tex = pow( tex, vec4( 0.4545 ) );
-
         if( uv.y < 0.001 || uv.x < 0.001 || uv.x > 0.999 || uv.y > 0.999 ) tex *= 0.0;
 
-        gl_FragColor = tex;
+        gl_FragColor =  pow( tex, vec4( 0.4545 ) );
 
         }
     </script>
@@ -394,9 +456,9 @@
         var BufferAMat, BufferBMat, BufferCMat, ImageMat;
         var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var colourOne = new THREE.Color(1, 1, 0);
-        var colourTwo = new THREE.Color(1, 0, 0);
-        var parameter = { iter: 1, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire" };
+        var colourOne = new THREE.Color(0, 0, 0.1);
+        var colourTwo = new THREE.Color(10, 1, 0.3);
+        var parameter = { iter: 1, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -473,7 +535,9 @@
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
                 iColourForce: { value: 1.1 },
-                iRandom: { value: 1 }
+                iRandom: { value: true },
+                iGrid: { value: true },
+                iFrame: { value: 0 }
             };
             BufferAMat = new THREE.ShaderMaterial({
                 uniforms: BufferAUniforms,
@@ -518,10 +582,8 @@
             // BufferC.
             BufferCUniforms = {
                 iChannel0: { value: BufferC },
-                iTime: { value: 1.0 },
                 iResolution: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: 0.0 },
                 iForce: { value: 8.0 },
                 iSize: { value: 0.0135 }
             };
@@ -543,10 +605,11 @@
                 //iChannel0: { type: "t", value: BufferA },
                 iChannel0: { value: BufferA },
                 iResolution: { value: new THREE.Vector2() },
-                iColourForce: { value: 2.0 },
-                iRandom: { value: 1 },
+                iColourForce: { value: 1.1 },
+                iRandom: { value: true },
                 iColourOne: { value: colourOne },
-                iColourTwo: { value: colourTwo }
+                iColourTwo: { value: colourTwo },
+                iBumpMap: { value: true }
             };
             ImageMat = new THREE.ShaderMaterial({
                 uniforms: ImageUniforms,
@@ -599,7 +662,6 @@
         function animate() {
 
             requestAnimationFrame(animate);
-            BufferAUniforms.iTime.value += 0.05;
             render();
 
         }
@@ -612,6 +674,8 @@
             if (parameter.restart === true) {
 
                 renderer.dispose();
+                BufferAUniforms.iTime.value = 1.0;
+                BufferAUniforms.iFrame.value = 0;
                 parameter.restart = false;
 
             }
@@ -619,6 +683,9 @@
             else {
 
                 for (var i = 0; i < parameter.iter; ++i) {
+
+                    BufferAUniforms.iTime.value += 0.05;
+                    BufferAUniforms.iFrame.value += 1;
 
                     BufferAUniforms.iTimeDelta.value = timeDelta;
                     BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
@@ -725,13 +792,17 @@
             var gridSize = fluidParams.add(BufferAUniforms.iDx, "value", 0.2, 0.5, 0.01).name("Grid Size");
 
             var colourParams = gui.addFolder("Colours");
+            var overlayGrid = colourParams.add(BufferAUniforms.iGrid, "value").name("Grid");
+            var fake3d = colourParams.add(ImageUniforms.iBumpMap, "value").name("Fake 3D");
             var colourStrength = colourParams.add(BufferAUniforms.iColourForce, "value", 0.1, 5.0, 0.1).name("Colour Strength");
             var speed = colourParams.add(BufferAUniforms.iSpeed, "value", 0.1, 5.0, 0.1).name("Colour Change Speed");
-            var randomColour = colourParams.add(ImageUniforms.iRandom, "value", 0, 1, 1).name("Random Colours");
-            BufferAUniforms.iRandom.value = ImageUniforms.iRandom.value;
+            var randomColour = colourParams.add(parameter, "random").name("Random Colours");
             randomColour.onChange(function (value) {
 
-                if (value === 1) {
+                BufferAUniforms.iRandom.value = parameter.random;
+                ImageUniforms.iRandom.value = parameter.random;
+
+                if (value === true) {
 
                     firstColour.domElement.style.pointerEvents = "none";
                     firstColour.domElement.style.opacity = 0.5;
@@ -761,6 +832,14 @@
 
             var firstColour = colourParams.addColor(ImageUniforms.iColourOne, "value", colourOne / 255).name("First Colour");
             var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo / 255).name("Second Colour");
+            firstColour.domElement.style.pointerEvents = "none";
+            firstColour.domElement.style.opacity = 0.5;
+
+            secondColour.domElement.style.pointerEvents = "none";
+            secondColour.domElement.style.opacity = 0.5;
+
+            speed.domElement.style.pointerEvents = "auto";
+            speed.domElement.style.opacity = 1.0;
 
         }
 
@@ -785,12 +864,13 @@
         function handleMove(evt) {
 
             evt.preventDefault();
-            var el = document.getElementById("container");
+            //var el = document.getElementById("container");
             var touches = evt.changedTouches;
             var x = 0, y = 0;
 
             if (BufferAUniforms.iMouse.value.z === 1) {
 
+                /*
                 x = touches[0].pageX * scale;
                 y = (window.innerHeight - touches[0].pageY) * scale;
 
@@ -799,6 +879,25 @@
 
                 BufferCUniforms.iMouse.value.x = x;
                 BufferCUniforms.iMouse.value.y = y;
+                */
+
+                var element = document.getElementById("container").getBoundingClientRect();
+                var bodyRect = document.body.getBoundingClientRect();
+
+                var h = (element.top - bodyRect.top);
+                var w = (element.left - bodyRect.left);
+
+                x = touches[0].pageX - w;
+                y = touches[0].pageY - h;
+
+                //x *= scale;
+                //y *= scale;
+
+                BufferAUniforms.iMouse.value.x = x;
+                BufferAUniforms.iMouse.value.y = height - y;
+
+                BufferCUniforms.iMouse.value.x = x;
+                BufferCUniforms.iMouse.value.y = height - y;
 
             }
 
@@ -813,8 +912,12 @@
 
         function handleCancel(evt) {
 
-            evt.preventDefault();
-            BufferAUniforms.iMouse.value.z = 0;
+            if (e.cancelable) {
+
+                evt.preventDefault();
+                BufferAUniforms.iMouse.value.z = 0;
+
+            }
 
         }
 
