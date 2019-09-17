@@ -536,8 +536,8 @@
 
             container = document.getElementById('container');
 
-            width = 720;
-            height = 720;
+            width = 520;
+            height = 520;
             container.width = width;
             container.height = height;
 
@@ -690,7 +690,7 @@
                     var element = document.getElementById("container").getBoundingClientRect();
 
                     x = (e.offsetX);//x = e.clientX * scale;//e.pageX;
-                    y = (element.height - e.offsetY)//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    y = (element.height - e.offsetY);//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
