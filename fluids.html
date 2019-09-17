@@ -115,39 +115,39 @@
         if( iRandom == 1 )
         {
 
-            colO = vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
-            noise( uv + tim + 2.0 ), 1 );
+        colO = vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
+        noise( uv + tim + 2.0 ), 1 );
 
         }
 
         else
         {
 
-            colO += 1.0;
+        colO += 1.0;
 
         }
 
         if( iGrid == 1 )
         {
 
-            if( iFrame < 30 )
-            {
+        if( iFrame < 20 )
+        {
 
-                if( mod( max( uv.x, 0.01 ), 0.02 ) > 0.005  )
-                {
+        if( mod( max( uv.x, 0.01 ), 0.02 ) > 0.005  )
+        {
 
-                    col += 0.1;
+        col += 0.1;
 
-                }
+        }
 
-                else
-                {
+        else
+        {
 
-                    col -= 0.1;
+        col -= 0.1;
 
-                }
+        }
 
-            }
+        }
 
         }
 
@@ -183,8 +183,9 @@
     <script id="BufferBFrag" type="x-shader/x-fragment">
 
         uniform sampler2D iChannel0;
-        uniform sampler2D iChannel1;
+        //uniform sampler2D iChannel1;
         uniform vec2 iResolution;
+        uniform vec3 iMouse;
         uniform float iViscocity;
         uniform float iDensity;
         uniform float iForce;
@@ -193,12 +194,32 @@
         uniform float iDiffusion;
         uniform float iReaction;
         uniform float iVorticity;
+        uniform vec2 iVectorForce;
+        uniform float iSize;
 
         //const float dx = 0.5;
         float dt = iDx * iDx * 0.5;
         //const float ForceVector = 8.0;
         //const float Viscocity = 0.3;
         //const float K = 0.2;
+
+        //const float siz = 0.025;
+
+        float dis( vec2 uv, vec2 mou )
+        {
+
+        return length( uv - mou );
+
+        }
+
+        float cir( vec2 uv, vec2 mou, float r )
+        {
+
+        float o = smoothstep( r, r - 0.05, dis( uv, mou ) );
+
+        return o;
+
+        }
 
         // https://www.youtube.com/watch?v=TxxZ8gkGNAc
         float cur( vec2 uv, vec2 Step )
@@ -233,6 +254,9 @@
         {
 
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
+        vec2 p = gl_FragCoord.xy / iResolution.y;
+
+        vec2 mou = iMouse.xy / iResolution.y;
 
         vec2 cScale = vec2( iDx );
 
@@ -280,8 +304,17 @@
         FC.xy = texture2D( iChannel0, Was, 0.0 ).xy;
 
         // Forces.
+        vec2 acc = vec2( 0 );
+        vec2 vel = mou - iVectorForce / iResolution.y;
+        if( length( vel ) < 0.1 && cir( p, mou, iSize ) > 0.05 && iMouse.z > 0.5 )
+
+        acc += vel * iForce;
+
+        //force = iVectorForce / iResolution.y;
+
         vec2 ExternalForce = vec2( 0 );
-        ExternalForce += texture2D( iChannel1, uv, 0.0 ).xy * iForce;
+        //ExternalForce += texture2D( iChannel1, uv, 0.0 ).xy * iForce;
+        ExternalForce += acc;
         vec2 dir = vor( Was, Step );
 
         // Vorticity confinement.
@@ -299,6 +332,7 @@
         }
     </script>
     <!-- BufferC. -->
+    <!--
     <script id="BufferCFrag" type="x-shader/x-fragment">
 
         uniform sampler2D iChannel0;
@@ -344,7 +378,7 @@
         gl_FragColor = vec4( acc, mou );
 
         }
-    </script>
+    </script>-->
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
 
@@ -368,70 +402,70 @@
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
 
         vec4 tex = texture2D( iChannel0, uv );
-        
+
         if( iBumpMap == 1 )
         {
 
-            vec3 sp = vec3(uv, 0); // Surface posion. Hit point, if you prefer. Essentially, a screen at the origin.
-            vec3 rd = normalize(vec3(uv, 1.)); // Unit direction vector. From the origin to the screen plane.
-            vec3 lp = vec3(0.9, 1.5, -5.0); // Light position - Back from the screen.
-            vec3 sn = vec3(0., 0., -1); // Plane normal. Z pointing toward the viewer.
+        vec3 sp = vec3(uv, 0); // Surface posion. Hit point, if you prefer. Essentially, a screen at the origin.
+        vec3 rd = normalize(vec3(uv, 1.)); // Unit direction vector. From the origin to the screen plane.
+        vec3 lp = vec3(0.9, 1.5, -5.0); // Light position - Back from the screen.
+        vec3 sn = vec3(0., 0., -1); // Plane normal. Z pointing toward the viewer.
 
-            vec2 eps = vec2(4./iResolution.y, 0.);
+        vec2 eps = vec2(4./iResolution.y, 0.);
 
-            float f = bumpFunc(sp.xy); // Sample value multiplied by the amplitude.
-            float fx = bumpFunc(sp.xy-eps.xy); // Same for the nearby sample in the X-direction.
-            float fy = bumpFunc(sp.xy-eps.yx); // Same for the nearby sample in the Y-direction.
+        float f = bumpFunc(sp.xy); // Sample value multiplied by the amplitude.
+        float fx = bumpFunc(sp.xy-eps.xy); // Same for the nearby sample in the X-direction.
+        float fy = bumpFunc(sp.xy-eps.yx); // Same for the nearby sample in the Y-direction.
 
-            // Controls how much the bump is accentuated.
-            const float bumpFactor = 0.1;
+        // Controls how much the bump is accentuated.
+        const float bumpFactor = 0.1;
 
-            // Using the above to determine the dx and dy function gradients.
-            fx = (fx-f)/eps.x; // Change in X
-            fy = (fy-f)/eps.x; // Change in Y.
-            sn = normalize( sn + vec3(fx, fy, 0)*bumpFactor );
-
-
-            // LIGHTING
-            //
-            // Determine the light direction vector, calculate its distance, then normalize it.
-            vec3 ld = lp - sp;
-            float lDist = max(length(ld), 0.001);
-            ld /= lDist;
-
-            // Light attenuation.
-            float atten = 1./(1.0 + lDist*lDist*0.15);
-            //float atten = min(1./(lDist*lDist*1.), 1.);
-
-            // Using the bump function, "f," to darken the crevices. Completely optional, but I
-            // find it gives extra depth.
-            atten *= f*.9 + .1; // Or... f*f*.7 + .3; //  pow(f, .75); // etc.
+        // Using the above to determine the dx and dy function gradients.
+        fx = (fx-f)/eps.x; // Change in X
+        fy = (fy-f)/eps.x; // Change in Y.
+        sn = normalize( sn + vec3(fx, fy, 0)*bumpFactor );
 
 
+        // LIGHTING
+        //
+        // Determine the light direction vector, calculate its distance, then normalize it.
+        vec3 ld = lp - sp;
+        float lDist = max(length(ld), 0.001);
+        ld /= lDist;
 
-            // Diffuse value.
-            float diff = max(dot(sn, ld), 0.);
-            // Enhancing the diffuse value a bit. Made up.
-            diff = pow(diff, 4.)*0.66 + pow(diff, 8.)*0.34;
-            // Specular highlighting.
-            float spec = pow(max(dot( reflect(-ld, sn), -rd), 0.), 12.);
+        // Light attenuation.
+        float atten = 1./(1.0 + lDist*lDist*0.15);
+        //float atten = min(1./(lDist*lDist*1.), 1.);
 
-            vec3 col = (tex.rgb * (diff*vec3(1, .97, .92)*2. + 0.5) + vec3(1., .6, .2)*spec*2.)*atten;
-            tex.rgb = col;
+        // Using the bump function, "f," to darken the crevices. Completely optional, but I
+        // find it gives extra depth.
+        atten *= f*.9 + .1; // Or... f*f*.7 + .3; //  pow(f, .75); // etc.
+
+
+
+        // Diffuse value.
+        float diff = max(dot(sn, ld), 0.);
+        // Enhancing the diffuse value a bit. Made up.
+        diff = pow(diff, 4.)*0.66 + pow(diff, 8.)*0.34;
+        // Specular highlighting.
+        float spec = pow(max(dot( reflect(-ld, sn), -rd), 0.), 12.);
+
+        vec3 col = (tex.rgb * (diff*vec3(1, .97, .92)*2. + 0.5) + vec3(1., .6, .2)*spec*2.)*atten;
+        tex.rgb = col;
 
         }
 
         if( iRandom == 1 )
         {
 
-            tex = vec4( mix( tex.rgb * iColourForce, tex.rgb, tex.z ), 1 );
+        tex = vec4( mix( tex.rgb * iColourForce, tex.rgb, tex.z ), 1 );
 
         }
 
         else
         {
 
-            tex = vec4( mix( iColourOne, iColourTwo, tex.z ), 1 );
+        tex = vec4( mix( iColourOne / 255.0, iColourTwo / 255.0, tex.z ), 1 );
 
         }
 
@@ -449,16 +483,18 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
-        var camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferCScene, BufferImageScene, renderer;
-        var BufferA, BufferAFeedBack, BufferB, BufferC;
-        var BufferAUniforms, BufferBUniforms, BufferCUniforms, ImageUniforms;
-        var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, BufferCQuad, ImageQuad;
-        var BufferAMat, BufferBMat, BufferCMat, ImageMat;
+        var camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferImageScene, renderer; //BufferCScene;
+        var BufferA, BufferAFeedBack, BufferB;//, BufferC;
+        var BufferAUniforms, BufferBUniforms, ImageUniforms; //BufferCUniforms;
+        var BufferAQuad, BufferBQuad, BufferAFeedBackQuad, ImageQuad; //BufferCQuad
+        var BufferAMat, BufferBMat, ImageMat; //BufferCMat
         var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var colourOne = new THREE.Color(0, 0, 0.1);
-        var colourTwo = new THREE.Color(10, 1, 0.3);
-        var parameter = { iter: 1, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
+        var colourOne = new THREE.Color(0, 0, 25.5);
+        var colourTwo = new THREE.Color(2550, 255, 76.5);
+        var parameter = { iter: 3, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
+        var x = 0, y = 0;
+        var acc = new THREE.Vector2(0, 0), vel = new THREE.Vector2(0, 0);
 
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -491,8 +527,8 @@
             BufferAFeedBackScene = new THREE.Scene();
             BufferBScene = new THREE.Scene();
             BufferBFeedBackScene = new THREE.Scene();
-            BufferCScene = new THREE.Scene();
-            BufferCFeedBackScene = new THREE.Scene();
+            /*BufferCScene = new THREE.Scene();
+            BufferCFeedBackScene = new THREE.Scene();*/
             BufferImageScene = new THREE.Scene();
 
             //setup renderer
@@ -506,8 +542,8 @@
             BufferAFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferB = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
             BufferBFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferC = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferCFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
+            /*BufferC = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
+            BufferCFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);*/
             BufferImage = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
 
             // Setup output camera
@@ -534,7 +570,7 @@
                 iSize: { value: 0.0135 },
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
-                iColourForce: { value: 1.1 },
+                iColourForce: { value: 5.0 },
                 iRandom: { value: true },
                 iGrid: { value: true },
                 iFrame: { value: 0 }
@@ -555,16 +591,19 @@
             // BufferB.
             BufferBUniforms = {
                 iChannel0: { value: BufferB },
-                iChannel1: { value: BufferC },
+                //iChannel1: { value: BufferC },
                 iResolution: { value: new THREE.Vector2() },
                 iViscocity: { value: 0.3 },
                 iDensity: { value: 0.2 },
-                iForce: { value: 25.0 },
+                iForce: { value: 50.0 },
                 iDx: { value: 0.5 },
                 iState: { value: 0 },
                 iDiffusion: { value: 0.2 },
                 iReaction: { value: 0.1 },
-                iVorticity: { value: 3.5 }
+                iVorticity: { value: 3.5 },
+                iVectorForce: { value: new THREE.Vector2() },
+                iMouse: { value: new THREE.Vector3() },
+                iSize: { value: 0.0135 }
             };
             BufferBMat = new THREE.ShaderMaterial({
                 uniforms: BufferBUniforms,
@@ -576,7 +615,7 @@
             BufferBScene.add(BufferBQuad);
 
             // BufferBFeedBack.
-            BufferBFeedBackQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
+            /*BufferBFeedBackQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
             BufferBFeedBackScene.add(BufferBFeedBackQuad);
 
             // BufferC.
@@ -598,7 +637,7 @@
 
             // BufferCFeedBack.
             BufferCFeedBackQuad = new THREE.Mesh(BufferCGeo, BufferCMat);
-            BufferCFeedBackScene.add(BufferCFeedBackQuad);
+            BufferCFeedBackScene.add(BufferCFeedBackQuad);*/
 
             // Image.
             ImageUniforms = {
@@ -623,20 +662,27 @@
             onWindowResize();
             window.addEventListener('resize', onWindowResize, false);
 
-            var x = 0, y = 0;
-
             document.getElementById("container").onmousemove = function (e) {
 
-                if (BufferAUniforms.iMouse.value.z === 1) {
+                if (BufferBUniforms.iMouse.value.z === 1)
+                {
 
-                    x = e.clientX * scale;//e.pageX;
-                    y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    var element = document.getElementById("container").getBoundingClientRect();
+
+                    x = (e.offsetX);//x = e.clientX * scale;//e.pageX;
+                    y = (element.height - e.offsetY);//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
 
-                    BufferCUniforms.iMouse.value.x = x;
-                    BufferCUniforms.iMouse.value.y = y;
+                    BufferBUniforms.iMouse.value.x = x;
+                    BufferBUniforms.iMouse.value.y = y;
+
+                    BufferBUniforms.iVectorForce.value.x = vel.x;
+                    BufferBUniforms.iVectorForce.value.y = vel.y;
+
+                    vel.x = x;
+                    vel.y = y;
 
                 }
 
@@ -645,12 +691,14 @@
             document.getElementById("container").onmousedown = function (e) {
 
                 BufferAUniforms.iMouse.value.z = 1;
+                BufferBUniforms.iMouse.value.z = 1;
 
             }
 
             document.getElementById("container").onmouseup = function (e) {
 
                 BufferAUniforms.iMouse.value.z = 0;
+                BufferBUniforms.iMouse.value.z = 0;
 
             }
 
@@ -692,9 +740,9 @@
                     BufferAUniforms.iChannel1.value = BufferBFeedBack.texture;
 
                     BufferBUniforms.iChannel0.value = BufferBFeedBack.texture;
-                    BufferBUniforms.iChannel1.value = BufferCFeedBack.texture;
+                    //BufferBUniforms.iChannel1.value = BufferCFeedBack.texture;
 
-                    BufferCUniforms.iChannel0.value = BufferCFeedBack.texture;
+                    //BufferCUniforms.iChannel0.value = BufferCFeedBack.texture;
 
                     ImageUniforms.iChannel0.value = BufferAFeedBack.texture;
 
@@ -716,14 +764,14 @@
                     BufferB = BufferBFeedBack;
                     BufferBFeedBack = tempB;
 
-                    renderer.setRenderTarget(BufferC);
+                    /*renderer.setRenderTarget(BufferC);
                     renderer.render(BufferCScene, camera);
                     renderer.setRenderTarget(null);
                     renderer.clear();
 
                     let tempC = BufferC;
                     BufferC = BufferCFeedBack;
-                    BufferCFeedBack = tempC;
+                    BufferCFeedBack = tempC;*/
 
                 }
 
@@ -787,8 +835,14 @@
             var vorty = fluidParams.add(BufferBUniforms.iVorticity, "value", 0.0, 5.0, 0.01).name("Vorticity Confinement");
             var visco = fluidParams.add(BufferBUniforms.iViscocity, "value", 0.05, 1, 0.01).name("Viscocity");
             var densi = fluidParams.add(BufferBUniforms.iDensity, "value", 0.05, 1, 0.01).name("Density");
-            var force = fluidParams.add(BufferBUniforms.iForce, "value", 2, 12, 0.01).name("Force Velocity");
-            var size = fluidParams.add(BufferAUniforms.iSize, "value", 0.01, 0.1, 0.0001).name("Size");
+            var force = fluidParams.add(BufferBUniforms.iForce, "value", 1, 50, 0.01).name("Force Velocity");
+            var size = fluidParams.add(BufferBUniforms.iSize, "value", 0.01, 0.1, 0.0001).name("Size");
+            BufferAUniforms.iSize.value = BufferBUniforms.iSize.value;
+            size.onChange(function (value) {
+
+                BufferAUniforms.iSize.value = BufferBUniforms.iSize.value;
+
+            });
             var gridSize = fluidParams.add(BufferAUniforms.iDx, "value", 0.2, 0.5, 0.01).name("Grid Size");
 
             var colourParams = gui.addFolder("Colours");
@@ -830,8 +884,8 @@
 
             });
 
-            var firstColour = colourParams.addColor(ImageUniforms.iColourOne, "value", colourOne / 255).name("First Colour");
-            var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo / 255).name("Second Colour");
+            var firstColour = colourParams.addColor(ImageUniforms.iColourOne, "value", colourOne).name("First Colour");
+            var secondColour = colourParams.addColor(ImageUniforms.iColourTwo, "value", colourTwo).name("Second Colour");
             firstColour.domElement.style.pointerEvents = "none";
             firstColour.domElement.style.opacity = 0.5;
 
@@ -858,28 +912,17 @@
             evt.preventDefault();
             var el = document.getElementById("container");
             BufferAUniforms.iMouse.value.z = 1;
+            BufferBUniforms.iMouse.value.z = 1;
 
         }
 
         function handleMove(evt) {
 
             evt.preventDefault();
-            //var el = document.getElementById("container");
             var touches = evt.changedTouches;
             var x = 0, y = 0;
 
-            if (BufferAUniforms.iMouse.value.z === 1) {
-
-                /*
-                x = touches[0].pageX * scale;
-                y = (window.innerHeight - touches[0].pageY) * scale;
-
-                BufferAUniforms.iMouse.value.x = x;
-                BufferAUniforms.iMouse.value.y = y;
-
-                BufferCUniforms.iMouse.value.x = x;
-                BufferCUniforms.iMouse.value.y = y;
-                */
+            if (BufferBUniforms.iMouse.value.z === 1) {
 
                 var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
@@ -889,15 +932,19 @@
 
                 x = touches[0].pageX - w;
                 y = touches[0].pageY - h;
-
-                //x *= scale;
-                //y *= scale;
+                y = height - y;
 
                 BufferAUniforms.iMouse.value.x = x;
-                BufferAUniforms.iMouse.value.y = height - y;
+                BufferAUniforms.iMouse.value.y = y;
 
-                BufferCUniforms.iMouse.value.x = x;
-                BufferCUniforms.iMouse.value.y = height - y;
+                BufferBUniforms.iMouse.value.x = x;
+                BufferBUniforms.iMouse.value.y = y;
+
+                BufferBUniforms.iVectorForce.value.x = vel.x;
+                BufferBUniforms.iVectorForce.value.y = vel.y;
+
+                vel.x = x;
+                vel.y = y;
 
             }
 
@@ -907,6 +954,7 @@
 
             evt.preventDefault();
             BufferAUniforms.iMouse.value.z = 0;
+            BufferBUniforms.iMouse.value.z = 0;
 
         }
 
@@ -916,6 +964,7 @@
 
                 evt.preventDefault();
                 BufferAUniforms.iMouse.value.z = 0;
+                BufferBUniforms.iMouse.value.z = 0;
 
             }
 
@@ -941,10 +990,10 @@
             BufferB.setSize(x, y);
             BufferBFeedBack.setSize(x, y);
 
-            BufferCUniforms.iResolution.value.x = x;
+            /*BufferCUniforms.iResolution.value.x = x;
             BufferCUniforms.iResolution.value.y = y;
             BufferC.setSize(x, y);
-            BufferCFeedBack.setSize(x, y);
+            BufferCFeedBack.setSize(x, y);*/
 
             ImageUniforms.iResolution.value.x = x;
             ImageUniforms.iResolution.value.y = y;

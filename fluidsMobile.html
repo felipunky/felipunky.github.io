@@ -506,7 +506,7 @@
         var timeDelta = 0.0;
         var colourOne = new THREE.Color(0, 0, 25.5);
         var colourTwo = new THREE.Color(2550, 255, 76.5);
-        var parameter = { iter: 1, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
+        var parameter = { iter: 2, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
         var x = 0, y = 0;
         var acc = new THREE.Vector2(0, 0), vel = new THREE.Vector2(0, 0);
 
@@ -589,7 +589,7 @@
                 iSize: { value: 0.0135 },
                 iDx: { value: 0.5 },
                 iSpeed: { value: 2.0 },
-                iColourForce: { value: 3.0 },
+                iColourForce: { value: 5.0 },
                 iRandom: { value: true },
                 iGrid: { value: true },
                 iFrame: { value: 0 }
@@ -705,8 +705,6 @@
                     vel.y = y;
 
                 }
-
-                
 
             }
 
@@ -943,22 +941,10 @@
         function handleMove(evt) {
 
             evt.preventDefault();
-            //var el = document.getElementById("container");
             var touches = evt.changedTouches;
             var x = 0, y = 0;
 
             if (BufferBUniforms.iMouse.value.z === 1) {
-
-                /*
-                x = touches[0].pageX * scale;
-                y = (window.innerHeight - touches[0].pageY) * scale;
-
-                BufferAUniforms.iMouse.value.x = x;
-                BufferAUniforms.iMouse.value.y = y;
-
-                BufferCUniforms.iMouse.value.x = x;
-                BufferCUniforms.iMouse.value.y = y;
-                */
 
                 var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
@@ -969,9 +955,6 @@
                 x = touches[0].pageX - w;
                 y = touches[0].pageY - h;
                 y = height - y;
-
-                //x *= scale;
-                //y *= scale;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
@@ -1009,35 +992,11 @@
 
         }
 
-        function onWindowResize(event) {
+        function onWindowResize(event)
+        {
 
             renderer.setSize(width, height);
-            /*var x = 0;
-            var y = 0;
 
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            x = renderer.domElement.width;
-            y = renderer.domElement.height;
-
-            BufferAUniforms.iResolution.value.x = x;
-            BufferAUniforms.iResolution.value.y = y;
-            BufferA.setSize(x, y);
-            BufferAFeedBack.setSize(x, y);
-
-            BufferBUniforms.iResolution.value.x = x;
-            BufferBUniforms.iResolution.value.y = y;
-            BufferB.setSize(x, y);
-            BufferBFeedBack.setSize(x, y);
-
-            BufferCUniforms.iResolution.value.x = x;
-            BufferCUniforms.iResolution.value.y = y;
-            BufferC.setSize(x, y);
-            BufferCFeedBack.setSize(x, y);
-
-            ImageUniforms.iResolution.value.x = x;
-            ImageUniforms.iResolution.value.y = y;
-            */
         }
 
     </script>
