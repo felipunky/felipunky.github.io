@@ -651,8 +651,14 @@
                     BufferBUniforms.iMouse.value.x = x;
                     BufferBUniforms.iMouse.value.y = y;
 
-                    BufferBUniforms.iVectorForce.value.x = vel.x;
-                    BufferBUniforms.iVectorForce.value.y = vel.y;
+                    
+                    if( vel.x > 0.1 || vel.y > 0.1 )
+                    {
+
+                        BufferBUniforms.iVectorForce.value.x = vel.x;
+                        BufferBUniforms.iVectorForce.value.y = vel.y;
+
+                    }
 
                     vel.x = x;
                     vel.y = y;
@@ -915,8 +921,13 @@
                 BufferBUniforms.iMouse.value.x = x;
                 BufferBUniforms.iMouse.value.y = y;
 
-                BufferBUniforms.iVectorForce.value.x = vel.x;
-                BufferBUniforms.iVectorForce.value.y = vel.y;
+                if( vel.x > 0.1 || vel.y > 0.1 )
+                {
+
+                    BufferBUniforms.iVectorForce.value.x = vel.x;
+                    BufferBUniforms.iVectorForce.value.y = vel.y;
+
+                }
 
                 vel.x = x;
                 vel.y = y;
