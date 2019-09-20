@@ -967,7 +967,7 @@ a.brand:focus{
   opacity: 0;
   display: none;
   margin-top: 3.2rem;
-  color: #fff;
+  color: #000;
   line-height: 1.71rem;
   -webkit-transform: translateY(2rem);
   -ms-transform: translateY(2rem);
@@ -1832,10 +1832,16 @@ a.brand:focus{
 .love
 {
     
-    color: #ff0000;
+    color: #f3ca30;
     
 }
 
+.WhatIDo
+{
+
+    color: #fff;
+
+}
 
 /* 4.2 Sections */
 
