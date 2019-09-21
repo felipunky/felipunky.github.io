@@ -1160,7 +1160,7 @@ a.brand:focus{
   bottom: -15%;
   width: 101%;
   height: 57.2%;
-  background:url("Images/bg/dots.png") 0 0 repeat;
+  background:url("/Images/bg/dots.png") 0 0 repeat;
 }
 
 .experience-box{
@@ -2035,7 +2035,7 @@ a.brand:focus{
   width: 101%;
   top:50%;
   opacity: 0.8;
-  background: url("Images/bg/dots.png") 0 0 repeat;
+  background: url("/Images/bg/dots.png") 0 0 repeat;
 }
 
 
@@ -2439,7 +2439,7 @@ a.brand:focus{
 }
 
 .bg-dots{
-  background:url("Images/bg/dots2.png") 0 0 repeat;
+  background:url("/Images/bg/dots2.png") 0 0 repeat;
 }
 
 
@@ -5077,7 +5077,7 @@ a.brand:focus{
   bottom: -15%;
   width: 101%;
   height: 57.2%;
-  background:url("Images/bg/dots.png") 0 0 repeat;
+  background:url("/Images/bg/dots.png") 0 0 repeat;
 }
 
 .experience-box{
@@ -5916,7 +5916,7 @@ a.brand:focus{
   width: 101%;
   top:50%;
   opacity: 0.8;
-  background: url("Images/bg/dots.png") 0 0 repeat;
+  background: url("/Images/bg/dots.png") 0 0 repeat;
 }
 
 
@@ -6309,7 +6309,7 @@ a.brand:focus{
 }
 
 .bg-dots{
-  background:url("Images/bg/dots2.png") 0 0 repeat;
+  background:url("/Images/bg/dots2.png") 0 0 repeat;
 }
 
 
