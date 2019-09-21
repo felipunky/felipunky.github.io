@@ -445,7 +445,7 @@
         var timeDelta = 0.0;
         var colourOne = new THREE.Color(0, 0, 25.5);
         var colourTwo = new THREE.Color(2550, 255, 76.5);
-        var parameter = { iter: 3, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
+        var parameter = { iter: 2, restart: false, text: "0 = Fluid, 1 = Smoke, 2 = Fire", random: true, fakethreed: true };
         var x = 0, y = 0;
         var acc = new THREE.Vector2(0, 0), vel = new THREE.Vector2(0, 0);
 
@@ -656,6 +656,10 @@
 
                 BufferAUniforms.iMouse.value.z = 0;
                 BufferBUniforms.iMouse.value.z = 0;
+                BufferAUniforms.iMouse.value.x = 1000;
+                BufferAUniforms.iMouse.value.y = 1000;
+                BufferBUniforms.iMouse.value.x = 1000;
+                BufferBUniforms.iMouse.value.y = 1000;
 
             }
 
@@ -905,6 +909,10 @@
             evt.preventDefault();
             BufferAUniforms.iMouse.value.z = 0;
             BufferBUniforms.iMouse.value.z = 0;
+            BufferAUniforms.iMouse.value.x = 1000;
+            BufferAUniforms.iMouse.value.y = 1000;
+            BufferBUniforms.iMouse.value.x = 1000;
+            BufferBUniforms.iMouse.value.y = 1000;
 
         }
 
@@ -915,6 +923,10 @@
                 evt.preventDefault();
                 BufferAUniforms.iMouse.value.z = 0;
                 BufferBUniforms.iMouse.value.z = 0;
+                BufferAUniforms.iMouse.value.x = 1000;
+                BufferAUniforms.iMouse.value.y = 1000;
+                BufferBUniforms.iMouse.value.x = 1000;
+                BufferBUniforms.iMouse.value.y = 1000;
 
             }
 
