@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -184,7 +184,7 @@
 
         }
 
-        float ray( vec3 ro, vec3 rd, out float d, out vec3 colO, float time )
+        float ray( vec3 ro, vec3 rd, out float d, inout vec3 colO, float time )
         {
 
         float t = 0.0;
