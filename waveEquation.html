@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -95,11 +95,11 @@
         float right = texture2D(iChannel0, uv + diff.xz, 0.0).r;
         float bottom = texture2D(iChannel0, uv + diff.zy, 0.0).r;
         vec3 red = vec3( -(center.a - 0.5) * 2.0 + (top + left + right + bottom - 2.0) );
-        /*if( iMouse.z < 0.5 )
+        if( iMouse.z < 0.5 )
         {
-        c = cir( p, vec2( 0.9 + sin( iTime * 5.0 ) * 0.5, 0.5 - cos( iTime * 5.0 ) * 0.5 ) );
+        c = cir( p, vec2( sin( iTime * 5.0 ) * 0.45, cos( iTime * 5.0 ) * 0.45 ) + 0.5 );
         }
-        */
+        
         vec3 ran = vec3( c * hash( iTimeDelta + 5.0 ), c * hash( iTimeDelta + 2.0 ), c * hash( iTimeDelta + 1.0 ) );
         red += c; // mouse
         red *= 0.98; // damping
@@ -108,7 +108,7 @@
         red = clamp(red, 0., 1.);
         gl_FragColor = vec4(red, center.r);
         gl_FragColor += 0.05 * texture2D( iChannel0, uv, 0.0 );
-        //gl_FragColor *= vec4( 1.0, 1.5, 1.3, 1.0 );
+        gl_FragColor *= vec4( 1.0, 1.5, 1.3, 1.0 );
         }
     </script>
 
@@ -120,13 +120,13 @@
         #extension GL_OES_standard_derivatives : enable
         uniform sampler2D iChannel0;
         uniform vec2 iResolution;
-        uniform float iTime;
-        uniform float iTimeDelta;
-        uniform vec3 iMouse;
+        //uniform float iTime;
+        //uniform float iTimeDelta;
+        //uniform vec3 iMouse;
         void main()
         {
         vec2 uv = gl_FragCoord.xy / iResolution.xy;
-        vec2 mou = iMouse.xy / iResolution.y;
+        //vec2 mou = iMouse.xy / iResolution.y;
         gl_FragColor = texture2D( iChannel0, uv );
         //gl_FragColor = mix( vec4( 1 ), vec4( 0 ), col.r );
         // Output to screen
@@ -188,9 +188,9 @@
             else {
                 height = width * scale;
             }
-*/
+
             container.width = width;
-            container.height = height;
+            container.height = height;*/
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
             BufferAFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
@@ -219,10 +219,10 @@
             // Image.
             ImageUniforms = {
                 iChannel0: { value: BufferA },
-                iTime: { value: 0.0 },
+                //iTime: { value: 0.0 },
                 iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
-                iMouse: { value: new THREE.Vector3() },
-                iTimeDelta: { value: timeDelta }
+                //iMouse: { value: new THREE.Vector3() },
+                //iTimeDelta: { value: timeDelta }
             };
             ImageMat = new THREE.ShaderMaterial({
                 uniforms: ImageUniforms,
@@ -238,12 +238,12 @@
             document.getElementById("container").onmousemove = function (e) {
                 if (BufferAUniforms.iMouse.value.z === 1) {
                     var element = document.getElementById("container").getBoundingClientRect();
-                    x = (e.offsetX);//e.pageX;
-                    y = (element.height - e.offsetY);//window.innerHeight - e.pageY;
-                    BufferAUniforms.iMouse.value.x = x;
-                    BufferAUniforms.iMouse.value.y = y;
-                    ImageUniforms.iMouse.value.x = (x) * scale;
-                    ImageUniforms.iMouse.value.y = (y) * scale;
+                    x = (e.offsetX) * scale;//e.pageX;
+                    y = (element.height - e.offsetY) * scale;//window.innerHeight - e.pageY;
+                    BufferAUniforms.iMouse.value.x = x / 1.5;
+                    BufferAUniforms.iMouse.value.y = y / 1.5;
+                    /*ImageUniforms.iMouse.value.x = x;
+                    ImageUniforms.iMouse.value.y = y;*/
                 }
             }
             document.getElementById("container").onmousedown = function (e) {
@@ -258,15 +258,15 @@
         //------------------------------------------
         function update() {
             requestAnimationFrame(update);
-            BufferAUniforms.iTime.value += 0.05;
-            ImageUniforms.iTime.value += 0.05;
+            BufferAUniforms.iTime.value += 0.025;
+            //ImageUniforms.iTime.value += 0.025;
             render();
         }
         //------------------------------------------
         // Main rendering
         //------------------------------------------
         function render() {
-            renderer.setSize(width, height);
+            //renderer.setSize(width, height);
             BufferAUniforms.iTimeDelta.value = timeDelta;
             BufferAUniforms.iChannel0.value = BufferAFeedBack.texture;
             ImageUniforms.iChannel0.value = BufferA.texture;
@@ -312,11 +312,11 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
                 x = touches[0].pageX - w;
-                y = touches[0].pageY - h;
-                BufferAUniforms.iMouse.value.x = (x);
-                BufferAUniforms.iMouse.value.y = height - (y);
-                ImageUniforms.iMouse.value.x = (x) * scale;
-                ImageUniforms.iMouse.value.y = (y) * scale;
+                y = height - touches[0].pageY - h;
+                BufferAUniforms.iMouse.value.x = x / 1.5;
+                BufferAUniforms.iMouse.value.y = y / 1.5;
+                /*ImageUniforms.iMouse.value.x = (x) * scale;
+                ImageUniforms.iMouse.value.y = (y) * scale;*/
             }
         }
         function handleEnd(evt) {
@@ -328,11 +328,13 @@
             BufferAUniforms.iMouse.value.z = 0;
         }
         function onWindowResize(event) {
-            renderer.setSize(width, height);
+            renderer.setSize(width * 1.5, height * 1.5);
+            //BufferAUniforms.iMouse.value.x *= 2;
+            //BufferAUniforms.iMouse.value.y *= 2;
             //BufferAUniforms.iResolution.value.x = renderer.domElement.width;
             //BufferAUniforms.iResolution.value.y = renderer.domElement.height;
-            //ImageUniforms.iResolution.value.x = renderer.domElement.width;
-            //ImageUniforms.iResolution.value.y = renderer.domElement.height;
+            ImageUniforms.iResolution.value.x = renderer.domElement.width;
+            ImageUniforms.iResolution.value.y = renderer.domElement.height;
             //BufferA.setSize(renderer.domElement.width, renderer.domElement.height);
             //BufferAFeedBack.setSize(renderer.domElement.width, renderer.domElement.height);
         }
