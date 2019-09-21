@@ -1843,6 +1843,22 @@ a.brand:focus{
 
 }
 
+.Small
+{
+
+    color: #f3ca2f;
+    font-size: x-small;
+
+}
+
+.XSmall
+{
+
+    color: #f3ca2f;
+    font-size: xx-small;
+
+}
+
 /* 4.2 Sections */
 
 
