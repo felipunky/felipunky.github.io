@@ -312,9 +312,9 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
                 x = touches[0].pageX - w;
-                y = height - touches[0].pageY - h;
-                BufferAUniforms.iMouse.value.x = x;
-                BufferAUniforms.iMouse.value.y = y;
+                y = touches[0].pageY - h;
+                BufferAUniforms.iMouse.value.x = x / 1.5;
+                BufferAUniforms.iMouse.value.y = height - y / 1.5;
                 /*ImageUniforms.iMouse.value.x = (x) * scale;
                 ImageUniforms.iMouse.value.y = (y) * scale;*/
             }
