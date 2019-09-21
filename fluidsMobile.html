@@ -642,8 +642,8 @@
 
                     var element = document.getElementById("container").getBoundingClientRect();
 
-                    x = (e.offsetX);//x = e.clientX * scale;//e.pageX;
-                    y = (element.height - e.offsetY);//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    x = (e.offsetX) / 1.7;//x = e.clientX * scale;//e.pageX;
+                    y = (element.height - e.offsetY) / 1.7;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
@@ -911,8 +911,8 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
 
-                x = touches[0].pageX - w;
-                y = touches[0].pageY - h;
+                x = ( touches[0].pageX - w ) / 1.7;
+                y = ( touches[0].pageY - h ) / 1.7;
                 y = height - y;
 
                 BufferAUniforms.iMouse.value.x = x;
@@ -959,7 +959,9 @@
         function onWindowResize(event)
         {
 
-            renderer.setSize(width, height);
+            renderer.setSize(width * 1.7, height * 1.7);
+            ImageUniforms.iResolution.value.x = renderer.domElement.width;
+            ImageUniforms.iResolution.value.y = renderer.domElement.height;
 
         }
 
