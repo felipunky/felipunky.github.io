@@ -1,4 +1,4 @@
-﻿( function($) {
+( function($) {
   'use strict';
 
     
@@ -128,6 +128,7 @@
       	$('.pagepiling').pagepiling({
     		scrollingSpeed: 280,
 		    loopBottom:true,
+            loopTop:true,
 		    anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7'],
 		    afterLoad: function(anchorLink, index){
 	            if ( $('.pp-section.active').scrollTop() > 0 ){
@@ -180,7 +181,7 @@
 
 
     /*-------------------------------------------------------------------------------
-	  Change bacgkround on project section
+	  Change background on project section
 	-------------------------------------------------------------------------------*/
 
 
@@ -190,6 +191,11 @@
     	$('.bg-changer .section-bg').removeClass('active').eq(index).addClass('active');
     });
 
+ 
+     $('.project-box').on('touchstart',function(){
+          var index = $('.project-box').index(this);
+          $('.bg-changer .section-bg').removeClass('active').eq(index).addClass('active');
+    });
 
 
 	/*-------------------------------------------------------------------------------
