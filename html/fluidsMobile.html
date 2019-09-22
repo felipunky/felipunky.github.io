@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,6 +14,16 @@
             width: 100%;
             height: 100%
         }
+
+        #container
+        {
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+        }
     </style>
 </head>
 <body onload="startup()">
@@ -21,8 +31,10 @@
     <!-- Main THREE includes-->
     <!--<script src="D:\Programas\felipunky.github.io\three.min.js"></script>
     <script src="D:\Programas\felipunky.github.io\dat.gui.min.js"></script>-->
-    <script src="felipunky.github.io/three.min.js"></script>
-    <script src="felipunky.github.io/dat.gui.min.js"></script>
+    <script src="felipunky.github.io/js/three.min.js"></script>
+    <script src="felipunky.github.io/js/dat.gui.min.js"></script>
+    <!--<script src="/Users/Felipe/Documents/GitHub/felipunky.github.io/three.min.js"></script>
+    <script src="/Users/Felipe/Documents/GitHub/felipunky.github.io/dat.gui.min.js"></script>-->
     <!--<script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\three.min.js"></script>
     <script src="C:\Users\Paula\Desktop\Felipe\felipunky.github.io\dat.gui.min.js"></script>-->
     <!-------------------->
@@ -115,39 +127,39 @@
         if( iRandom == 1 )
         {
 
-        colO = vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
-        noise( uv + tim + 2.0 ), 1 );
+            colO = vec4( noise( uv + tim ), noise( uv + tim + 1.0 ),
+            noise( uv + tim + 2.0 ), 1 );
 
         }
 
         else
         {
 
-        colO += 1.0;
+            colO += 1.0;
 
         }
 
         if( iGrid == 1 )
         {
 
-        if( iFrame < 20 )
-        {
+            if( iFrame < 20 )
+            {
 
-        if( mod( max( uv.x, 0.01 ), 0.02 ) > 0.005  )
-        {
+                if( mod( max( uv.x, 0.01 ), 0.02 ) > 0.005  )
+                {
 
-        col += 0.1;
+                    col += 0.1;
 
-        }
+                }
 
-        else
-        {
+                else 
+                {
 
-        col -= 0.1;
+                    col -= 0.1;
 
-        }
+                }
 
-        }
+            }
 
         }
 
@@ -331,7 +343,7 @@
 
         }
     </script>
-
+    
     <!-- Image. -->
     <script id="ImageFrag" type="x-shader/x-fragment">
 
@@ -359,66 +371,66 @@
         if( iRandom == 1 )
         {
 
-        tex = vec4( mix( tex.rgb * iColourForce, tex.rgb, tex.z ), 1 );
+            tex = vec4( mix( tex.rgb * iColourForce, tex.rgb, tex.z ), 1 );
 
         }
 
-        else
+        else 
         {
 
-        tex = vec4( mix( iColourOne / 255.0, iColourTwo / 255.0, tex.z ), 1 );
+            tex = vec4( mix( iColourOne / 255.0, iColourTwo / 255.0, tex.z ), 1 );
 
         }
 
         if( iBumpMap == 1 )
         {
 
-        vec3 sp = vec3(uv, 0); // Surface posion. Hit point, if you prefer. Essentially, a screen at the origin.
-        vec3 rd = normalize(vec3(uv, 1.)); // Unit direction vector. From the origin to the screen plane.
-        vec3 lp = vec3(0.9, 1.5, -5.0); // Light position - Back from the screen.
-        vec3 sn = vec3(0., 0., -1); // Plane normal. Z pointing toward the viewer.
+            vec3 sp = vec3(uv, 0); // Surface posion. Hit point, if you prefer. Essentially, a screen at the origin.
+            vec3 rd = normalize(vec3(uv, 1.)); // Unit direction vector. From the origin to the screen plane.
+            vec3 lp = vec3(0.9, 1.5, -5.0); // Light position - Back from the screen.
+            vec3 sn = vec3(0., 0., -1); // Plane normal. Z pointing toward the viewer.
 
-        vec2 eps = vec2(4./iResolution.y, 0.);
+            vec2 eps = vec2(4./iResolution.y, 0.);
 
-        float f = bumpFunc(sp.xy); // Sample value multiplied by the amplitude.
-        float fx = bumpFunc(sp.xy-eps.xy); // Same for the nearby sample in the X-direction.
-        float fy = bumpFunc(sp.xy-eps.yx); // Same for the nearby sample in the Y-direction.
+            float f = bumpFunc(sp.xy); // Sample value multiplied by the amplitude.
+            float fx = bumpFunc(sp.xy-eps.xy); // Same for the nearby sample in the X-direction.
+            float fy = bumpFunc(sp.xy-eps.yx); // Same for the nearby sample in the Y-direction.
 
-        // Controls how much the bump is accentuated.
-        const float bumpFactor = 0.1;
+            // Controls how much the bump is accentuated.
+            const float bumpFactor = 0.1;
 
-        // Using the above to determine the dx and dy function gradients.
-        fx = (fx-f)/eps.x; // Change in X
-        fy = (fy-f)/eps.x; // Change in Y.
-        sn = normalize( sn + vec3(fx, fy, 0)*bumpFactor );
-
-
-        // LIGHTING
-        //
-        // Determine the light direction vector, calculate its distance, then normalize it.
-        vec3 ld = lp - sp;
-        float lDist = max(length(ld), 0.001);
-        ld /= lDist;
-
-        // Light attenuation.
-        float atten = 1./(1.0 + lDist*lDist*0.15);
-        //float atten = min(1./(lDist*lDist*1.), 1.);
-
-        // Using the bump function, "f," to darken the crevices. Completely optional, but I
-        // find it gives extra depth.
-        atten *= f*.9 + .1; // Or... f*f*.7 + .3; //  pow(f, .75); // etc.
+            // Using the above to determine the dx and dy function gradients.
+            fx = (fx-f)/eps.x; // Change in X
+            fy = (fy-f)/eps.x; // Change in Y.
+            sn = normalize( sn + vec3(fx, fy, 0)*bumpFactor );
 
 
+            // LIGHTING
+            //
+            // Determine the light direction vector, calculate its distance, then normalize it.
+            vec3 ld = lp - sp;
+            float lDist = max(length(ld), 0.001);
+            ld /= lDist;
 
-        // Diffuse value.
-        float diff = max(dot(sn, ld), 0.);
-        // Enhancing the diffuse value a bit. Made up.
-        diff = pow(diff, 4.)*0.66 + pow(diff, 8.)*0.34;
-        // Specular highlighting.
-        float spec = pow(max(dot( reflect(-ld, sn), -rd), 0.), 12.);
+            // Light attenuation.
+            float atten = 1./(1.0 + lDist*lDist*0.15);
+            //float atten = min(1./(lDist*lDist*1.), 1.);
 
-        vec3 col = (tex.rgb * (diff*vec3(1, .97, .92)*2. + 0.5) + vec3(1., .6, .2)*spec*2.)*atten;
-        tex.rgb = col;
+            // Using the bump function, "f," to darken the crevices. Completely optional, but I
+            // find it gives extra depth.
+            atten *= f*.9 + .1; // Or... f*f*.7 + .3; //  pow(f, .75); // etc.
+
+
+
+            // Diffuse value.
+            float diff = max(dot(sn, ld), 0.);
+            // Enhancing the diffuse value a bit. Made up.
+            diff = pow(diff, 4.)*0.66 + pow(diff, 8.)*0.34;
+            // Specular highlighting.
+            float spec = pow(max(dot( reflect(-ld, sn), -rd), 0.), 12.);
+
+            vec3 col = (tex.rgb * (diff*vec3(1, .97, .92)*2. + 0.5) + vec3(1., .6, .2)*spec*2.)*atten;
+            tex.rgb = col;
 
         }
 
@@ -436,6 +448,8 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
+        var width = 0;
+        var height = 0;
         var camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferImageScene, renderer; //BufferCScene;
         var BufferA, BufferAFeedBack, BufferB;//, BufferC;
         var BufferAUniforms, BufferBUniforms, ImageUniforms; //BufferCUniforms;
@@ -475,6 +489,11 @@
 
             container = document.getElementById('container');
 
+            width = 520;
+            height = 520;
+            container.width = width;
+            container.height = height;
+
             //setup scenes
             BufferAScene = new THREE.Scene();
             BufferAFeedBackScene = new THREE.Scene();
@@ -491,13 +510,13 @@
             container.appendChild(renderer.domElement);
 
             // create buffers
-            BufferA = new THREE.WebGLRenderTarget(window.innerWidth * 0.5, window.innerHeight * 0.5, renderTargetNearestFloatParams);
-            BufferAFeedBack = new THREE.WebGLRenderTarget(window.innerWidth * 0.5, window.innerHeight * 0.5, renderTargetNearestFloatParams);
-            BufferB = new THREE.WebGLRenderTarget(window.innerWidth * 0.5, window.innerHeight * 0.5, renderTargetNearestFloatParams);
-            BufferBFeedBack = new THREE.WebGLRenderTarget(window.innerWidth * 0.5, window.innerHeight * 0.5, renderTargetNearestFloatParams);
-            /*BufferC = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
-            BufferCFeedBack = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);*/
-            BufferImage = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetNearestFloatParams);
+            BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferAFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferB = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferBFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            /*BufferC = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferCFeedBack = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);*/
+            BufferImage = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
 
             // Setup output camera
             camera = new THREE.Camera();
@@ -517,7 +536,7 @@
                 iChannel0: { value: BufferA },
                 iChannel1: { value: BufferB },
                 iTime: { value: 1.0 },
-                iResolution: { value: new THREE.Vector2() },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iMouse: { value: new THREE.Vector3() },
                 iTimeDelta: { value: 1.0 },
                 iSize: { value: 0.0135 },
@@ -545,7 +564,7 @@
             BufferBUniforms = {
                 iChannel0: { value: BufferB },
                 //iChannel1: { value: BufferC },
-                iResolution: { value: new THREE.Vector2() },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iViscocity: { value: 0.3 },
                 iDensity: { value: 0.2 },
                 iForce: { value: 50.0 },
@@ -557,6 +576,7 @@
                 iVectorForce: { value: new THREE.Vector2() },
                 iMouse: { value: new THREE.Vector3() },
                 iSize: { value: 0.0135 }
+
             };
             BufferBMat = new THREE.ShaderMaterial({
                 uniforms: BufferBUniforms,
@@ -568,13 +588,13 @@
             BufferBScene.add(BufferBQuad);
 
             // BufferBFeedBack.
-            /*BufferBFeedBackQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
+            BufferBFeedBackQuad = new THREE.Mesh(BufferBGeo, BufferBMat);
             BufferBFeedBackScene.add(BufferBFeedBackQuad);
 
             // BufferC.
-            BufferCUniforms = {
+            /*BufferCUniforms = {
                 iChannel0: { value: BufferC },
-                iResolution: { value: new THREE.Vector2() },
+                iResolution: { value: new THREE.Vector2(width, height) },
                 iMouse: { value: new THREE.Vector3() },
                 iForce: { value: 8.0 },
                 iSize: { value: 0.0135 }
@@ -590,13 +610,13 @@
 
             // BufferCFeedBack.
             BufferCFeedBackQuad = new THREE.Mesh(BufferCGeo, BufferCMat);
-            BufferCFeedBackScene.add(BufferCFeedBackQuad);*/
-
+            BufferCFeedBackScene.add(BufferCFeedBackQuad);
+            */
             // Image.
             ImageUniforms = {
                 //iChannel0: { type: "t", value: BufferA },
                 iChannel0: { value: BufferA },
-                iResolution: { value: new THREE.Vector2() },
+                iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
                 iColourForce: { value: 1.1 },
                 iRandom: { value: true },
                 iColourOne: { value: colourOne },
@@ -617,12 +637,13 @@
 
             document.getElementById("container").onmousemove = function (e) {
 
-                if (BufferBUniforms.iMouse.value.z === 1) {
+                if (BufferBUniforms.iMouse.value.z === 1)
+                {
 
                     var element = document.getElementById("container").getBoundingClientRect();
 
-                    x = (e.offsetX) * scale;//x = e.clientX * scale;//e.pageX;
-                    y = (element.height - e.offsetY) * scale;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    x = (e.offsetX) / 1.7;//x = e.clientX * scale;//e.pageX;
+                    y = (element.height - e.offsetY) / 1.7;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
@@ -630,6 +651,7 @@
                     BufferBUniforms.iMouse.value.x = x;
                     BufferBUniforms.iMouse.value.y = y;
 
+                    
                     if( vel.x > 0.1 || vel.y > 0.1 )
                     {
 
@@ -645,14 +667,16 @@
 
             }
 
-            document.getElementById("container").onmousedown = function (e) {
+            document.getElementById("container").onmousedown = function (e)
+            {
 
                 BufferAUniforms.iMouse.value.z = 1;
                 BufferBUniforms.iMouse.value.z = 1;
 
             }
 
-            document.getElementById("container").onmouseup = function (e) {
+            document.getElementById("container").onmouseup = function (e)
+            {
 
                 BufferAUniforms.iMouse.value.z = 0;
                 BufferBUniforms.iMouse.value.z = 0;
@@ -701,6 +725,9 @@
                     BufferAUniforms.iChannel1.value = BufferBFeedBack.texture;
 
                     BufferBUniforms.iChannel0.value = BufferBFeedBack.texture;
+                    //BufferBUniforms.iChannel1.value = BufferCFeedBack.texture;
+
+                    //BufferCUniforms.iChannel0.value = BufferCFeedBack.texture;
 
                     ImageUniforms.iChannel0.value = BufferAFeedBack.texture;
 
@@ -721,6 +748,15 @@
                     let tempB = BufferB;
                     BufferB = BufferBFeedBack;
                     BufferBFeedBack = tempB;
+
+                    /*renderer.setRenderTarget(BufferC);
+                    renderer.render(BufferCScene, camera);
+                    renderer.setRenderTarget(null);
+                    renderer.clear();
+
+                    let tempC = BufferC;
+                    BufferC = BufferCFeedBack;
+                    BufferCFeedBack = tempC;*/
 
                 }
 
@@ -879,8 +915,8 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
 
-                x = touches[0].pageX - w;
-                y = touches[0].pageY - h;
+                x = ( touches[0].pageX - w ) / 1.7;
+                y = ( touches[0].pageY - h ) / 1.7;
                 y = height - y;
 
                 BufferAUniforms.iMouse.value.x = x;
@@ -932,28 +968,12 @@
 
         }
 
-        function onWindowResize(event) {
+        function onWindowResize(event)
+        {
 
-            var x = 0;
-            var y = 0;
-
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            x = renderer.domElement.width;
-            y = renderer.domElement.height;
-
-            BufferAUniforms.iResolution.value.x = x;
-            BufferAUniforms.iResolution.value.y = y;
-            BufferA.setSize(x, y);
-            BufferAFeedBack.setSize(x, y);
-
-            BufferBUniforms.iResolution.value.x = x;
-            BufferBUniforms.iResolution.value.y = y;
-            BufferB.setSize(x, y);
-            BufferBFeedBack.setSize(x, y);
-
-            ImageUniforms.iResolution.value.x = x;
-            ImageUniforms.iResolution.value.y = y;
+            renderer.setSize(width * 1.7, height * 1.7);
+            ImageUniforms.iResolution.value.x = renderer.domElement.width;
+            ImageUniforms.iResolution.value.y = renderer.domElement.height;
 
         }
 
