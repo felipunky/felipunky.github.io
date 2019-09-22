@@ -1,4 +1,5 @@
 <html>
+    <link href="../css/style.css" rel="stylesheet" media="screen">
 <head>
     <title>Optimization</title>
     <style>
@@ -94,13 +95,19 @@
             $8$ is a positive number, so $x=4$ is positive upwards $S^{\prime\prime}(4)=\cup$ meaning we are at a $Minimum$
             Why does this work? The derivative $f^{\prime}(x)$ of a function gives us the slope/tangent, that means that when the function's slope is at $0$, we are at a local minimum or maximum.
         </p>
+        <span class="SmallWhite">Image by Felipe Gutiérrez using GeoGebra</span>
         <img src="../Images/Optimization/x2y2.png" alt="x2y2">
         <p>
             In the example above, we are only dealing with one variable $x$ (although we are solving a two variable problem we are substituting to only solve for one variable), but what happens if we have a function that we want to optimize that has more than one variable?
             <br>
-            We need multi-variable calculus, and that means we need to use partial derivatives $\frac{\partial f}{\partial x}$ to evaluate the tangent of the function at each input. If we want to solve the problem above $x^2+y^2$ with the constraints $xy=-16$ we can use <a href="http://www.math.harvard.edu/archive/21a_spring_09/PDF/11-08-Lagrange-Multipliers.pdf">Lagrange multipliers</a> to minimize or maximize the functions according to the constraint $\lambda$. The intuition for the Lagrange multipliers is best explained by this image:
+            We need multi-variable calculus, and that means we need to use partial derivatives $\frac{\partial f}{\partial x}$ to evaluate the tangent of the function at each input. If we want to solve the problem above $x^2+y^2$ with the constraints $xy=-16$ we can use <a href="http://www.math.harvard.edu/archive/21a_spring_09/PDF/11-08-Lagrange-Multipliers.pdf">Lagrange multipliers</a> to minimize or maximize the functions according to the constraint $\lambda$.
         </p>
-        <img src="../Images/Optimization/LagrangeMultipliers2D.svg" alt="LagrangeMultipliers">
+        <p>
+        The intuition for the Lagrange multipliers is best explained by this image:
+        <br>
+        <span class="SmallWhite">Image by Wikipedia user Nexcis</span>
+        </p>
+        <img src="../Images/Optimization/LagrangeMultipliers.jpg" alt="LagrangeMultipliers">
         <p>
         The red curve shows the constraint $g(x, y) = c$. The blue curves are contours of $f(x, y)$. The point where the red constraint tangentially touches a blue contour is the maximum of $f(x, y)$ along the constraint, since $d1 > d2$.
         </p>
@@ -180,7 +187,7 @@
         <br>
         We use a probability function $A=\exp{ ( -\Delta f/kT)}$ to accept a state. Where $\Delta f$ is the rate of change from the energy of the previous iteration to the current one ($E_{current}-E_{previous}$), $k$ is the <a href="https://www.britannica.com/science/Boltzmann-constant">Boltzmann constant</a> and $T$ is the temperature (that is decreased every iteration, when this reaches the desired threshold it will also act as an exit condition for the iteration loop).
         <br>
-        Here's a visualization of the process stolen from wikipedia
+        <span class="SmallWhite">Here's a visualization of the process stolen from wikipedia</span>
         <br>
         <img src="../Images/Optimization/Hill_Climbing_with_Simulated_Annealing.gif" title="SimulatedAnnealingHillClimbing" />
         <br>
@@ -215,6 +222,8 @@
             <br>
             The gene map (or our representation) of our fitness function can have many dimensions, so a real representation is impossible. But we can approximate some projection into a 2D world
             <br>
+            <span class="SmallWhite">Image by David Rutten</span>
+            <br>
             <img src="../Images/Optimization/genomegraph_00.png" title="GeneMap">
             <br>
             According to our "Gene Map" we can define two types of mating:
@@ -222,6 +231,8 @@
             Incestous:
             <br>
             Means that we choose partners that are very much like us
+            <br>
+            <span class="SmallWhite">Image by David Rutten</span>
             <br>
             <img src="../Images/Optimization/genomegraph_02.png" title="Incestous">
             <br>
@@ -233,15 +244,21 @@
             <br>
             Means the opposite of incestous, or in other words, that are either far away in the "Gene map" or that are really different from us
             <br>
+            <span class="SmallWhite">Image by David Rutten</span>
+            <br>
             <img src="../Images/Optimization/genomegraph_03.png" title="Zoophilic">
             <br>
             Extreme zoophilic behaviour can also damage the chances of finding an optimum solution as the incompatibility of the genomes can give a result that is not near any local optima.
+            <br>
+            <span class="SmallWhite">Image by David Rutten</span>
             <br>
             <img src="../Images/Optimization/subpopulation_00.png" title="LocalOptima">
             <br>
             Imagine extremely zoophilic behaviour on the graph above, we would end up in solutions that are not even close to any local optima.
             <br>
             Having an understanding of zoophilic and incestous behaviour, it seems like the lesser of the two evils is to find a spot between the two of them
+            <br>
+            <span class="SmallWhite">Image by David Rutten</span>
             <br>
             <img src="../Images/Optimization/genomegraph_04.png" title="LesserOfTwoEvils">
         </p>
@@ -250,6 +267,8 @@
         </h3>
         <p>
             Once the coupling phase has been achieved, we need to define a way in which we would recombine the genes of the selected genomes.
+            <br>
+            <span class="SmallWhite">Image by David Rutten</span>
             <br>
             <img src="../Images/Optimization/coalescence_algorithms.png" title="Coalescense">
             <br>
@@ -270,13 +289,15 @@
         Imagine you are a little kid playing with your friends, you are blind-folded and the game consists of you getting to one specific place (let's say you want to get to the kitchen). The specific place is the global optima, your friends are telling you how "cold" or "hot" you are in relationship to how close to the kitchen you are (this is the output from the fitness/cost function). If your friends like binary states "hot" and "cold", it would be very hard to tell how close you really are to the kitchen, but if they tell you (let's pick an arbitrary scale to clarify a little from $0^{\circ}$ to $100^{\circ}$) that you are at $90^{\circ}$ you can move one step to left and ask again, if you are at $95^{\circ}$ now, you continue in the same direction, otherwise you pick another direction, for example, to the right.
         <br>
         Let's solve a more practical problem (this is a simple kind of packing with regular convex shapes, it has applications in the industry for minimizing the amount of material used when cutting), we want to place some rectangles on the inside of another rectangle
-        <video width="320" height="240" controls>
+        <br>
+        <span class="SmallWhite">Video by Felipe Gutiérrez using Rhino3d/Grasshopper</span>
+        <video width="500" height="400" controls>
             <source type="video/mp4" src="../Videos/Optimization/Packing.mp4">
          </video>
         This is a dummy test, we are only concerned that the rectangles are inside the bin (the sheet) and that the rectangles do not overlap.
-        <a href="../GHFiles/Optimization/BlogOptimization.gh" download>
-            Download the Grasshopper file.
-        </a> 
+        <br>
+        Download the
+        <a href="../GHFiles/Optimization/BlogOptimization.gh" download> Grasshopper file.</a>
         </p>
     </div>
 </body>
