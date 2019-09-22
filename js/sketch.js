@@ -35,10 +35,10 @@ function setup()
 
     scale = window.devicePixelRatio;
 
-    A = createVector( windowWidth * 0.1, windowHeight * 0.1 );
-    B = createVector( windowWidth * 0.1, windowHeight * 0.3 );
-    C = createVector( windowWidth * 0.7, windowHeight * 0.1 );
-    D = createVector( windowWidth * 0.9, windowHeight * 0.2 );
+    A = createVector( windowWidth * 0.1, windowHeight * 0.2 );
+    B = createVector( windowWidth * 0.5, windowHeight * 0.7 );
+    C = createVector( windowWidth * 0.7, windowHeight * 0.2 );
+    D = createVector( windowWidth * 0.85, windowHeight * 0.8 );
     
     var canvas = createCanvas( windowWidth, windowHeight );
     canvas.parent( "container" );
