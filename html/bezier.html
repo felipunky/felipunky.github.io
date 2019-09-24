@@ -1,7 +1,7 @@
 <html>
-    <link href="../css/style.css" rel="stylesheet" media="screen">
 <head>
     <title>Bézier Curves</title>
+    <link href="../css/style.css" rel="stylesheet" media="screen">
     <style>
 
         body 
@@ -29,6 +29,13 @@
         }
 
     </style>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        "HTML-CSS": {minScaleAdjust: 100},
+        SVG: {minScaleAdjust: 100},
+        CommonHTML: {minScaleAdjust: 100}
+        });
+    </script>
     <script type="text/javascript" async
             src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
     </script>
@@ -168,7 +175,9 @@
         </p>
         <a href="processing.html">CPU Version</a>
         <p></p>
-        <a href="shaders.html">GPU Version (Best to stay away from this one if you don't have a beefy GPU)</a>
+        <a href="shaders.html">GPU Version <br>
+        <span class="Small">*Best to stay away from this one if you don't have a beefy GPU</span>
+        </a>
     </div>
 </body>
 </html>
