@@ -209,8 +209,8 @@
         
         vec3 col = mix( vec3( 0 ),
                        mix( vec3( 0.4, 0.1, 0.2 ),
-                           vec3( 0.9, 0.9, 0.5 ),
-                           den
+                            vec3( 0.9 - noise( vec3( sin( iTime * 0.02 ) ) ), 0.9 - noise( vec3( sin( iTime * 0.03 ) ) ), 0.5 ),
+                            den
                            ),
                        den * 4.0
                        );
@@ -226,12 +226,12 @@
         
         vec2 uv = ( -iResolution.xy + 2.0 * gl_FragCoord.xy ) / iResolution.y;
         
-        vec2 mou = -iMouse.xy / iResolution.xy;
+        vec2 mou = iMouse.xy / iResolution.xy;
         
         vec3 ro = vec3( 0.0, 0.0, 1.5 );
         vec3 rd = normalize( vec3( uv, -1.0 ) );
         
-        if( iMouse.z > 0.5 )
+        //if( iMouse.z > 0.5 )
         {
             
             ro.zy *= rot( mou.y * TPI );
@@ -242,7 +242,7 @@
             
         }
         
-        if( iMouse.z < 0.5 )
+        /*if( iMouse.z < 0.5 )
         {
             
             ro.zy *= rot( iTime * 0.025 );
@@ -251,14 +251,14 @@
             rd.xy *= rot( iTime * 0.025 );
             
             
-        }
+        }*/
         
         float den = 0.0, t = ray( ro, rd, den );
         
         vec3 col = shad( ro, rd, uv );
         
         // Output to screen
-        gl_FragColor = vec4(col,1.0);
+        gl_FragColor = vec4( col, 1 );
         
     }
     
@@ -332,7 +332,7 @@
             container.width = width;
             container.height = height;
             // create buffers
-            BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
+            BufferA = new THREE.WebGLRenderTarget(width / 2, height / 2, renderTargetNearestFloatParams);
             // Setup output camera
             camera = new THREE.Camera();
             camera.position.z = 1;
@@ -369,7 +369,7 @@
             ImageUniforms = {
                 
                 iChannel0: { value: BufferA.texture },
-                iResolution: { value: new THREE.Vector2( width * scale * 2, height * scale * 2 ) },
+                iResolution: { value: new THREE.Vector2( width * scale, height * scale ) },
                 //iMouse: { value: new THREE.Vector3( 0, 0, 0 ) },
                 //iTime: { value: 1.0 }
                 
@@ -392,8 +392,8 @@
                 {
                     
                     var element = document.getElementById("container").getBoundingClientRect();
-                    x = (e.offsetX) / 2;
-                    y = (element.height - e.offsetY) / 2;
+                    x = ( e.offsetX ) / 2;
+                    y = ( element.height - e.offsetY ) / 2;
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
                     
@@ -472,10 +472,10 @@
 
                 var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
-
+                
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
-
+                
                 x = ( touches[0].pageX - w ) / 2;
                 y = ( touches[0].pageY - h ) / 2;
                 y = height - y;
