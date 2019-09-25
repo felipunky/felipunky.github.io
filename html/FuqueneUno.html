@@ -510,7 +510,7 @@
 
             // Image.
             ImageUniforms = {
-                iChannel0: { value: BufferA },
+                iChannel0: { value: BufferA.texture },
                 iResolution: { value: new THREE.Vector2(width * scale, height * scale) }
             };
             ImageMat = new THREE.ShaderMaterial({

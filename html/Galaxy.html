@@ -44,38 +44,37 @@
         }
     </script>
 
-    <!-- Image. -->
-    <script id="ImageFrag" type="x-shader/x-fragment">
-        uniform vec2 iResolution;
-        uniform float iTime;
-        uniform vec3 iMouse;
-        uniform sampler2D iChannel0;
-
-        #define STEPS         64
-        #define FAR          10.
-        #define PI  acos( -1.0 )
-        #define TPI     2.0 * PI
-        // iq's procedural vs from texture noise, uncomment at your own risk
-        //#define PROCEDURAL
-        #define HASHSCALE  .1031
-        #define NB_ARMS     3.0
+    <script id="BufferAFrag" type="x-shader/x-fragment">
+    uniform vec2 iResolution;
+    uniform float iTime;
+    uniform vec3 iMouse;
+    uniform sampler2D iChannel0;
+    
+    #define STEPS         64
+    #define FAR          10.
+    #define PI  acos( -1.0 )
+    #define TPI     2.0 * PI
+    // iq's procedural vs from texture noise, uncomment at your own risk
+    //#define PROCEDURAL
+    #define HASHSCALE  .1031
+    #define NB_ARMS     3.0
         
-        // From iapafoto's slightly modded
-        float spiral(in vec3 p) {
-            float a = atan( p.y,p.x ) + iTime * 0.5;
-            float r = length( p.xy );
-            float lr = 2.0 * log( r );
-            float th = 0.05 - 0.4 * r; // thickness according to distance
-            float d = fract( 0.5 * ( a - lr * 1.0 ) / PI ); //apply rotation and scaling.
-            float phase = NB_ARMS * ( a-lr );
-            
-            d = cos( phase );
-            
-            d = ( 0.1 - abs( d - 0.1 ) ) * 2.0 * PI * r / 32.0;
-            
-            return sqrt( d * d + p.z * p.z ) - th * r;
-            
-        }
+    // From iapafoto's slightly modded
+    float spiral(in vec3 p) {
+        float a = atan( p.y,p.x ) + iTime * 0.5;
+        float r = length( p.xy );
+        float lr = 2.0 * log( r );
+        float th = 0.05 - 0.4 * r; // thickness according to distance
+        float d = fract( 0.5 * ( a - lr * 1.0 ) / PI ); //apply rotation and scaling.
+        float phase = NB_ARMS * ( a-lr );
+        
+        d = cos( phase );
+        
+        d = ( 0.1 - abs( d - 0.1 ) ) * 2.0 * PI * r / 32.0;
+        
+        return sqrt( d * d + p.z * p.z ) - th * r;
+        
+    }
     
     mat2 rot( float a )
     {
@@ -209,11 +208,11 @@
         vec3 p = ro + rd * t;
         
         vec3 col = mix( vec3( 0 ),
-                        mix( vec3( 0.4, 0.1, 0.2 ),
-                             vec3( 0.9, 0.9, 0.5 ),
-                             den
+                       mix( vec3( 0.4, 0.1, 0.2 ),
+                           vec3( 0.9, 0.9, 0.5 ),
+                           den
                            ),
-                        den * 4.0
+                       den * 4.0
                        );
                        
                        col *= sqrt( col );
@@ -224,7 +223,7 @@
     
     void main()
     {
-
+        
         vec2 uv = ( -iResolution.xy + 2.0 * gl_FragCoord.xy ) / iResolution.y;
         
         vec2 mou = -iMouse.xy / iResolution.xy;
@@ -260,7 +259,24 @@
         
         // Output to screen
         gl_FragColor = vec4(col,1.0);
+        
+    }
+    
+    </script>
 
+    
+    <!-- Image. -->
+    <script id="ImageFrag" type="x-shader/x-fragment">
+    uniform vec2 iResolution;
+    uniform sampler2D iChannel0;
+    
+    void main()
+    {
+        
+        vec2 uv = gl_FragCoord.xy / iResolution.xy;
+        
+        gl_FragColor = texture2D( iChannel0, uv );
+        
     }
 
     </script>
@@ -272,10 +288,11 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
-        var camera, BufferImageScene, renderer;
-        var ImageUniforms;
-        var ImageQuad;
-        var ImageMat;
+        var camera, BufferAScene, BufferAFeedBackScene, BufferImageScene, renderer;
+        var BufferA, BufferAFeedBack;
+        var BufferAUniforms, ImageUniforms;
+        var BufferAQuad, BufferAFeedBackQuad, ImageQuad;
+        var BufferAMat, ImageMat;
         var width = 0.0, height = 0.0, scaleRatio = 0.0;
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
@@ -299,6 +316,8 @@
         function start() {
             container = document.getElementById('container');
             //setup scenes
+            BufferAScene = new THREE.Scene();
+            BufferAFeedBackScene = new THREE.Scene();
             BufferImageScene = new THREE.Scene();
             //setup renderer
             renderer = new THREE.WebGLRenderer();
@@ -306,10 +325,10 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
             scaleRatio = window.innerWidth / window.innerHeight;
-
+            
             height = 512;
             width = height * scaleRatio;
-
+            
             container.width = width;
             container.height = height;
             // create buffers
@@ -327,14 +346,32 @@
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
             texture.flipY = false;
+            
+            // BufferA.
+            BufferAUniforms = {
+                
+                iChannel0: { value: texture },
+                iResolution: { value: new THREE.Vector2( width / 2, height / 2 ) },
+                iMouse: { value: new THREE.Vector3( 0, 0, 0 ) },
+                iTime: { value: 1.0 }
+                
+            };
+            BufferAMat = new THREE.ShaderMaterial({
+                  uniforms: BufferAUniforms,
+                  vertexShader: document.getElementById('VertShader').textContent,
+                  fragmentShader: document.getElementById('BufferAFrag').textContent
+                  });
+            var BufferAGeo = new THREE.PlaneBufferGeometry(2, 2);
+            BufferAQuad = new THREE.Mesh(BufferAGeo, BufferAMat);
+            BufferAScene.add(BufferAQuad);
 
             // Image.
             ImageUniforms = {
                 
-                iChannel0: { value: texture },
-                iResolution: { value: new THREE.Vector2( width * scale, height * scale ) },
-                iMouse: { value: new THREE.Vector3( 0, 0, 0 ) },
-                iTime: { value: 1.0 }
+                iChannel0: { value: BufferA.texture },
+                iResolution: { value: new THREE.Vector2( width * scale * 2, height * scale * 2 ) },
+                //iMouse: { value: new THREE.Vector3( 0, 0, 0 ) },
+                //iTime: { value: 1.0 }
                 
             };
             ImageMat = new THREE.ShaderMaterial({
@@ -351,14 +388,14 @@
             document.getElementById("container").onmousemove = function (e)
             {
                 
-                if( ImageUniforms.iMouse.value.z === 1 )
+                if( BufferAUniforms.iMouse.value.z === 1 )
                 {
                     
                     var element = document.getElementById("container").getBoundingClientRect();
-                    x = (e.offsetX);
-                    y = (element.height - e.offsetY);
-                    ImageUniforms.iMouse.value.x = x;
-                    ImageUniforms.iMouse.value.y = y;
+                    x = (e.offsetX) / 2;
+                    y = (element.height - e.offsetY) / 2;
+                    BufferAUniforms.iMouse.value.x = x;
+                    BufferAUniforms.iMouse.value.y = y;
                     
                 }
                 
@@ -367,14 +404,14 @@
             document.getElementById("container").onmousedown = function (e)
             {
                 
-                ImageUniforms.iMouse.value.z = 1;
+                BufferAUniforms.iMouse.value.z = 1;
             
             }
             
             document.getElementById("container").onmouseup = function (e)
             {
                 
-                ImageUniforms.iMouse.value.z = 0;
+                BufferAUniforms.iMouse.value.z = 0;
             
             }
             
@@ -384,7 +421,7 @@
         //------------------------------------------
         function update() {
             requestAnimationFrame(update);
-            ImageUniforms.iTime.value += 0.025;
+            BufferAUniforms.iTime.value += 0.025;
             render();
         }
         //------------------------------------------
@@ -393,6 +430,11 @@
         function render() 
         {
             
+            ImageUniforms.iChannel0.value = BufferA.texture;
+            renderer.setRenderTarget(BufferA);
+            renderer.render(BufferAScene, camera);
+            renderer.setRenderTarget(null);
+            renderer.clear();
             renderer.render(BufferImageScene, camera);
 
         }
@@ -413,8 +455,8 @@
 
             evt.preventDefault();
             var el = document.getElementById("container");
-            ImageUniforms.iMouse.value.z = 1;
-            ImageUniforms.iMouse.value.z = 1;
+            BufferAUniforms.iMouse.value.z = 1;
+            BufferAUniforms.iMouse.value.z = 1;
 
         }
 
@@ -425,7 +467,7 @@
             var touches = evt.changedTouches;
             var x = 0, y = 0;
 
-            if (ImageUniforms.iMouse.value.z === 1)
+            if (BufferAUniforms.iMouse.value.z === 1)
             {
 
                 var element = document.getElementById("container").getBoundingClientRect();
@@ -434,12 +476,12 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
 
-                x = touches[0].pageX - w;
-                y = touches[0].pageY - h;
+                x = ( touches[0].pageX - w ) / 2;
+                y = ( touches[0].pageY - h ) / 2;
                 y = height - y;
 
-                ImageUniforms.iMouse.value.x = x;
-                ImageUniforms.iMouse.value.y = y;
+                BufferAUniforms.iMouse.value.x = x;
+                BufferAUniforms.iMouse.value.y = y;
 
             }
 
@@ -449,7 +491,7 @@
         {
 
             evt.preventDefault();
-            ImageUniforms.iMouse.value.z = 0;
+            BufferAUniforms.iMouse.value.z = 0;
 
         }
 
@@ -460,7 +502,7 @@
             {
 
                 evt.preventDefault();
-                ImageUniforms.iMouse.value.z = 0;
+                BufferAUniforms.iMouse.value.z = 0;
 
             }
 
