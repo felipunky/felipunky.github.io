@@ -1,6 +1,5 @@
 ( function($) {
   'use strict';
-
     
    /*-------------------------------------------------------------------------------
 	  Detect mobile device 
@@ -54,15 +53,13 @@
 
 
 	$('.navbar-toggle').on('click',function(){
-		$('body').removeClass('menu-is-closed').addClass('menu-is-opened');
+        $('body').removeClass('menu-is-closed').addClass('menu-is-opened');
 	});
 
 	$('.close-menu, .click-capture').on('click', function(){
 		$('body').removeClass('menu-is-opened').addClass('menu-is-closed');
-		$('.menu-list ul').slideUp(300);
+        $('.menu-list ul').slideUp(300);
 	});
- 
- 
 
 	/*-------------------------------------------------------------------------------
 	  Owl Carousel
@@ -133,10 +130,11 @@
 		    anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7'],
 		    afterLoad: function(anchorLink, index){
 	            if ( $('.pp-section.active').scrollTop() > 0 ){
-	            	$('.navbar').removeClass('navbar-white');
+                    $('.navbar').removeClass('navbar-white');
 	            }
 	            else{
-	            	$('.navbar').addClass('navbar-white');
+                    $('.navbar').addClass('navbar-white');
+                    $('body').removeClass('menu-is-opened').addClass('menu-is-closed');
 	            }
 	            
   			}
@@ -171,7 +169,7 @@
 		$('#pp-nav').remove().appendTo('body').addClass('white right-boxed hidden-xs');
 
 		$('.pp-nav-up').on('click', function(){
-			$.fn.pagepiling.moveSectionUp();
+            $.fn.pagepiling.moveSectionUp();
 		});
 
 		$('.pp-nav-down').on('click', function(){
