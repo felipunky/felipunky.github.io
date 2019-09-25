@@ -322,8 +322,8 @@
             const loader = new THREE.TextureLoader();
             const url = '../Images/Galaxy/NoiseSmall.png';
             const texture = loader.load(url);
-            texture.minFilter = THREE.NearestFilter;
-            texture.magFilter = THREE.NearestFilter;
+            texture.minFilter = THREE.LinearFilter;
+            texture.magFilter = THREE.LinearFilter;
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
             texture.flipY = false;
