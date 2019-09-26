@@ -2683,6 +2683,8 @@ a.brand:focus{
 .project-detail-info{
   background-color: #272727;
   padding: 3.3rem;
+  opacity: 0.9;
+  filter: alpha(opacity=90); /* For IE8 and earlier */
 }
 
 .project-detail-control{
