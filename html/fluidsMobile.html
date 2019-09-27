@@ -919,7 +919,7 @@
                 x = ( touches[0].pageX - w ) / scaleMax;
                 /*y = ( touches[0].pageY - h );
                 y = height - y / scaleMax;*/
-                y = ( window.innerHeight - touches[0].pageY + h ) / scaleMax;
+                y = ( height - touches[0].pageY - h ) / scaleMax;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
@@ -946,9 +946,9 @@
 
             evt.preventDefault();
             BufferAUniforms.iMouse.value.z = 0;
-            BufferBUniforms.iMouse.value.z = 0;
             BufferAUniforms.iMouse.value.x = 1000;
             BufferAUniforms.iMouse.value.y = 1000;
+            BufferBUniforms.iMouse.value.z = 0;
             BufferBUniforms.iMouse.value.x = 1000;
             BufferBUniforms.iMouse.value.y = 1000;
 
@@ -960,9 +960,9 @@
 
                 evt.preventDefault();
                 BufferAUniforms.iMouse.value.z = 0;
-                BufferBUniforms.iMouse.value.z = 0;
                 BufferAUniforms.iMouse.value.x = 1000;
                 BufferAUniforms.iMouse.value.y = 1000;
+                BufferBUniforms.iMouse.value.z = 0;
                 BufferBUniforms.iMouse.value.x = 1000;
                 BufferBUniforms.iMouse.value.y = 1000;
 
