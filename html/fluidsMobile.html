@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
             height: 100%
         }
 
-        /*#container
+        #container
         {
 
             position: absolute;
@@ -23,7 +23,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
 
-        }*/
+        }
     </style>
 </head>
 <body onload="startup()">
@@ -489,13 +489,9 @@
 
             container = document.getElementById('container');
 
-            height = window.innerHeight * 0.25;
+            /*height = window.innerHeight / 1;
             scaleMax = window.innerHeight / height;
-            width = window.innerWidth * 0.25;
-            scaleRatio = height / width;
-            
-            container.width = width;
-            container.height = height;
+            width = window.innerWidth / 1;*/
 
             //setup scenes
             BufferAScene = new THREE.Scene();
@@ -508,9 +504,21 @@
 
             //setup renderer
             renderer = new THREE.WebGLRenderer({ checkShaderErrors: false });
+
             scale = window.devicePixelRatio;
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
+            scaleRatio = window.innerWidth / window.innerHeight;
+
+            height = window.innerHeight * 0.25;
+            height = THREE.Math.floorPowerOfTwo( height )
+            scaleMax = window.innerHeight / height;
+            width = window.innerWidth * 0.25;
+            width = THREE.Math.floorPowerOfTwo( width )
+
+            //scale = window.devicePixelRatio;
+            //renderer.setPixelRatio(scale);
+            //container.appendChild(renderer.domElement);
 
             // create buffers
             BufferA = new THREE.WebGLRenderTarget(width, height, renderTargetNearestFloatParams);
@@ -912,14 +920,14 @@
 
             if (BufferBUniforms.iMouse.value.z === 1) {
 
-                /*var element = document.getElementById("container").getBoundingClientRect();
+                var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
 
                 var h = (element.top - bodyRect.top);
-                var w = (element.left - bodyRect.left);*/
+                var w = (element.left - bodyRect.left);
 
-                x = ( touches[0].pageX ) / scaleMax * scaleRatio;
-                y = height - ( touches[0].pageY / scaleMax );
+                x = ( touches[0].pageX - w ) /scaleMax;
+                y = height - ( touches[0].pageY  - h ) /scaleMax;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
