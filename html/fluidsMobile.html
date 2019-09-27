@@ -186,6 +186,7 @@
         vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou ) * sim.z;
 
         gl_FragColor = self;
+        //gl_FragColor = vec4( smoothstep( 0.03, 0.03 - 0.005, length( uv - mou ) ) );
 
         }
 
