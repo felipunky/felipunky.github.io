@@ -449,7 +449,7 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
-        var width = 0.0, height = 0.0, scaleRatio = 0.0, scaleMax = 0.0;
+        var width = 0.0, height = 0.0, scaleRatio = 0.0, scaleMax = 0.0, scaleMaxO = 0.0;
         var camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferImageScene, renderer; //BufferCScene;
         var BufferA, BufferAFeedBack, BufferB;//, BufferC;
         var BufferAUniforms, BufferBUniforms, ImageUniforms; //BufferCUniforms;
@@ -515,6 +515,7 @@
             width = window.innerWidth * 0.25;
             width = THREE.Math.floorPowerOfTwo(width)
             scaleRatio = width / height;
+            scaleMaxO = window.innerWidth / width;
 
             //scale = window.devicePixelRatio;
             //renderer.setPixelRatio(scale);
@@ -654,7 +655,7 @@
                     var element = document.getElementById("container").getBoundingClientRect();
 
                     x = ( e.offsetX ) / ( scaleMax );//x = e.clientX * scale;//e.pageX;
-                    y = (element.height - e.offsetY) / scaleMax;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    y = (element.height - e.offsetY) / scaleMaxO;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
@@ -930,7 +931,7 @@
                 /*y = ( touches[0].pageY - h ) / scaleMax;
                 y = height / scale - y;*/
                 //x = +( touches[0].pageX / window.innerWidth ) * 2 - 1;
-                y = height - ( touches[0].pageY - h ) / scaleMax;
+                y = height - ( touches[0].pageY - h ) / scaleMaxO;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
