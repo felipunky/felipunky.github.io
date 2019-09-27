@@ -259,6 +259,7 @@
         
         // Output to screen
         gl_FragColor = vec4( col, 1 );
+        //gl_FragColor = vec4( smoothstep( 0.1, 0.1 - 0.005, length( ( gl_FragCoord.xy / iResolution.y ) - ( iMouse.xy / iResolution.y ) ) ) );
         
     }
     
@@ -293,7 +294,7 @@
         var BufferAUniforms, ImageUniforms;
         var BufferAQuad, BufferAFeedBackQuad, ImageQuad;
         var BufferAMat, ImageMat;
-        var width = 0.0, height = 0.0, scaleRatio = 0.0;
+        var width = 0.0, height = 0.0, scaleRatio = 0.0, scaleMax = 0.0;
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
             magFilter: THREE.LinearFilter,
@@ -327,7 +328,9 @@
             scaleRatio = window.innerWidth / window.innerHeight;
             
             height = 512;
+            scaleMax = window.innerHeight / height;
             width = height * scaleRatio;
+            
             
             container.width = width;
             container.height = height;
@@ -369,7 +372,7 @@
             ImageUniforms = {
                 
                 iChannel0: { value: BufferA.texture },
-                iResolution: { value: new THREE.Vector2( width * scale, height * scale ) },
+                iResolution: { value: new THREE.Vector2( width * scale * scaleMax, height * scale * scaleMax ) },
                 //iMouse: { value: new THREE.Vector3( 0, 0, 0 ) },
                 //iTime: { value: 1.0 }
                 
@@ -392,8 +395,8 @@
                 {
                     
                     var element = document.getElementById("container").getBoundingClientRect();
-                    x = ( e.offsetX ) / 2;
-                    y = ( element.height - e.offsetY ) / 2;
+                    x = ( e.offsetX ) / ( 2 * scaleMax );
+                    y = ( element.height - e.offsetY ) / ( 2 * scaleMax );
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
                     
@@ -476,8 +479,8 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
                 
-                x = ( touches[0].pageX - w ) / 2;
-                y = ( touches[0].pageY - h ) / 2;
+                x = ( touches[0].pageX - w ) / ( 2 * scaleMax );
+                y = ( touches[0].pageY - h ) / ( 2 * scaleMax );
                 y = height - y;
 
                 BufferAUniforms.iMouse.value.x = x;
@@ -509,7 +512,7 @@
         }
 
         function onWindowResize(event) {
-            renderer.setSize(width, height);
+            renderer.setSize(width * scaleMax, height * scaleMax);
             //BufferAUniforms.iResolution.value.x = renderer.domElement.width;
             //BufferAUniforms.iResolution.value.y = renderer.domElement.height;
             //ImageUniforms.iResolution.value.x = renderer.domElement.width;
