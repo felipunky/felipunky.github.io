@@ -513,10 +513,10 @@
 
         function onWindowResize(event) {
             renderer.setSize(width * scaleMax, height * scaleMax);
-            //BufferAUniforms.iResolution.value.x = renderer.domElement.width;
-            //BufferAUniforms.iResolution.value.y = renderer.domElement.height;
-            //ImageUniforms.iResolution.value.x = renderer.domElement.width;
-            //ImageUniforms.iResolution.value.y = renderer.domElement.height;
+            BufferAUniforms.iResolution.value.x = renderer.domElement.width;
+            BufferAUniforms.iResolution.value.y = renderer.domElement.height;
+            ImageUniforms.iResolution.value.x = renderer.domElement.width;
+            ImageUniforms.iResolution.value.y = renderer.domElement.height;
             //BufferA.setSize(renderer.domElement.width, renderer.domElement.height);
             //BufferAFeedBack.setSize(renderer.domElement.width, renderer.domElement.height);
         }

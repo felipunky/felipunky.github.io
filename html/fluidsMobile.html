@@ -448,8 +448,7 @@
         //------------------------------------------
         // Globals
         //------------------------------------------
-        var width = 0;
-        var height = 0;
+        var width = 0.0, height = 0.0, scaleRatio = 0.0, scaleMax = 0.0;
         var camera, BufferAScene, BufferAFeedBackScene, BufferBScene, BufferImageScene, renderer; //BufferCScene;
         var BufferA, BufferAFeedBack, BufferB;//, BufferC;
         var BufferAUniforms, BufferBUniforms, ImageUniforms; //BufferCUniforms;
@@ -489,8 +488,10 @@
 
             container = document.getElementById('container');
 
-            width = 520;
-            height = 520;
+            height = window.innerHeight * 0.25;
+            scaleMax = window.innerHeight / height;
+            width = window.innerWidth * 0.25;
+            
             container.width = width;
             container.height = height;
 
@@ -616,7 +617,7 @@
             ImageUniforms = {
                 //iChannel0: { type: "t", value: BufferA },
                 iChannel0: { value: BufferA },
-                iResolution: { value: new THREE.Vector2(width * scale, height * scale) },
+                iResolution: { value: new THREE.Vector2(width * scale * scaleMax, height * scale * scaleMax) },
                 iColourForce: { value: 1.1 },
                 iRandom: { value: true },
                 iColourOne: { value: colourOne },
@@ -642,8 +643,8 @@
 
                     var element = document.getElementById("container").getBoundingClientRect();
 
-                    x = (e.offsetX) / 1.7;//x = e.clientX * scale;//e.pageX;
-                    y = (element.height - e.offsetY) / 1.7;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    x = (e.offsetX) / ( scaleMax );//x = e.clientX * scale;//e.pageX;
+                    y = (element.height - e.offsetY) / ( scaleMax );//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
@@ -915,8 +916,8 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
 
-                x = ( touches[0].pageX - w ) / 1.7;
-                y = ( touches[0].pageY - h ) / 1.7;
+                x = ( touches[0].pageX - w ) / scaleMax;
+                y = ( touches[0].pageY - h ) / scaleMax;
                 y = height - y;
 
                 BufferAUniforms.iMouse.value.x = x;
@@ -971,7 +972,7 @@
         function onWindowResize(event)
         {
 
-            renderer.setSize(width * 1.7, height * 1.7);
+            renderer.setSize(width * scaleMax, height * scaleMax);
             ImageUniforms.iResolution.value.x = renderer.domElement.width;
             ImageUniforms.iResolution.value.y = renderer.domElement.height;
 
