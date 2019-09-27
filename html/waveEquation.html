@@ -148,7 +148,7 @@
         var BufferAMat, ImageMat;
         var clock = new THREE.Clock();
         var timeDelta = 0.0;
-        var width = 0.0, height = 0.0, scaleRatio = 0.0;
+        var width = 0.0, height = 0.0, scaleRatio = 0.0, scaleMax = 0.0;
         var renderTargetNearestFloatParams = {
             minFilter: THREE.LinearFilter,
             magFilter: THREE.LinearFilter,
@@ -180,8 +180,9 @@
             renderer.setPixelRatio(scale);
             container.appendChild(renderer.domElement);
             scaleRatio = window.innerWidth / window.innerHeight;
-            width = 512;
-            height = 512;
+            height = window.innerHeight * 0.25;
+            scaleMax = window.innerHeight / height;
+            width = window.innerWidth * 0.25;
             /*if (scale > 1.0) {
                 height = width * scale * 0.9;
             }
@@ -240,8 +241,8 @@
                     var element = document.getElementById("container").getBoundingClientRect();
                     x = (e.offsetX);//e.pageX;
                     y = (element.height - e.offsetY);//window.innerHeight - e.pageY;
-                    BufferAUniforms.iMouse.value.x = x / 1.7;
-                    BufferAUniforms.iMouse.value.y = y / 1.7;
+                    BufferAUniforms.iMouse.value.x = x / scaleMax;
+                    BufferAUniforms.iMouse.value.y = y / scaleMax;
                     /*ImageUniforms.iMouse.value.x = x;
                     ImageUniforms.iMouse.value.y = y;*/
                 }
@@ -328,7 +329,7 @@
             BufferAUniforms.iMouse.value.z = 0;
         }
         function onWindowResize(event) {
-            renderer.setSize(width * 1.7, height * 1.7);
+            renderer.setSize(width * scaleMax, height * scaleMax);
             //BufferAUniforms.iMouse.value.x *= 2;
             //BufferAUniforms.iMouse.value.y *= 2;
             //BufferAUniforms.iResolution.value.x = renderer.domElement.width;
