@@ -917,8 +917,8 @@
                 var w = (element.left - bodyRect.left);
 
                 x = ( touches[0].pageX - w ) / scaleMax;
-                y = ( h - touches[0].pageY ) / scaleMax;
-                y = ( height - y );
+                y = ( touches[0].pageY ) / scaleMax;
+                //y = ( height - y );
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
