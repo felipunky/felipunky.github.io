@@ -186,7 +186,7 @@
         vec4 self = texture2D( iChannel0, uv, 0.0 ) + forc( uv, p, mou ) * sim.z;
 
         gl_FragColor = self;
-        gl_FragColor = vec4( smoothstep( 0.03, 0.03 - 0.005, length( uv - mou ) ) );
+        //gl_FragColor = vec4( smoothstep( 0.03, 0.03 - 0.005, length( uv - mou ) ) );
 
         }
 
@@ -492,6 +492,7 @@
             height = window.innerHeight * 0.25;
             scaleMax = window.innerHeight / height;
             width = window.innerWidth * 0.25;
+            scaleRatio = height / width;
             
             container.width = width;
             container.height = height;
@@ -911,14 +912,14 @@
 
             if (BufferBUniforms.iMouse.value.z === 1) {
 
-                var element = document.getElementById("container").getBoundingClientRect();
+                /*var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
 
                 var h = (element.top - bodyRect.top);
-                var w = (element.left - bodyRect.left);
+                var w = (element.left - bodyRect.left);*/
 
-                x = touches[0].pageX / scaleMax;
-                y = height / ( scaleMax / 4 ) - touches[0].pageY / scaleMax;
+                x = ( touches[0].pageX ) / scaleMax * scaleRatio;
+                y = height - ( touches[0].pageY / scaleMax );
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
