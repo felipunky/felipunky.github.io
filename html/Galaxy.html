@@ -259,7 +259,7 @@
         
         // Output to screen
         gl_FragColor = vec4( col, 1 );
-        //gl_FragColor = vec4( smoothstep( 0.1, 0.1 - 0.005, length( ( gl_FragCoord.xy / iResolution.y ) - ( iMouse.xy / iResolution.y ) ) ) );
+        //gl_FragColor = vec4( smoothstep( 0.03, 0.03 - 0.005, length( ( gl_FragCoord.xy / iResolution.y ) - ( iMouse.xy / iResolution.y ) ) ) );
         
     }
     
@@ -476,12 +476,10 @@
                 var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
                 
-                var h = (element.top - bodyRect.top);
-                var w = (element.left - bodyRect.left);
-                
-                x = ( touches[0].pageX - w ) / ( 2 * scaleMax );
-                y = ( touches[0].pageY - h ) / ( 2 * scaleMax );
-                y = height - y;
+                var h = (bodyRect.top);
+                var w = (bodyRect.left);
+                x = touches[0].pageX / ( scaleMax * 2 ) - w;
+                y = height / scaleMax - touches[0].pageY / ( scaleMax * 2 ) - h;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
@@ -513,10 +511,10 @@
 
         function onWindowResize(event) {
             renderer.setSize(width * scaleMax, height * scaleMax);
-            BufferAUniforms.iResolution.value.x = renderer.domElement.width;
+            /*BufferAUniforms.iResolution.value.x = renderer.domElement.width;
             BufferAUniforms.iResolution.value.y = renderer.domElement.height;
             ImageUniforms.iResolution.value.x = renderer.domElement.width;
-            ImageUniforms.iResolution.value.y = renderer.domElement.height;
+            ImageUniforms.iResolution.value.y = renderer.domElement.height;*/
             //BufferA.setSize(renderer.domElement.width, renderer.domElement.height);
             //BufferAFeedBack.setSize(renderer.domElement.width, renderer.domElement.height);
         }

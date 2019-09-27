@@ -916,10 +916,8 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
 
-                x = ( touches[0].pageX - w ) / scaleMax;
-                //y = height - ( touches[0].pageY ) / scaleMax;
-                y = ( touches[0].pageY ) / scaleMax;
-                y = height - y;
+                x = touches[0].pageX / ( scaleMax ) - w;
+                y = height / ( scaleMax * 0.25 ) - touches[0].pageY / ( scaleMax ) - h;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
@@ -974,8 +972,8 @@
         {
 
             renderer.setSize(width * scaleMax, height * scaleMax);
-            ImageUniforms.iResolution.value.x = renderer.domElement.width;
-            ImageUniforms.iResolution.value.y = renderer.domElement.height;
+            /*ImageUniforms.iResolution.value.x = renderer.domElement.width;
+            ImageUniforms.iResolution.value.y = renderer.domElement.height;*/
 
         }
 
