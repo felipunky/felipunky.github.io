@@ -515,8 +515,9 @@
             width = window.innerWidth * 0.25;
             width = THREE.Math.floorPowerOfTwo(width)
             scaleRatio = width / height;
-            renderer.setSize( width * scaleMax, height * scaleMax );
-            //scaleMaxO = window.innerWidth / width;
+            scaleMaxO = window.innerWidth / width;
+            renderer.setSize(width * scaleMax, height * scaleMaxO);
+            
 
             //scale = window.devicePixelRatio;
             //renderer.setPixelRatio(scale);
@@ -932,7 +933,7 @@
                 /*y = ( touches[0].pageY - h ) / scaleMax;
                 y = height / scale - y;*/
                 //x = +( touches[0].pageX / window.innerWidth ) * 2 - 1;
-                y = height - ( touches[0].pageY - h ) / scaleMax;
+                y = height - ( touches[0].pageY - h ) / scaleMaxO;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
@@ -986,7 +987,7 @@
         function onWindowResize(event)
         {
 
-            renderer.setSize(width * scaleMax, height * scaleMax);
+            renderer.setSize(width * scaleMax, height * scaleMaxO);
             /*ImageUniforms.iResolution.value.x = renderer.domElement.width;
             ImageUniforms.iResolution.value.y = renderer.domElement.height;*/
 
