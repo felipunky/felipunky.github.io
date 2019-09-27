@@ -918,7 +918,7 @@
 
                 x = ( touches[0].pageX - w ) / scaleMax;
                 y = ( touches[0].pageY );
-                y = ( height - y ) / scaleMax;
+                y = ( height * 0.5 - y ) / scaleMax;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
