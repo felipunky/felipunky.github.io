@@ -940,9 +940,11 @@
                 var x = ( touches[0].pageX * width / ( rect.width / scaleMax ) );
                 var y = height - ( touches[0].pageY * height / rect.height ),*/
                 
-                const rect = renderer.domElement.getBoundingClientRect();
+                /*const rect = renderer.domElement.getBoundingClientRect();
                 const x = touches[0].clientX * width / rect.width;
-                const y = height - ( touches[0].clientY * height / rect.height );
+                const y = height - ( touches[0].clientY * height / rect.height );*/
+                x = ( touches[0].clientX ) / scaleMaxO;
+                y = height - ( touches[0].clientY ) / scaleMax;
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
