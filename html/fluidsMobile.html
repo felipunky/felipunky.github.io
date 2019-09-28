@@ -15,7 +15,7 @@
             height: 100%
         }
 
-        #container
+        /*#container
         {
 
             position: absolute;
@@ -23,7 +23,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
 
-        }
+        }*/
     </style>
 </head>
 <body onload="startup()">
@@ -656,8 +656,8 @@
 
                     var element = document.getElementById("container").getBoundingClientRect();
 
-                    x = ( e.offsetX ) / ( scaleMaxO );//x = e.clientX * scale;//e.pageX;
-                    y = (element.height - e.offsetY) / scaleMax;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
+                    x = ( e.clientX ) / ( scaleMaxO );//x = e.clientX * scale;//e.pageX;
+                    y = (element.height - e.clientY) / scaleMax;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
                     BufferAUniforms.iMouse.value.y = y;
@@ -923,7 +923,7 @@
 
             if (BufferBUniforms.iMouse.value.z === 1) {
 
-                var element = document.getElementById("container").getBoundingClientRect();
+                /*var element = document.getElementById("container").getBoundingClientRect();
                 var bodyRect = document.body.getBoundingClientRect();
 
                 var h = (element.top - bodyRect.top);
@@ -933,12 +933,16 @@
                 //y = ( touches[0].pageY - h );
                 //y = height / scale - y;
                 //x = +( touches[0].pageX / window.innerWidth ) * 2 - 1;
-                y = height - ( touches[0].clientY - h ) / scaleMax;
+                y = height - ( touches[0].clientY - h ) / scaleMax;*/
                 //y += height * 0.526171875;
                 /*
                 const rect = renderer.domElement.getBoundingClientRect();
                 var x = ( touches[0].pageX * width / ( rect.width / scaleMax ) );
                 var y = height - ( touches[0].pageY * height / rect.height ),*/
+                
+                const rect = renderer.domElement.getBoundingClientRect();
+                const x = touches[0].clientX * width / rect.width;
+                const y = height - ( touches[0].clientY * height / rect.height );
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
