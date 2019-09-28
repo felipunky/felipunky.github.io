@@ -923,26 +923,26 @@
 
             if (BufferBUniforms.iMouse.value.z === 1) {
 
-                /*var element = document.getElementById("container").getBoundingClientRect();
-                var bodyRect = document.body.getBoundingClientRect();
+                //var element = document.getElementById("container").getBoundingClientRect();
+                var rect = renderer.domElement.getBoundingClientRect();
 
-                var h = (element.top - bodyRect.top);
-                var w = (element.left - bodyRect.left);
+                //var h = (element.top - bodyRect.top);
+                //var w = (element.left - bodyRect.left);
 
-                x = ( touches[0].clientX - w ) / scaleMaxO;
+                x = ( touches[0].clientX - rect.left ) / scaleMaxO;
                 //y = ( touches[0].pageY - h );
                 //y = height / scale - y;
                 //x = +( touches[0].pageX / window.innerWidth ) * 2 - 1;
-                y = height - ( touches[0].clientY - h ) / scaleMax;*/
+                y = height - ( touches[0].clientY - rect.top ) / scaleMax;
                 //y += height * 0.526171875;
                 /*
                 const rect = renderer.domElement.getBoundingClientRect();
                 var x = ( touches[0].pageX * width / ( rect.width / scaleMax ) );
                 var y = height - ( touches[0].pageY * height / rect.height ),*/
                 
-                const rect = renderer.domElement.getBoundingClientRect();
-                const x = ( touches[0].clientX - rect.left ) * width / rect.width;
-                const y = height - ( touches[0].clientY - rect.top ) * height / rect.height;
+                /*const rect = renderer.domElement.getBoundingClientRect();
+                const x = ( touches[0].clientX - rect.left ) * ( width / rect.width );
+                const y = height - ( touches[0].clientY - rect.top ) * ( height / rect.height );*/
                 /*x = ( touches[0].clientX ) / scaleMaxO;
                 y = height - ( touches[0].clientY ) / scaleMax;*/
 
