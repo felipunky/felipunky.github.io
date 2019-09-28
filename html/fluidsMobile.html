@@ -941,8 +941,8 @@
                 var y = height - ( touches[0].pageY * height / rect.height ),*/
                 
                 const rect = renderer.domElement.getBoundingClientRect();
-                const x = touches[0].clientX * width / rect.width;
-                const y = height - ( touches[0].clientY * height / rect.height );
+                const x = ( touches[0].clientX - rect.left ) * width / rect.width;
+                const y = height - ( touches[0].clientY - rect.left ) * height / rect.height;
                 /*x = ( touches[0].clientX ) / scaleMaxO;
                 y = height - ( touches[0].clientY ) / scaleMax;*/
 
