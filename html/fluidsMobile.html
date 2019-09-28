@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -930,10 +930,15 @@
                 var w = (element.left - bodyRect.left);
 
                 x = ( touches[0].pageX - w ) / scaleMax;
-                /*y = ( touches[0].pageY - h ) / scaleMax;
-                y = height / scale - y;*/
+                //y = ( touches[0].pageY - h );
+                //y = height / scale - y;
                 //x = +( touches[0].pageX / window.innerWidth ) * 2 - 1;
-                y = height - ( touches[0].pageY - h ) / scaleMaxO;
+                y = height * ( scaleMaxO / scaleMax ) - ( touches[0].pageY - h ) / scaleMax;
+                //y += height * 0.526171875;
+                /*
+                const rect = renderer.domElement.getBoundingClientRect();
+                var x = ( touches[0].pageX * width / ( rect.width / scaleMax ) );
+                var y = height - ( touches[0].pageY * height / rect.height ),*/
 
                 BufferAUniforms.iMouse.value.x = x;
                 BufferAUniforms.iMouse.value.y = y;
