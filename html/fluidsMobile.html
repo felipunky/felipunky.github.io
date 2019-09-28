@@ -942,7 +942,7 @@
                 
                 const rect = renderer.domElement.getBoundingClientRect();
                 const x = ( touches[0].clientX - rect.left ) * width / rect.width;
-                const y = height - ( touches[0].clientY - rect.left ) * height / rect.height;
+                const y = height - ( touches[0].clientY - rect.top ) * height / rect.height;
                 /*x = ( touches[0].clientX ) / scaleMaxO;
                 y = height - ( touches[0].clientY ) / scaleMax;*/
 
