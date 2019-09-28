@@ -516,7 +516,7 @@
             width = THREE.Math.floorPowerOfTwo(width)
             scaleRatio = width / height;
             scaleMaxO = window.innerWidth / width;
-            renderer.setSize(width * scaleMax, height * scaleMaxO);
+            //renderer.setSize(width * scaleMax, height * scaleMaxO);
             
 
             //scale = window.devicePixelRatio;
@@ -630,7 +630,7 @@
             ImageUniforms = {
                 //iChannel0: { type: "t", value: BufferA },
                 iChannel0: { value: BufferA },
-                iResolution: { value: new THREE.Vector2(width * scale * scaleMax, height * scale * scaleMax) },
+                iResolution: { value: new THREE.Vector2(width * scale * scaleMaxO, height * scale * scaleMax) },
                 iColourForce: { value: 1.1 },
                 iRandom: { value: true },
                 iColourOne: { value: colourOne },
@@ -656,7 +656,7 @@
 
                     var element = document.getElementById("container").getBoundingClientRect();
 
-                    x = ( e.offsetX ) / ( scaleMax );//x = e.clientX * scale;//e.pageX;
+                    x = ( e.offsetX ) / ( scaleMaxO );//x = e.clientX * scale;//e.pageX;
                     y = (element.height - e.offsetY) / scaleMax;//y = (window.innerHeight - e.clientY) * scale;//window.innerHeight - e.pageY;
 
                     BufferAUniforms.iMouse.value.x = x;
@@ -929,11 +929,11 @@
                 var h = (element.top - bodyRect.top);
                 var w = (element.left - bodyRect.left);
 
-                x = ( touches[0].pageX - w ) / scaleMax;
+                x = ( touches[0].clientX - w ) / scaleMaxO;
                 //y = ( touches[0].pageY - h );
                 //y = height / scale - y;
                 //x = +( touches[0].pageX / window.innerWidth ) * 2 - 1;
-                y = height * ( scaleMaxO / scaleMax ) - ( touches[0].pageY - h ) / scaleMax;
+                y = height - ( touches[0].clientY - h ) / scaleMax;
                 //y += height * 0.526171875;
                 /*
                 const rect = renderer.domElement.getBoundingClientRect();
@@ -992,7 +992,7 @@
         function onWindowResize(event)
         {
 
-            renderer.setSize(width * scaleMax, height * scaleMaxO);
+            renderer.setSize(width * scaleMaxO, height * scaleMax);
             /*ImageUniforms.iResolution.value.x = renderer.domElement.width;
             ImageUniforms.iResolution.value.y = renderer.domElement.height;*/
 
