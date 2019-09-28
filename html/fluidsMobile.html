@@ -15,7 +15,7 @@
             height: 100%
         }
 
-        /*#container
+        #container
         {
 
             position: absolute;
@@ -23,7 +23,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
 
-        }*/
+        }
     </style>
 </head>
 <body onload="startup()">
@@ -516,7 +516,7 @@
             width = THREE.Math.floorPowerOfTwo(width)
             scaleRatio = width / height;
             scaleMaxO = window.innerWidth / width;
-            //renderer.setSize(width * scaleMax, height * scaleMaxO);
+            renderer.setSize(width * scaleMax, height * scaleMaxO);
             
 
             //scale = window.devicePixelRatio;
