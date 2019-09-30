@@ -1890,6 +1890,31 @@ a.brand:focus{
 
 }
 
+.MesaUno
+{
+
+    padding-top: 100px;
+    text-align: justify;
+    text-justify: inter-word;
+
+}
+
+.ImageMesa
+{
+
+    width: 100%;
+    height: auto;
+
+}
+
+.VideoModeloParametrico
+{
+
+    width: 100%;
+    height: auto;
+
+}
+
 /* 4.2 Sections */
 
 
