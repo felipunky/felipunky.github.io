@@ -31,30 +31,30 @@
     <div class="menu">
         <span class="close-menu icon-cross2 right-boxed"></span>
         <div class="menu-lang right-boxed">
-            <a href="../index.html" class="active">Eng</a>
-            <a href="../indexEspañol.html">Spa</a>
+            <a href="../index.html">Eng</a>
+            <a href="../indexEspañol.html class="active"">Spa</a>
         </div>
         <ul class="menu-list right-boxed">
             <li data-menuanchor="page1">
-                <a href="../index.html#page1">Home</a>
+                <a href="#page1">Inicio</a>
             </li>
             <li data-menuanchor="page2">
-                <a href="../index.html#page2">Specialization</a>
+                <a href="#page2">Especialización</a>
             </li>
             <li data-menuanchor="page3">
-                <a href="../index.html#page3">Demos</a>
+                <a href="#page3">Demos</a>
             </li>
             <li data-menuanchor="page4">
-                <a href="../index.html#page4">Blog</a>
+                <a href="#page4">Blog</a>
             </li>
             <li data-menuanchor="page5">
-                <a href="../index.html#page5">Services</a>
+                <a href="#page5">Servicios</a>
             </li>
             <li data-menuanchor="page6">
-                <a href="../index.html#page6">Resume</a>
+                <a href="#page6">Experiencia</a>
             </li>
             <li data-menuanchor="page7">
-                <a href="../index.html#page7">Contact</a>
+                <a href="#page7">Contacto</a>
             </li>
         </ul>
         <div class="menu-footer right-boxed">
@@ -65,7 +65,7 @@
                 <a href=https://www.instagram.com/randomrenders/ class="icon ion-social-instagram"></a>
                 <a href="https://github.com/felipunky" class="icon ion-social-github"></a>
             </div>
-            <div class="copy">© Felipe Gutierrez Duque. All Rights Reserved<br> Design by Felipe Gutiérrez Duque</div>
+            <div class="copy">© Felipe Gutierrez Duque. Todos los derechos reservados<br> Diseño por Felipe Gutiérrez Duque</div>
         </div>
     </div>
 
@@ -97,7 +97,7 @@
         </div>
     </header>
     <div class="page-wrapper">
-        <div class="copy-bottom white boxed">© Felipe Gutiérrez Duque 2019. All images unless otherwise stated were created by me.</div>
+        <div class="copy-bottom white boxed">© Felipe Gutiérrez Duque 2019. Todas las imágenes a menos de que se indique lo contrario fueron creadas por mi.</div>
         <div class="lang-bottom white boxed">
             <div class="menu-lang right-boxed">
                 <a href="../index.html" class="active">Eng</a>
@@ -149,8 +149,8 @@
                 </p>
 
                 <p class="MesaUno">
-                    Con estos valores iniciales tenemos suficiente información para crear un modelo paramétrico en el que las posiciones de la estructura puedan modificarse. Esto nos dara la posibilidad
-                    de crear diseños diferentes de acuerdo a una lógica de optimización estructural.
+                    Con estos valores iniciales se tiene suficiente información para crear un modelo paramétrico en el que las posiciones de la estructura puedan modificarse. Esto  permitirá crear 
+                    diseños diferentes de acuerdo a una lógica de optimización estructural.
                     <br>
                     <br>
                     <span class="Bold">Modelo paramétrico:</span>
@@ -178,8 +178,8 @@
                 <p class="MesaUno">
                     El procedimiento para cumplir este requerimiento es el siguiente:
                     <br>
-                    Crear una superficie a partir del rectángulo original que va a simular nuestra lámina de mármol, dividir la superficie,
-                    ya que nuestra lámina queda en contácto con vigas, adicionar los puntos que componen las vigas (en este caso se decidió subdividir la línea original en más puntos para tener mayor
+                    Crear una superficie a partir del rectángulo original que va a simular nuestra lámina de mármol, dividir la superficie en puntos,
+                    ya que la lámina queda en contácto con vigas, adicionar los puntos que componen las vigas (en este caso se decidió subdividir la línea original en más puntos para tener mayor
                     exactitud en el análisis estructural) a los puntos de la subdivisión de la superficie y construir una malla/mesh a partir de estos (a través de una triangulación de Delaunay) utilizando
                     el componente Delaunay Mesh de Grasshopper.
                     <br>
@@ -203,8 +203,8 @@
                 </p>
 
                 <p class="MesaUno">
-                    Lo siguiente es definir las secciones tanto para las vigas (patas) como para las conchas (placas), los soportes (vamos a utilizar los puntos de apoyo con el suelo) y las cargas (aquí vamos a
-                    utilizar solamente la gravedad). Hay que tener cuidado con que no haya puntos repetidos para el análisis. En caso de que hayan se deben remover con el componente removeDuplicatePts de Karamba3D.
+                    Lo siguiente es definir las secciones tanto para las vigas (patas) como para las conchas (placas), los soportes (vamos a utilizar los puntos de apoyo con el suelo) y las cargas (en este caso 
+                    solamente la fuerza gravedad). Hay que tener cuidado con que no haya puntos repetidos para el análisis. En caso de que hayan se deben remover con el componente removeDuplicatePts de Karamba3D.
                     <br>
                     <br>
                     <span class="Bold">Montaje del FEA:</span>
@@ -213,7 +213,7 @@
                     <img src="../Images/Mesa/FEASetup.JPG" class="ImageMesa">
                     <br>
                     <br>
-                    Una vez corrida la simulación, podemos generar una visualización.
+                    Una vez corrida la simulación, se puede generar una visualización.
                     <br>
                     <br>
                     <span class="Bold">Visualización del FEA:</span>
@@ -223,10 +223,10 @@
                 </p>
 
                 <p class="MesaUno">
-                    Seguidamente, para optimizar la estructura, se utilizará el output Displacement (el desplazamiento que tendrán los elementos bajo las cargas definidas) del componente Analyze de Karamba3D, con el
-                    fin de minimizar dicho número.
+                    Seguidamente, para optimizar la estructura, se utilizará el output Displacement (el desplazamiento que tendrán los elementos bajo las cargas definidas) del componente Analyze de Karamba3D, como 
+                    función de coste (Fitness function).
                     <br>
-                    A continuación minimizamos mediante el componente Galapagos el desplazamiento a través de Simulated Annealing, en español Recocido Simulado.
+                    A continuación minimizamos el desplazamiento mediante el componente Galapagos a través de Simulated Annealing, en español Recocido Simulado.
                     <br>
                     <br>
                     <span class="Bold">Optimizando mínimo desplazamiento:</span>
@@ -238,8 +238,7 @@
                 </p>
 
                 <p class="MesaUno">
-                    Hay otras optimizaciones que podrían implementarse para tener menos desplazamientos, pero el concepto de diseño es el de la ligereza y sí se le agregan más elementos a la estructura, la mesa se
-                    vería sobrecargada.
+                    Hay otras optimizaciones que podrían implementarse para tener menos desplazamientos, pero gracias al concepto de diseño de ligereza este fue el diseño seleccionado.
                     <br>
                     La primera imagen a continuación es un ejemplo ya que es estructuralmente mejor que la segunda, debido a que tiene menos desplazamientos.
                     <br>

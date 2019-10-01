@@ -1,0 +1,318 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Personal Site">
+    <meta name="author" content="Felipe Gutiérrez Duque">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="..\favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+
+    <title>Felipe Gutiérrez Programmer</title>
+
+    <!-- Styles -->
+    <link href="../css/style.css" rel="stylesheet" media="screen">
+</head>
+<body class="body-full-page">
+
+    <div class="loader"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>
+
+    <!-- Content CLick Capture-->
+
+
+    <div class="click-capture"></div>
+
+    <!-- Sidebar Menu-->
+
+    <div class="menu">
+        <span class="close-menu icon-cross2 right-boxed"></span>
+        <div class="menu-lang right-boxed">
+            <a href="../index.html" class="active">Eng</a>
+            <a href="../indexEspañol.html">Spa</a>
+        </div>
+        <ul class="menu-list right-boxed">
+            <li data-menuanchor="page1">
+                <a href="../index.html#page1">Home</a>
+            </li>
+            <li data-menuanchor="page2">
+                <a href="../index.html#page2">Specialization</a>
+            </li>
+            <li data-menuanchor="page3">
+                <a href="../index.html#page3">Demos</a>
+            </li>
+            <li data-menuanchor="page4">
+                <a href="../index.html#page4">Blog</a>
+            </li>
+            <li data-menuanchor="page5">
+                <a href="../index.html#page5">Services</a>
+            </li>
+            <li data-menuanchor="page6">
+                <a href="../index.html#page6">Resume</a>
+            </li>
+            <li data-menuanchor="page7">
+                <a href="../index.html#page7">Contact</a>
+            </li>
+        </ul>
+        <div class="menu-footer right-boxed">
+            <div class="social-list">
+                <!--<a href=https://www.behance.net/FelipeGutierrez95 class="icon ion-social-behance"></a>-->
+                <a href="https://api.whatsapp.com/send?phone=573046592737" class="icon ion-social-whatsapp"></a>
+                <a href=https://www.linkedin.com/in/felipe-gutierrez-1853a8156/ class="icon ion-social-linkedin"></a>
+                <a href=https://www.instagram.com/randomrenders/ class="icon ion-social-instagram"></a>
+                <a href="https://github.com/felipunky" class="icon ion-social-github"></a>
+            </div>
+            <div class="copy">© Felipe Gutierrez Duque. All Rights Reserved<br> Design by Felipe Gutiérrez Duque</div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+
+
+    <header class="navbar navbar-2 navbar-white boxed">
+        <div class="navbar-bg"></div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <a class="brand" href="../index.html">
+            <img class="brand-img" alt="" src="..\Images\bg\brand.png">
+            <div class="brand-info">
+                <div class="brand-name">Felipe Gutiérrez</div>
+                <div class="brand-text">Programmer/Creative</div>
+            </div>
+        </a>
+
+        <div class="social-list hidden-xs">
+            <!--<a href=https://www.behance.net/FelipeGutierrez95 class="icon ion-social-behance"></a>-->
+            <a href="https://api.whatsapp.com/send?phone=573046592737" class="icon ion-social-whatsapp"></a>
+            <a href=https://www.linkedin.com/in/felipe-gutierrez-1853a8156/ class="icon ion-social-linkedin"></a>
+            <a href=https://www.instagram.com/randomrenders/ class="icon ion-social-instagram"></a>
+            <a href="https://github.com/felipunky" class="icon ion-social-github"></a>
+        </div>
+    </header>
+    <div class="page-wrapper">
+        <div class="copy-bottom white boxed">© Felipe Gutiérrez Duque 2019. All images unless otherwise stated were created by me.</div>
+        <div class="lang-bottom white boxed">
+            <div class="menu-lang right-boxed">
+                <a href="../index.html" class="active">Eng</a>
+                <a href="../indexEspañol.html">Spa</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <h1 class="MesaTitulo">Generative Table Design</h1>
+                <h4>Memoir of the design on an algorithmic table</h4>
+
+                <p class="MesaUno">
+                    The design process starts by stating a concept of lightness, equilibrium. The first approach to the problem (translating the weight of the marble sheet to the floor), starts by using two
+                    geometric primitives, the rectangle and it's more resistent subdivision, the triangle. To support the sheet with two subdivided rectangles or trusses in both extremes of the sheet creates
+                    a system that is resistant with the least amount of elements. If we optimize the material section according to the forces (traction or compresion) more material is needed where the system
+                    experiences compresion and less material is needed where there is traction, this let's us create a structure that is lighter. In theory the different forces need different types of materials
+                    to reduce the section of the pieces, but for aesthetics reasons, the same material will be used for all the elements that experience traction or compresion.
+                    <br>
+                    <br>
+                    <span class="Bold">Original sketch:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Concepto.jpg" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    Knowing the initial concept, Grasshopper/Rhinoceros3d will be used to create the model, taking as a start point the dimension of the marble sheet, as the height that the table is going to have
+                    and the distance between the sheet and the structure.
+
+                    <br>
+                    <br>
+                    <span class="Bold">Parametric rectangle definition:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Inicial.JPG" class="ImageMesa">
+                    <br>
+
+
+                    <br>
+                    <br>
+                    <span class="Bold">3D geometry definition:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/InicialUno.JPG" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    Given this information we have enough to create a parametric model in which the positions of the structure can be modified. This will enable us to create different designs according to a
+                    structural optimization logic.
+                    <br>
+                    <br>
+                    <span class="Bold">Parametric model:</span>
+                    <br>
+                    <br>
+                    <video autoplay muted loop class="VideoModeloParametrico">
+                        <source type="video/mp4" src="../Images/Mesa/ModeloParametrico.mp4">
+                    </video>
+                </p>
+
+                <p class="MesaUno">
+                    Once that we have implemented our algorithm that let's us modify the elements, a FEM (Finite Element Model) is created. The Finite Elements are: beams that are modeled by lines and shells
+                    that are modeled by meshes.
+                    <br>
+                    When the FEM is being created it is important that all the elements coincide, meaning; if the beam is in supporting a slab/shell, it's a must that the points that define the each of these
+                    elements match.
+                    <br>
+                    <br>
+                    <span class="Bold">Below, we can see that the mesh vertices match those of the line:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/FEM.jpg" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    The procedure for the vertices to match is as follows:
+                    <br>
+                    Create a surface from the initial rectangle that is going to simulate the marble sheet, divide the surface into points, since the sheet is in contact with the beams, add the points that make
+                    up the beams (in this case the original line was subdivided into smallers ones to get a more accurate structural analysis) to the surface subdivision and construct a mesh from them (through a
+                    Delaunay triangulation) using Grasshopper's Delaunay Mesh component.
+                    <br>
+                    <br>
+                    <span class="Bold">Shell and beam with matching vertexes:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/FEMUno.jpg" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    For the structural simulation the free version of Karamba3d (by Clemens Preisinger in cooperation with Bollinger und Grohmann ZTGmbH) for Grasshopper is going to be used. The analysis needs
+                    points, elements, supports, loads and cross-section.
+                    In this case the material is marble.
+                    <br>
+                    <br>
+                    <span class="Bold">Marble properties:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Material.JPG" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    The next step is to define the sections for the beams (legs) and the shells (marble sheet), the supports (the points that are in contact with the floor will be used) and the loads (only the load
+                    of gravity will be used). It is important that there are no duplicate points for the analysis. The Karamba3D's removeDuplicatePts will be used for this purpose.
+                    <br>
+                    <br>
+                    <span class="Bold">FEA setup:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/FEASetup.JPG" class="ImageMesa">
+                    <br>
+                    <br>
+                    Once that the simulation is setup, a visualization can be generated.
+                    <br>
+                    <br>
+                    <span class="Bold">FEA visualization:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/FEAVisualizacion.JPG" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    Then, to optimize the structure, the Displacement output from Karamba3D's Analyze will be used as the Fitness function.
+                    <br>
+                    The Galapagos component and it's Simulated Annealing solver are used to minimize the displacement.
+                    <br>
+                    <br>
+                    <span class="Bold">Optimizing minimum displacement:</span>
+                    <br>
+                    <br>
+                    <video autoplay muted loop class="VideoModeloParametrico">
+                        <source type="video/mp4" src="../Images/Mesa/VideoOptimizacion.mp4">
+                    </video>
+                </p>
+
+                <p class="MesaUno">
+                    There are several optimizations that could be implemented to obtain less displacement, but due to the lightness design concept of the design this is the chosen design.
+                    <br>
+                    The first image is an example as it is more structurally sound than the second one, given that it has less displacement:
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/StructureOne.JPG" class="ImageMesa">
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/StructureTwo.JPG" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    After having designed through structural optimization, the different sections that the real object will have are created, depending on the force the elements experience they have a smaller section
+                    (traction) or bigger section (compression). The design is baked as breps (BoundaryRep-resentation) to Rhino from Grasshopper and "Split" operations between the "legs" create elements that can be
+                    cutted and soldered together.
+                    <br>
+                    <br>
+                    <span class="Bold">Construction detail:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/DetalleConstructivo.png" class="ImageMesa">
+                </p>
+
+                <p class="MesaUno">
+                    Finally material tests are made through renders to find which one will be picked for the final product.
+                    <br>
+                    <br>
+                    <span class="Bold">Different rendering materials:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_2.png" class="ImageMesa">
+                    <br>
+                    <span class="Bold">Bronze</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_3.png" class="ImageMesa">
+                    <br>
+                    <span class="Bold">Black metal</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_4.png" class="ImageMesa">
+                    <br>
+                    <span class="Bold">Corroded metal</span>
+                </p>
+                <p class="MesaUno">
+                    <span class="Bold">Other rendered images:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_5.png" class="ImageMesa">
+                    <span class="Bold">Black metal</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_6.png" class="ImageMesa">
+                    <span class="Bold">Clay render</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_7.png" class="ImageMesa">
+                    <span class="Bold">Clay render</span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery -->
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/smoothscroll.js"></script>
+    <script src="../js/jquery.validate.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.pagepiling.js"></script>
+
+
+
+    <!-- Scripts -->
+    <script src="../js/scripts.js"></script>
+</body>
+</html>
