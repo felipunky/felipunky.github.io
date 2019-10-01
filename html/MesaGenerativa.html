@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
 
-    <title>Felipe Gutiérrez Programmer</title>
+    <title>Mesa Generativa</title>
 
     <!-- Styles -->
     <link href="../css/style.css" rel="stylesheet" media="screen">
@@ -110,98 +110,192 @@
         <div class="row">
             <div class="col">
 
+                <h1 class="MesaTitulo">Diseño de Mesa Generativa</h1>
+                <h4>Memoria del diseño de una mesa algorítmica</h4>
+
                 <p class="MesaUno">
-                    El proceso de diseño comienza con un concepto de ligereza, de equilibrio. La primera aproximación al problema (transladar el peso de una lámina de marmol al suelo), nace de dos
-                    primitivos el rectángulo y su subdivisión más resistente, el triángulo. Sostener la lámina con dos rectángulos subdivididos o serchas en los extremos permite tener un sistema
+                    El proceso de diseño comienza con un concepto de ligereza, de equilibrio. La primera aproximación al problema (transladar el peso de una lámina de mármol al suelo), nace de dos
+                    primitivos, el rectángulo y su subdivisión más resistente, el triángulo. Sostener la lámina con dos rectángulos subdivididos o serchas en los extremos permite tener un sistema
                     resistente con la menor cantidad de elementos. Sí optimizamos la cantidad de material de acuerdo a las fuerzas (tensión o compresión) se necesita mayor material donde el sistema
                     presenta compresión y menor cantidad de material donde hay tensión, esto nos permite tener una estructura más ligera. En teoría las diferentes fuerzas necesitan diferentes tipos
-                    de material para reducir la sección de las piezas, pero por motivos estéticos, se utilizará el mismo material para los elementos que están a tensión como a compresión.
-                    Ahora falta conectar los dos elementos estructurales con un elemento a tracción (una diagonal).
+                    de material para reducir la sección de las piezas, no obstante, por motivos estéticos, se utilizará el mismo material para los elementos que están a tensión como a compresión.
+                    <br>
+                    <br>
+                    <span class="Bold">Boceto original:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/Concepto.jpg" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
-                    Sabiendo como se va a ver el concepto, se utilizará Grasshopper/Rhinoceros3d para crear el modelo.
-                    Tomando como punto de pártida las dimensiones de la lámina de marmol
+                    Sabiendo como se va a ver el concepto, se utilizará Grasshopper/Rhinoceros3d para crear el modelo,
+                    tomando como punto de pártida las dimensiones de la lámina de mármol.
+                    <br>
+                    <br>
+                    <span class="Bold">Definición del rectángulo paramétrico:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/Inicial.JPG" class="ImageMesa">
+                    <br>
+                    <br>
+                    Así como el alto que va a tener la mesa y la distancia que va a haber entre la lámina y la estructura.
+                    <br>
+                    <br>
+                    <span class="Bold">Definición de la geometría 3D:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/InicialUno.JPG" class="ImageMesa"> 
                 </p>
 
                 <p class="MesaUno">
                     Con estos valores iniciales tenemos suficiente información para crear un modelo paramétrico en el que las posiciones de la estructura puedan modificarse. Esto nos dara la posibilidad
                     de crear diseños diferentes de acuerdo a una lógica de optimización estructural.
+                    <br>
+                    <br>
+                    <span class="Bold">Modelo paramétrico:</span>
+                    <br>
+                    <br>
                     <video autoplay muted loop class="VideoModeloParametrico">
                         <source type="video/mp4" src="../Images/Mesa/ModeloParametrico.mp4">
                     </video>
                 </p>
 
                 <p class="MesaUno">
-                    Una vez creado el algoritmo que permite modificar los elementos, se crea un FEM (Finite Element Model) o Modelo de Elementos Finitos. Para poder correr una simulación estructural o FEA
-                    (Finite Element Analysis) o Análisis de Elementos Finitos. Los elementos finitos son beams (lines/líneas) o vigas en español y shells (meshes/mallas) o conchas en español. Lo importante
-                    para crear el FEM es que todos los elementos coincidan, es decir, sí se tiene una viga (beam) soportando una placa (shell), es importante que los puntos que componen cada uno de estos
-                    elementos coincidan.
+                    Una vez creado el algoritmo que permite modificar los elementos, se crea un FEM (Finite Element Model) o Modelo de Elementos Finitos para poder correr una simulación estructural, FEA
+                    (Finite Element Analysis), o Análisis de Elementos Finitos. Los elementos finitos son: beams (vigas) que se modelan como líneas y shells (conchas) que se modelan como meshes/mallas. 
+                    <br>
+                    Cuando se esté modelonda el FEM es importante que todos los elementos coincidan, es decir; sí se tiene una viga (beam) soportando una placa (shell), es fundamental que los puntos que 
+                    componen cada uno de estos elementos coincidan.
+                    <br>
+                    <br>
+                    <span class="Bold">A continuación, se puede ver el mesh cuyos vértices coinciden con los vértices de la línea:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/FEM.jpg" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
-                    El procedimiento para cumplir este requerimiento es el siguiente, crear una superficie a partir del rectángulo original que va a simular nuestra lámina de marmol, dividir la superficie,
-                    ya que nuestra lámina queda en contacto con una viga, adicionar los puntos que componen la viga (en este caso se decidió subdividir la línea original en más puntos para tener mayor
+                    El procedimiento para cumplir este requerimiento es el siguiente:
+                    <br>
+                    Crear una superficie a partir del rectángulo original que va a simular nuestra lámina de mármol, dividir la superficie,
+                    ya que nuestra lámina queda en contácto con vigas, adicionar los puntos que componen las vigas (en este caso se decidió subdividir la línea original en más puntos para tener mayor
                     exactitud en el análisis estructural) a los puntos de la subdivisión de la superficie y construir una malla/mesh a partir de estos (a través de una triangulación de Delaunay) utilizando
                     el componente Delaunay Mesh de Grasshopper.
+                    <br>
+                    <br>
+                    <span class="Bold">Concha cuyos vértices coinciden con los de la viga:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/FEMUno.jpg" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
-                    Para la simulación estructural se va a utilizar la versión gratuita del plugin Karamba3D (escrito por Clemens Preisinger en cooperación con Bollinger und Grohmann ZTGmbH) para Grasshopper.
-                    Se necesitan puntos, elementos, soportes, cargas y sección para correr la simulación. Lo primero es definir el material, en este caso marmol
+                    Para la simulación estructural se va a utilizar la versión gratuita del plugin Karamba3D (escrito por Clemens Preisinger en cooperación con Bollinger und Grohmann ZTGmbH) de
+                    Grasshopper. El análisis necesita de puntos, elementos, soportes, cargas y sección.
+                    El material, en este caso es mármol.
+                    <br>
+                    <br>
+                    <span class="Bold">Propiedades del mármol:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/Material.JPG" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
                     Lo siguiente es definir las secciones tanto para las vigas (patas) como para las conchas (placas), los soportes (vamos a utilizar los puntos de apoyo con el suelo) y las cargas (aquí vamos a
-                    utilizar solamente la gravedad). Hay que tener cuidado con que no haya puntos repetidos para el análisis, se remueven con el componente removeDuplicatePts de Karamba3D.
-                    Una vez corrida la simulación, podemos generar una visualización de la misma de la siguiente forma
+                    utilizar solamente la gravedad). Hay que tener cuidado con que no haya puntos repetidos para el análisis. En caso de que hayan se deben remover con el componente removeDuplicatePts de Karamba3D.
+                    <br>
+                    <br>
+                    <span class="Bold">Montaje del FEA:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/FEASetup.JPG" class="ImageMesa">
+                    <br>
+                    <br>
+                    Una vez corrida la simulación, podemos generar una visualización.
+                    <br>
+                    <br>
+                    <span class="Bold">Visualización del FEA:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/FEAVisualizacion.JPG" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
-                    Para optimizar la estructura, se utilizará el output Displacement (el desplazamiento que tendrán los elementos bajo las cargas definidas) del componente Analyze de Karamba3D, se busca minimizar
-                    este número.
+                    Seguidamente, para optimizar la estructura, se utilizará el output Displacement (el desplazamiento que tendrán los elementos bajo las cargas definidas) del componente Analyze de Karamba3D, con el
+                    fin de minimizar dicho número.
+                    <br>
+                    A continuación minimizamos mediante el componente Galapagos el desplazamiento a través de Simulated Annealing, en español Recocido Simulado.
+                    <br>
+                    <br>
+                    <span class="Bold">Optimizando mínimo desplazamiento:</span>
+                    <br>
+                    <br>
                     <video autoplay muted loop class="VideoModeloParametrico">
                         <source type="video/mp4" src="../Images/Mesa/VideoOptimizacion.mp4">
                     </video>
                 </p>
 
                 <p class="MesaUno">
-                    Hay otras optimizaciones que podrían implementarse para tener menos desplazamientos, pero el concepto de diseño es el de la ligereza y sí se le agregan más elementos a la estructura, la mesa va
-                    a verse sobre cargada. Por ejemplo la imagen de abajo es estructuralmente mejor que la planteada para el diseño, se puede ver que tiene menos desplazamientos.
+                    Hay otras optimizaciones que podrían implementarse para tener menos desplazamientos, pero el concepto de diseño es el de la ligereza y sí se le agregan más elementos a la estructura, la mesa se
+                    vería sobrecargada.
+                    <br>
+                    La primera imagen a continuación es un ejemplo ya que es estructuralmente mejor que la segunda, debido a que tiene menos desplazamientos.
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/StructureOne.JPG" class="ImageMesa">
-                    Que la planteada
+                    <br>
                     <br>
                     <img src="../Images/Mesa/StructureTwo.JPG" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
-                    Una vez creado el diseño, se crean diferentes secciones para los elementos que funcionan a tracción (más delgados) que para los elementos que están a compresión. Se queman/bake los breps a Rhino
-                    desde Grasshopper y se realizan operaciones "Split" entre los elementos para obtener elementos que puedan ser cortados y soldados.
-                    <img src="../Images/Mesa/FEAVisualizacion.JPG" class="ImageMesa">
+                    Después de haber diseñado a través de la optimización estructural, se crean diferentes secciones para los elementos que funcionan a tracción (más delgados) que para los elementos que están a
+                    compresión. Se queman/bake los breps (Boundary Rep-resentation) a Rhino desde Grasshopper y se realizan operaciones "Split" entre las "patas" para obtener elementos que puedan ser cortados
+                    y soldados.
+                    <br>
+                    <br>
+                    <span class="Bold">Detalle constructivo:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/DetalleConstructivo.png" class="ImageMesa">
                 </p>
 
                 <p class="MesaUno">
-                    Después se realizan pruebas de materiales mediante renders
+                    Finalmente se realizan pruebas de materiales mediante renders, con lo que se busca determinar el material de escogencia.
+                    <br>
+                    <br>
+                    <span class="Bold">Renders diferentes materiales:</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/Mesa_2.png" class="ImageMesa">
-                    Bronce
+                    <br>
+                    <span class="Bold">Bronce</span>
+                    <br>
                     <br>
                     <img src="../Images/Mesa/Mesa_3.png" class="ImageMesa">
-                    Metal negro
+                    <br>
+                    <span class="Bold">Metal negro</span>
+                    <br>
                     <br>
                     <img src="../Images/Mesa/Mesa_4.png" class="ImageMesa">
-                    Metal oxidado
+                    <br>
+                    <span class="Bold">Metal oxidado</span>
                 </p>
                 <p class="MesaUno">
-                    Aquí otros renders que se hicieron
+                    <span class="Bold">Otras imágenes renderizadas:</span>
+                    <br>
+                    <br>
+                    <img src="../Images/Mesa/Mesa_5.png" class="ImageMesa">
+                    <span class="Bold">Metal negro</span>
+                    <br>
                     <br>
                     <img src="../Images/Mesa/Mesa_6.png" class="ImageMesa">
+                    <span class="Bold">Clay render</span>
+                    <br>
+                    <br>
                     <img src="../Images/Mesa/Mesa_7.png" class="ImageMesa">
+                    <span class="Bold">Clay render</span>
                 </p>
 
             </div>

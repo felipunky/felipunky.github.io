@@ -1890,10 +1890,18 @@ a.brand:focus{
 
 }
 
-.MesaUno
+.MesaTitulo
 {
 
     padding-top: 100px;
+    text-align: justify;
+    text-justify: inter-word;
+
+}
+
+.MesaUno
+{
+
     text-align: justify;
     text-justify: inter-word;
 
@@ -1912,6 +1920,13 @@ a.brand:focus{
 
     width: 100%;
     height: auto;
+
+}
+
+.Bold
+{
+
+    font-weight: 700;
 
 }
 
