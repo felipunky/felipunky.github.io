@@ -1252,6 +1252,12 @@ a.brand:focus{
 
 .resume-study{
   margin-bottom: 1rem;
+  color: #fff;
+}
+
+.resume-study:hover{
+  color: #f3ca2f;
+  text-decoration: none;
 }
 
 .resume-date{
