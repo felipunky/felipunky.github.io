@@ -1,0 +1,184 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Personal Site">
+    <meta name="author" content="Felipe Gutiérrez Duque">
+    <meta name="referrer" content="origin">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../apple-touch-icon-114x114.png">
+
+    <title>Minkowski Sums</title>
+    <link href="../css/style.css" rel="stylesheet" media="screen">
+    <style>
+
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+        }
+
+        .First {
+            width: auto;
+            height: 100%;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <link href="../css/DarkThemeGist.css" rel="stylesheet" media="screen">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        "HTML-CSS": {minScaleAdjust: 100},
+        SVG: {minScaleAdjust: 100},
+        CommonHTML: {minScaleAdjust: 100},
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+        }
+        });
+    </script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body class="body-full-page">
+    
+    <div class="loader"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>
+    
+    <!-- Content CLick Capture-->
+    
+    
+    <div class="click-capture"></div>
+    
+    <!-- Sidebar Menu-->
+    
+    <div class="menu">
+        <span class="close-menu icon-cross2 right-boxed"></span>
+        <div class="menu-lang right-boxed">
+            <a href="../index.html" class="active">Eng</a>
+            <a href="../indexEspañol.html">Spa</a>
+        </div>
+        <ul class="menu-list right-boxed">
+            <li  data-menuanchor="page1">
+                <a  href="../index.html#page1">Home</a>
+            </li>
+            <li  data-menuanchor="page2">
+                <a href="../index.html#page2">Specialization</a>
+            </li>
+            <li  data-menuanchor="page3">
+                <a href="../index.html#page3">Demos</a>
+            </li>
+            <li  data-menuanchor="page4">
+                <a href="../index.html#page4">Blog</a>
+            </li>
+            <li  data-menuanchor="page5">
+                <a href="../index.html#page5">Services</a>
+            </li>
+            <li  data-menuanchor="page6">
+                <a href="../index.html#page6">Resume</a>
+            </li>
+            <li  data-menuanchor="page7">
+                <a href="../index.html#page7">Contact</a>
+            </li>
+        </ul>
+        <div class="menu-footer right-boxed">
+            <div class="social-list">
+                <!--<a href=https://www.behance.net/FelipeGutierrez95 class="icon ion-social-behance"></a>-->
+                <a href="https://api.whatsapp.com/send?phone=573046592737" class="icon ion-social-whatsapp"></a>
+                <a href=https://www.linkedin.com/in/felipe-gutierrez-1853a8156/ class="icon ion-social-linkedin"></a>
+                <a href=https://www.instagram.com/randomrenders/ class="icon ion-social-instagram"></a>
+                <a href="https://github.com/felipunky" class="icon ion-social-github"></a>
+            </div>
+            <div class="copy">© Felipe Gutierrez Duque. All Rights Reserved<br> Design by Felipe Gutiérrez Duque</div>
+        </div>
+    </div>
+    
+    <!-- Navbar -->
+    
+    
+    <header class="navbar navbar-2 navbar-white boxed">
+        <div class="navbar-bg"></div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    
+    <h1>
+        Minkowski addition
+    </h1>
+    <div class="First">
+        <p>
+            According to <a href="https://en.wikipedia.org/wiki/Minkowski_addition">wikipedia</a> the Minkowski sum of two sets of vectors $A$ and $B$ in Euclidean space is formed by adding each vector in $A$ to each vector in $B$.<br>
+        </p>
+        <p>
+            $$A+B=\{\mathbf {a} +\mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}$$
+        </p>
+        <p class="Small" style="color: white">
+            All images come from an implementation of Minkowski Addition/Difference in the C# Script component for Grasshopper/Rhino3d.
+        </p>
+        <img src="../Images/Minkowski/MinkowskiAddition.jpg" alt="BezierCurve">
+        <p>Minkowski Addition (yellow polygon) of white polygon $A$ with red polygon $B$: $A{\oplus}B$</p>
+        <p>
+            <script src="https://gist.github.com/felipunky/720cc06580cd86f36480ba480f3076e0.js"></script>
+        </p>
+
+        <p>The Minkowski difference is defined as:</p>
+        <p>
+            $$A+B=\{\mathbf {a} +\mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}$$
+        </p>
+        <img src="../Images/Minkowski/MinkowskiDifference.jpg" alt="BezierCurve">
+        <p>Minkowski Difference (yellow polygon) of white polygon $A$ with red polygon $B$: $A{\oplus}-B$</p>
+        <p>
+            <script src="https://gist.github.com/felipunky/5eb6207bbeda8aa63dc582a34afce0a2.js"></script>
+        </p>
+
+        <p>
+            Why do we care?
+            <br>
+            The Minkowski difference gives us all the possible vectors where we can place a polygon close to another without overlaps.
+            This means that we can restrict the search space for a brute-force algorithm for packing from exhausting every polygon $n$ to every other polygon $m$ to every degree of freedom $xy$: $\mathcal{O}(n^{m^{x^{y}}})$
+            to every polygon $n$ with every other polygon $m$ to every possible vector obtained from the Minkownski difference $v$ $\mathcal{O}(n^{m^{v}})$. Although the algorithmic complexity does not seem to improve so much, remember that when we are dealing with
+            $x^{y}$ the permutations differ by orders of magnitude, suppose we have a search space $-5.00\leq{x}\leq{5.00}$ and $-5.00\leq{y}\leq{5.00}$ that means that we are iterating $10^{10^{10}}=1\text{e+}100$ ($10$ from the fractional tenths $10$ from the fractional
+            hundredths and $10$ from the range of the search space) by $1\text{e+}100$ ($x$ and $y$ are equal as they have the same range and fractional parts), so $1\text{e+}100^{1\text{e+}100}$ permutations, compared to $d=n+m$ where $n$ is the number of points of Polygon A
+            and $m$ is the number of points of Polygon B.
+            <br>
+            <span style="font-size: 80%">
+                *Note we are dealing only with 2D and
+                that for packing simulated annealing or other heuristics are preferred over the brute-force approach.
+            </span>
+            <br>
+            Minkowski sums are also used in robot planning and videogames, as the Minkowski difference can be used to test for collisions.
+        </p>
+        <img src="../Images/Minkowski/CollisionDetected.jpg" alt="BezierCurve">
+        <p>Polygon A and Polygon B intersect, we can tell so because the origin is contained in the Minkowski difference</p>
+        <img src="../Images/Minkowski/NoCollisionDetected.jpg" alt="BezierCurve">
+        <p>Polygon A and Polygon B do not intersect, we can tell so because the origin is not contained in the Minkowski difference</p>
+
+    </div>
+    </header>
+    
+    <!-- jQuery -->
+    
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/smoothscroll.js"></script>
+    <script src="../js/jquery.validate.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.pagepiling.js"></script>
+    
+    
+    
+    <!-- Scripts -->
+    <script src="../js/scripts.js"></script>
+    
+</body>
+</html>
