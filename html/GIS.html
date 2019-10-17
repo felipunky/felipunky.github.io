@@ -128,13 +128,14 @@
                     <a href="../Images/bg/WindVelocitySphericalO.jpg">
                         <img src="../Images/bg/WindVelocitySphericalO.jpg" class="ImageMesa">
                     </a>
+                    <span class="Small">
+                            Imagen producida en <a href="https://www.rhino3d.com/">Rhinoceros3d</a> mediante el plugin de Grasshopper GHopperGIS (desarrollado para <a href="https://www.echeverrimontes.com/">PEM</a>) y visualizada a 
+                            través de <a href="https://www.food4rhino.com/app/tarsier">Tarsier</a>
+                    </span>
                 </p>
 
                 <p class="MesaUno">
-                    <span class="Small">
-                        Imagen producida en <a href="https://www.rhino3d.com/">Rhinoceros3d</a> mediante el plugin de Grasshopper GHopperGIS (desarrollado para <a href="https://www.echeverrimontes.com/">PEM</a>) y visualizada a 
-                        través de <a href="https://www.food4rhino.com/app/tarsier">Tarsier</a></span>
-                    <br>
+                    
                     Esta imagen es la visualizacion de datos extraidos de un archivo grib proveniente de la <a href="https://nomads.ncep.noaa.gov">NCEP</a>. 
 
                     <br>
@@ -170,41 +171,70 @@
                     <a href="../Images/GIS/GUNGIS_1.jpg">
                         <img src="../Images/GIS/GUNGIS_1.jpg" class="ImageMesa">
                     </a>
+                    <span class="Small">Imagen del viewport de Rhino3d</span>
+                    <br>
+                    <br>
                     <span class="Bold">Vista 3D de calle 12c con 4a y sus alrededores (Bogotá)</span>
                     <br>
                     <br>
                     <a href="../Images/GIS/HotelGIS_1.jpg">
                         <img src="../Images/GIS/HotelGIS_1.jpg" class="ImageMesa">
                     </a>
+                    <span class="Small">Imagen del viewport de Rhino3d</span>
                 </p>
 
                 <p class="MesaUno">
-                    Una vez creado el algoritmo que permite modificar los elementos, se crea un FEM (Finite Element Model) o Modelo de Elementos Finitos para poder correr una simulación estructural, FEA
-                    (Finite Element Analysis), o Análisis de Elementos Finitos. Los elementos finitos son: beams (vigas) que se modelan como líneas y shells (conchas) que se modelan como meshes/mallas. 
+                    Colombia, en especial Bogotá tiene un excelente repositorio de <a href="https://datosabiertos.bogota.gov.co">datos abiertos</a>, en el que se puede encontrar información de edificaciones, vías, andenes,
+                    separadores, cotas de nivel, entre otras.  
                     <br>
-                    Cuando se esté modelonda el FEM es importante que todos los elementos coincidan, es decir; sí se tiene una viga (beam) soportando una placa (shell), es fundamental que los puntos que 
-                    componen cada uno de estos elementos coincidan.
-                    <br>
-                    <br>
-                    <span class="Bold">A continuación, se puede ver el mesh cuyos vértices coinciden con los vértices de la línea:</span>
+                    A partir de esta información ha sido fácil construir modelos de contexto para diferentes proyectos.
                     <br>
                     <br>
-                    <img src="../Images/Mesa/FEM.jpg" class="ImageMesa">
+                    <span class="Bold">
+                        Tanto el plugin (GHopperGIS) como otras operaciones aplicadas en los proyectos mencionados se basan en una biblioteca <a href="https://gdal.org/license.html">Open Source</a> llamada 
+                        <a href="https://gdal.org/">GDAL</a>. 
+                    </span>
+                    <br>
+                    <br>
+                    <img src="../Images/GIS/GDALLogoColor.svg" style="display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 20%;">
                 </p>
 
                 <p class="MesaUno">
-                    El procedimiento para cumplir este requerimiento es el siguiente:
-                    <br>
-                    Crear una superficie a partir del rectángulo original que va a simular nuestra lámina de mármol, dividir la superficie en puntos,
-                    ya que la lámina queda en contácto con vigas, adicionar los puntos que componen las vigas (en este caso se decidió subdividir la línea original en más puntos para tener mayor
-                    exactitud en el análisis estructural) a los puntos de la subdivisión de la superficie y construir una malla/mesh a partir de estos (a través de una triangulación de Delaunay) utilizando
-                    el componente Delaunay Mesh de Grasshopper.
+                    La biblioteca provee un modelo unificado para manejar datos de tipo raster (a través de GDAL) y datos de tipo vector (a través de OGR).
+                    GDAL incluye tanto "bindings" para lenguajes de programación (C++, C, C#, Python, entre otros) como utilidades de traducción de formatos y procesamiento de datos para la consola. Es utilizada por 
+                    <a href="https://www.google.com/earth/">Google Earth</a>, <a href="https://www.arcgis.com/index.html">ArcGIS</a>, <a href="https://en.wikipedia.org/wiki/GDAL#Software_using_GDAL/OGR">entre otros</a>.
                     <br>
                     <br>
-                    <span class="Bold">Concha cuyos vértices coinciden con los de la viga:</span>
+                    Para instalar GDAL como herramienta de consola para Windows:
+                    <br>
+                    Entrar a <a href="https://www.gisinternals.com/release.php">GISInternals</a>.
+                    <br>
+                    Escoger de acuerdo a arquitectura y compilador (sí no se sabe y el computador es relativamente nuevo: Compiler: MSVC 2017, Arch: x64). 
+                    <br>
+                    Entrar al link que está en la sección de Downloads.
                     <br>
                     <br>
-                    <img src="../Images/Mesa/FEMUno.jpg" class="ImageMesa">
+                    <img src="../Images/GIS/GISInternals.JPG" class="ImageMesa">
+                    <br>
+                    <br>
+                    Buscar con Control-F: "Generic installer for the GDAL core components."
+                    <br>
+                    <br>
+                    <img src="../Images/GIS/GISInternalsDownload.JPG" class="ImageMesa">
+                    <br>
+                    <br>
+                    Bajar y instalar con configuración: Typical.
+                    <br>
+                    <br>
+                    <img src="../Images/GIS/GDALInstall.JPG" style="display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 40%;">
+                    <br>
+                    <br>
                 </p>
 
                 <p class="MesaUno">
