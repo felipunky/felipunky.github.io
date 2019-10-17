@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
 
-    <title>Mesa Generativa</title>
+    <title>Herramientas GIS</title>
 
     <!-- Styles -->
     <link href="../css/style.css" rel="stylesheet" media="screen">
@@ -32,7 +32,7 @@
         <span class="close-menu icon-cross2 right-boxed"></span>
         <div class="menu-lang right-boxed">
             <a href="../index.html">Eng</a>
-            <a href="../indexEspañol.html class="active"">Spa</a>
+            <a href="../indexEspañol.html" class="active">Spa</a>
         </div>
         <ul class="menu-list right-boxed">
             <li data-menuanchor="page1">
@@ -110,55 +110,72 @@
         <div class="row">
             <div class="col">
 
-                <h1 class="MesaTitulo">Diseño de Mesa Generativa</h1>
-                <h4>Memoria del diseño de una mesa algorítmica</h4>
+                <h1 class="MesaTitulo">Herramientas SIG</h1>
+                <h4>Tutorial herramientas SIG</h4>
 
                 <p class="MesaUno">
-                    El proceso de diseño comienza con un concepto de ligereza, de equilibrio. La primera aproximación al problema (transladar el peso de una lámina de mármol al suelo), nace de dos
-                    primitivos, el rectángulo y su subdivisión más resistente, el triángulo. Sostener la lámina con dos rectángulos subdivididos o serchas en los extremos, permite tener un sistema
-                    resistente con la menor cantidad de elementos. Sí optimizamos la cantidad de material de acuerdo a las fuerzas (tensión o compresión), se necesita mayor material donde el sistema
-                    presenta compresión y menor cantidad de material donde hay tensión, esto nos permite tener una estructura más ligera. En teoría, las diferentes fuerzas necesitan diferentes tipos
-                    de material para reducir la sección de las piezas, no obstante, por motivos estéticos, se utilizará el mismo material para los elementos que están a tensión como a compresión.
+                    Los SIG (Sistemas de Información Geográfica) según <a href="https://es.wikipedia.org/wiki/Sistema_de_informaci%C3%B3n_geogr%C3%A1fica">Wikipedia</a> permiten capturar, guardar, manipular y modelar datos del 
+                    mundo real que se encuentran geo-referenciados. Las herramientas SIG permiten al usuario encontrar relaciones entre distintas fuentes de datos, tarea que de otra manera puede ser poco intuitiva y en algunos 
+                    casos imposible. 
+                    <br>
+                    Estas herramientas son utilizadas por arquitectos, economistas, geologos, artistas, ingenieros, biologos, especialistas en mercadeo, entre otros.
+                    Pueden ser usados para la predicción y visualización del clima, la predicción del crecimiento urbano, la creación de modelos urbanos o constructivos y incluso para crear arte cuyo propósito sea concientizar.
                     <br>
                     <br>
-                    <span class="Bold">Boceto original:</span>
+                    <span class="Bold">Velocidad del viento, proyección esférica</span>
                     <br>
                     <br>
-                    <img src="../Images/Mesa/Concepto.jpg" class="ImageMesa">
+                    <a href="../Images/bg/WindVelocitySphericalO.jpg">
+                        <img src="../Images/bg/WindVelocitySphericalO.jpg" class="ImageMesa">
+                    </a>
                 </p>
 
                 <p class="MesaUno">
-                    Sabiendo como se va a ver el concepto, se utilizará Grasshopper/Rhinoceros3d para crear el modelo,
-                    tomando como punto de pártida las dimensiones de la lámina de mármol, así como el alto que va a tener la mesa y la distancia que va a haber entre la lámina y la estructura.
+                    <span class="Small">
+                        Imagen producida en <a href="https://www.rhino3d.com/">Rhinoceros3d</a> mediante el plugin de Grasshopper GHopperGIS (desarrollado para <a href="https://www.echeverrimontes.com/">PEM</a>) y visualizada a 
+                        través de <a href="https://www.food4rhino.com/app/tarsier">Tarsier</a></span>
+                    <br>
+                    Esta imagen es la visualizacion de datos extraidos de un archivo grib proveniente de la <a href="https://nomads.ncep.noaa.gov">NCEP</a>. 
 
                     <br>
                     <br>
-                    <span class="Bold">Definición del rectángulo paramétrico:</span>
+                    <span class="Bold">Velocidad del viento, proyección Web Mercator</span>
                     <br>
                     <br>
-                    <img src="../Images/Mesa/Inicial.JPG" class="ImageMesa">
+                    <a href="../Images/bg/WindVelocity_4.jpg">
+                        <img src="../Images/bg/WindVelocity_4.jpg" class="ImageMesa">
+                    </a>
+                    <span class="Small">Imagen renderizada en RedShift para Houdini, malla proveniente del mismo proceso de la imagen anterior.</span>
                     <br>
                   
                    
                     <br>
                     <br>
-                    <span class="Bold">Definición de la geometría 3D:</span>
+                    <span class="Bold">Vista 3D de Panamá Vieja</span>
                     <br>
                     <br>
-                    <img src="../Images/Mesa/InicialUno.JPG" class="ImageMesa">
+                    <a href="../Images/GIS/PanamaGIS_2.jpg">
+                        <img src="../Images/GIS/PanamaGIS_2.jpg" class="ImageMesa">
+                    </a>
                 </p>
 
                 <p class="MesaUno">
-                    Con estos valores iniciales se tiene suficiente información para crear un modelo paramétrico en el que las posiciones de la estructura puedan modificarse. Esto  permitirá crear 
-                    diseños diferentes de acuerdo a una lógica de optimización estructural.
+                    Mediante la extracción de datos del portal <a href="http://datos-geomupa.opendata.arcgis.com/">GEO MUPA</a>, <a href="https://www.openstreetmap.org/">OpenStreetMap</a> y de 
+                    <a href="https://www.eorc.jaxa.jp/ALOS/en/">ALOS-2</a> se construye un modelo tri-dimensional que contiene edificios de acuerdo a usos, terreno, vías, parques, normativa, barrios y áreas protegidas 
                     <br>
                     <br>
-                    <span class="Bold">Modelo paramétrico:</span>
+                    <span class="Bold">Vista 3D de calle 82 con 7a y sus alrededores (Bogotá)</span>
                     <br>
                     <br>
-                    <video autoplay muted loop class="VideoModeloParametrico">
-                        <source type="video/mp4" src="../Images/Mesa/ModeloParametrico.mp4">
-                    </video>
+                    <a href="../Images/GIS/GUNGIS_1.jpg">
+                        <img src="../Images/GIS/GUNGIS_1.jpg" class="ImageMesa">
+                    </a>
+                    <span class="Bold">Vista 3D de calle 12c con 4a y sus alrededores (Bogotá)</span>
+                    <br>
+                    <br>
+                    <a href="../Images/GIS/HotelGIS_1.jpg">
+                        <img src="../Images/GIS/HotelGIS_1.jpg" class="ImageMesa">
+                    </a>
                 </p>
 
                 <p class="MesaUno">
