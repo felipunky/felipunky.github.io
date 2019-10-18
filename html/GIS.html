@@ -119,7 +119,7 @@
                     casos imposible. 
                     <br>
                     Estas herramientas son utilizadas por arquitectos, economistas, geologos, artistas, ingenieros, biologos, especialistas en mercadeo, entre otros.
-                    Pueden ser usados para la predicción y visualización del clima, la predicción del crecimiento urbano, la creación de modelos urbanos o constructivos y incluso para crear arte cuyo propósito sea concientizar.
+                    Pueden ser usados para la predicción y visualización del clima, la predicción del crecimiento urbano, la creación de modelos urbanos o constructivos, incluso para crear arte cuyo propósito sea concientizar.
                     <br>
                     <br>
                     <span class="Bold">Velocidad del viento, proyección esférica</span>
@@ -206,8 +206,13 @@
                     La biblioteca provee un modelo unificado para manejar datos de tipo raster (a través de GDAL) y datos de tipo vector (a través de OGR).
                     GDAL incluye tanto "bindings" para lenguajes de programación (C++, C, C#, Python, entre otros) como utilidades de traducción de formatos y procesamiento de datos para la consola. Es utilizada por 
                     <a href="https://www.google.com/earth/">Google Earth</a>, <a href="https://www.arcgis.com/index.html">ArcGIS</a>, <a href="https://en.wikipedia.org/wiki/GDAL#Software_using_GDAL/OGR">entre otros</a>.
-                    <br>
-                    <br>
+                </p>
+
+                <h3>Instalación de las herramientas</h3>
+
+                <h5>Instalación de GDAL para la consola</h5>
+
+                <p>
                     Para instalar GDAL como herramienta de consola para Windows:
                     <br>
                     Entrar a <a href="https://www.gisinternals.com/release.php">GISInternals</a>.
@@ -238,113 +243,53 @@
                 </p>
 
                 <p class="MesaUno">
-                    Para la simulación estructural se va a utilizar la versión gratuita del plugin Karamba3D (escrito por Clemens Preisinger en cooperación con Bollinger und Grohmann ZTGmbH) de
-                    Grasshopper. El análisis necesita de puntos, elementos, soportes, cargas y sección.
-                    El material, en este caso es mármol.
+                    <a href="../Scripts/GIS/GDALPATH.bat">Bajar</a> el archivo <a href="https://es.wikipedia.org/wiki/Archivo_batch">batch</a>, ejecutarlo 
+                    (simplemente clickear el archivo). Va a aparece el mensaje "Windows protegió su PC", clickear en Más información
                     <br>
                     <br>
-                    <span class="Bold">Propiedades del mármol:</span>
+                    <img src="../Images/GIS/BATRun.JPG" style="display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 40%;">
                     <br>
                     <br>
-                    <img src="../Images/Mesa/Material.JPG" class="ImageMesa">
+                    Clickear "Ejecutar de todas formas"
+                    <br>
+                    <br>
+                    <img src="../Images/GIS/BATRun_1.JPG" style="display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 40%;">
+                    <br>
+                    <br>
+                    El archivo .bat va a agregar los "paths" a las variables de entorno de Windows para que se pueda correr desde la consola GDAL.
+                    <br>
+                    La consola va a abrirse y va a preguntar por la arquitectura, en este caso es 64, pero puede ser 32. De acuerdo a la versión de  
+                    GDAL escogida previamente escribir en la consola: 64 o 32. Dar enter.
+                    <br>
+                    <br>
+                    <img src="../Images/GIS/BATRun_2.JPG" style="display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 40%;">
+                    <br>
+                    <br>
+                    Abrir una consola nueva y escribir: ogr2ogr. Dar enter
+                    <br>
+                    <br>
+                    <img src="../Images/GIS/GDALSuccess.PNG" style="display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 60%;">
+                    <br>
+                    <br>
+                    Debería aparecer un mensaje como el anterior, de lo contrario GDAL no está instalado correctamente.
                 </p>
 
-                <p class="MesaUno">
-                    Lo siguiente es definir las secciones tanto para las vigas (patas) como para las conchas (placas), los soportes (vamos a utilizar los puntos de apoyo con el suelo) y las cargas (en este caso 
-                    solamente la fuerza gravedad). Hay que tener cuidado con que no haya puntos repetidos para el análisis. En caso de que hayan se deben remover con el componente removeDuplicatePts de Karamba3D.
-                    <br>
-                    <br>
-                    <span class="Bold">Montaje del FEA:</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/FEASetup.JPG" class="ImageMesa">
-                    <br>
-                    <br>
-                    Una vez corrida la simulación, se puede generar una visualización.
-                    <br>
-                    <br>
-                    <span class="Bold">Visualización del FEA:</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/FEAVisualizacion.JPG" class="ImageMesa">
+                <h5>Instalación del plugin GHopperGIS para Grasshopper</h5>
+                <p>
+                    <a href="../GHPlugins/GHopperGIS.zip">Bajar</a> el zip que contiene el plugin.
                 </p>
-
-                <p class="MesaUno">
-                    Seguidamente, para optimizar la estructura, se utilizará el output Displacement (el desplazamiento que tendrán los elementos bajo las cargas definidas) del componente Analyze de Karamba3D, como 
-                    función de coste (Fitness function).
-                    <br>
-                    A continuación minimizamos el desplazamiento mediante el componente Galapagos a través de Simulated Annealing, en español Recocido Simulado.
-                    <br>
-                    <br>
-                    <span class="Bold">Optimizando mínimo desplazamiento:</span>
-                    <br>
-                    <br>
-                    <video autoplay muted loop class="VideoModeloParametrico">
-                        <source type="video/mp4" src="../Images/Mesa/VideoOptimizacion.mp4">
-                    </video>
-                </p>
-
-                <p class="MesaUno">
-                    Hay otras optimizaciones que podrían implementarse para tener menos desplazamientos, pero gracias al concepto de diseño de ligereza este fue el diseño seleccionado.
-                    <br>
-                    La primera imagen a continuación es un ejemplo ya que es estructuralmente mejor que la segunda, debido a que tiene menos desplazamientos.
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/StructureOne.JPG" class="ImageMesa">
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/StructureTwo.JPG" class="ImageMesa">
-                </p>
-
-                <p class="MesaUno">
-                    Después de haber diseñado a través de la optimización estructural, se crean diferentes secciones para los elementos que funcionan a tracción (más delgados) que para los elementos que están a
-                    compresión. Se queman/bake los breps (Boundary Rep-resentation) a Rhino desde Grasshopper y se realizan operaciones "Split" entre las "patas" para obtener elementos que puedan ser cortados
-                    y soldados.
-                    <br>
-                    <br>
-                    <span class="Bold">Detalle constructivo:</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/DetalleConstructivo.png" class="ImageMesa">
-                </p>
-
-                <p class="MesaUno">
-                    Finalmente se realizan pruebas de materiales mediante renders, con lo que se busca determinar el material de escogencia.
-                    <br>
-                    <br>
-                    <span class="Bold">Renders diferentes materiales:</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/Mesa_2.png" class="ImageMesa">
-                    <br>
-                    <span class="Bold">Bronce</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/Mesa_3.png" class="ImageMesa">
-                    <br>
-                    <span class="Bold">Metal negro</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/Mesa_4.png" class="ImageMesa">
-                    <br>
-                    <span class="Bold">Metal oxidado</span>
-                </p>
-                <p class="MesaUno">
-                    <span class="Bold">Otras imágenes renderizadas:</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/Mesa_5.png" class="ImageMesa">
-                    <span class="Bold">Metal negro</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/Mesa_6.png" class="ImageMesa">
-                    <span class="Bold">Clay render</span>
-                    <br>
-                    <br>
-                    <img src="../Images/Mesa/Mesa_7.png" class="ImageMesa">
-                    <span class="Bold">Clay render</span>
-                </p>
-
             </div>
         </div>
     </div>
