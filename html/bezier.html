@@ -52,6 +52,15 @@
     <script type="text/javascript" async
             src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
     </script>
+
+    <!-- <script>	
+        // Set the options to make LazyLoad self-initialize	
+        window.lazyLoadOptions = {	
+            elements_selector: ".lazyload"
+            // ... more custom settings?	
+        };
+    </script> -->
+
 </head>
 <body class="body-full-page">
     
@@ -126,7 +135,7 @@
                     All images come from the demos I programmed that are at the bottom of the page.
                 </span><br>
             </p>
-            <img src="../Images/Bezier/BezierCurve.png" alt="BezierCurve">
+            <img src="../Images/Bezier/BezierCurve.png" data-original="../Images/Bezier/BezierCurve.png" alt="BezierCurve">
             <p>
                 Parametric equations express a set of quantities as explicit functions of a number of "parameters".
             </p>
@@ -143,14 +152,14 @@
             <p>
                 $$W = {1\over 2}A + {1\over 2}B$$
             </p>
-            <img src="../Images/Bezier/LinearBezier.png" alt="MidPoint">
+            <img src="../Images/Bezier/LinearBezier.png" data-original="../Images/Bezier/LinearBezier.png" alt="MidPoint">
             <p>
                 The parametric expression of C results in the graphing of the parametric curve at points (x, y) regarding various t's:
             </p>
             <p>
                 $$W = (1-t)A + tB$$
             </p>
-            <img src="../Images/Bezier/LinearBezierOne.png" alt="SeventyPercent">
+            <img src="../Images/Bezier/LinearBezierOne.png" data-original="../Images/Bezier/LinearBezierOne.png" alt="SeventyPercent">
             <p>
                 $$W = (1-0.7)A + 0.7B$$
             </p>
@@ -178,7 +187,7 @@
             <p>
                 $$W = A(1-t)^2+2t(1-t)B + t^2C$$
             </p>
-            <img src="../Images/Bezier/QuadBezier.png" alt="QuadBezier">
+            <img src="../Images/Bezier/QuadBezier.png" data-original="../Images/Bezier/QuadBezier.png" alt="QuadBezier">
             <p>
                 Case 3: Cubic or degree 4 Bézier curve, which extrapolates from the first and second cases, and it could be taken to higher degrees too.
             </p>
@@ -212,7 +221,7 @@
             <p>
                 $$W = A(1-t)^3+3Bt(1-t)^2+3Ct^2(1-t)+Dt^3$$
             </p>
-            <img src="../Images/Bezier/CubicBezier.png" alt="CubicBezier">
+            <img src="../Images/Bezier/CubicBezier.png" data-original="../Images/Bezier/CubicBezier.png" alt="CubicBezier">
             <h3>
                 Rational Bézier Curves
             </h3>
@@ -245,11 +254,11 @@
             <p>
                 All weights are the same (equal to non-weighted):
             </p>
-            <img src="../Images/Bezier/RationalCubicNW.png" alt="NonWeighted">
+            <img src="../Images/Bezier/RationalCubicNW.png" data-original="../Images/Bezier/RationalCubicNW.png" alt="NonWeighted">
             <p>
                 Differing weights:
             </p>
-            <img src="../Images/Bezier/RationalCubicW.png" alt="Weighted">
+            <img src="../Images/Bezier/RationalCubicW.png" data-original="../Images/Bezier/RationalCubicW.png" alt="Weighted">
             <p>
                 Interactive demos:
             </p>
@@ -270,11 +279,17 @@
     <script src="../js/jquery.validate.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/jquery.pagepiling.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+    <script>
+        window.addEventListener("load", function(event) {
+            let images = document.querySelectorAll("[data-original]");
+            let lazy = lazyload(images, {"src": "data-original"});
+        });
+    </script>
     
     
     <!-- Scripts -->
     <script src="../js/scripts.js"></script>
-    
+    <!-- <script async src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.3.0/dist/lazyload.min.js"></script>	 -->
 </body>
 </html>
