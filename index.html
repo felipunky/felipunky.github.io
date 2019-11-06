@@ -106,7 +106,7 @@
               <div class="pagepiling">
                   <div data-anchor="page1" class="pp-scrollable text-white section section-1">
                       <div class="scroll-wrap">
-                          <div class="section-bg lazyload" style="background-image:url(Images/bg/WindVelocity_4.jpg);" data-src="Images/bg/WindVelocity_4.jpg"></div>
+                          <div class="lazy section-bg" style="background-image:url(Images/bg/WindVelocity_4_Small.jpg);" data-original="Images/bg/WindVelocity_4.jpg"></div>
                           <div class="scrollable-content">
                               <div class="vertical-centred">
                                   <div class="boxed boxed-inner">
@@ -189,12 +189,12 @@
                   <div data-anchor="page3" class="pp-scrollable text-white section section-3">
                       <div class="scroll-wrap">
                           <div class="bg-changer">
-                              <div class="section-bg" style="background-image:url(Images/bg/NotOurHome.png);" data-src="Images/bg/NotOurHome.png"></div>
-                              <div class="section-bg" style="background-image:url(Images/Galaxy/GalaxyOne.png);" data-src="Images/Galaxy/GalaxyOne.png"></div>
-                              <div class="section-bg" style="background-image:url(Images/bg/BezierP5.png);" data-src="Images/bg/BezierP5.png"></div>
-                              <div class="section-bg" style="background-image:url(Images/bg/FluidsMobile.png);" data-src="Images/bg/FluidsMobile.png"></div>
-                              <div class="section-bg" style="background-image:url(Images/bg/Fluid.png);" data-src="Images/bg/Fluid.png"></div>
-                              <div class="section-bg" style="background-image:url(Images/bg/FunkyWaveTwo.png);" data-src="Images/bg/FunkyWaveTwo.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/NotOurHome_Small.png);" data-original="Images/bg/NotOurHome.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/Galaxy/GalaxyOne_Small.png);" data-original="Images/Galaxy/GalaxyOne.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/BezierP5_Small.png);" data-original="Images/bg/BezierP5.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/FluidsMobile_Small.png);" data-original="Images/bg/FluidsMobile.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/Fluid_Small.png);" data-original="Images/bg/Fluid.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/FunkyWaveTwo_Small.png);" data-original="Images/bg/FunkyWaveTwo.png"></div>
                           </div>
                           <div class="scrollable-content">
                               <div class="vertical-centred">
@@ -287,9 +287,9 @@
                   <div data-anchor="page4" class="pp-scrollable text-white section section-3">
                       <div class="scroll-wrap">
                           <div class="bg-changer">
-                              <div class="section-bg" style="background-image:url(Images/bg/BezierGPU.png);" data-src="Images/bg/BezierGPU.png"></div>
-                              <div class="section-bg" style="background-image:url(Images/bg/dnaStructure.jpg);" data-src="Images/bg/dnaStructure.jpg"></div>
-                              <div class="section-bg" style="background-image:url(Images/Mesa/Mesa_5.png);" data-src="Images/Mesa/Mesa_5.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/BezierGPU_Small.png);" data-original="Images/bg/BezierGPU.png"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/bg/dnaStructure_Small.jpg);" data-original="Images/bg/dnaStructure.jpg"></div>
+                              <div class="lazy section-bg" style="background-image:url(Images/Mesa/Mesa_Portada_Small.png);" data-original="Images/Mesa/Mesa_Portada.png"></div>
                           </div>
                           <div class="scrollable-content">
                               <div class="vertical-centred">
@@ -367,7 +367,7 @@
                                                       </div>
                                                       <div class="col-md-6 col-lg-5 col-md-offset-1 col-lg-offset-2">
                                                           <div class="dots-image-2">
-                                                              <img alt="" class="img-responsive" src="Images/bg/Yardy.jpg">
+                                                              <img alt="" class="lazy img-responsive" src="Images/bg/Yardy.jpg">
                                                               <div class="dots"></div>
                                                               <div class="experience-info">
                                                                   <div class="number">2</div>
@@ -386,7 +386,7 @@
                   </div>
                   <div data-anchor="page6" class="pp-scrollable text-white section section-6">
                       <div class="scroll-wrap">
-                          <div class="section-bg" style="background-image:url(Images/bg/WindVelocitySpherical.jpg);" data-src="Images/bg/WindVelocitySpherical.jpg"></div>
+                          <div class="lazy section-bg" style="background-image:url(Images/bg/WindVelocitySpherical_Small.jpg);" data-original="Images/bg/WindVelocitySpherical.jpg"></div>
                           <div class="scrollable-content">
                               <div class="vertical-centred">
                                   <div class="boxed boxed-inner">
@@ -548,13 +548,13 @@
     <!-- Scripts -->
     <script src="js/scripts.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+    <script src="js/lazyload.min.js"></script>
     <script>
-        /*window.addEventListener("load", function(event) {
-            let images = document.querySelectorAll("[data-src]");
-            let lazy = lazyload(images, {"src": "data-src"});
-        });*/
-        lazyload();
+        window.addEventListener("load", function(event) {
+            let images = document.querySelectorAll("[data-original]");
+            let lazy = lazyload(images, {"src": "data-original"});
+        });
+        //lazyload();
         //if( $("img.lazyload").lazyload )
         //console.log("YES");
         
