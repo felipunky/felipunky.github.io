@@ -125,7 +125,7 @@
         <p class="Small" style="color: white">
             All images come from an implementation of Minkowski Addition/Difference in the C# Script component for Grasshopper/Rhino3d.
         </p>
-        <img src="../Images/Minkowski/MinkowskiAddition.jpg" alt="BezierCurve">
+        <img class="lazyload" data-src="../Images/Minkowski/MinkowskiAddition.jpg" src="../Images/Minkowski/MinkowskiAddition_Small.jpg" width="1634" height="809" alt="BezierCurve">
         <p>Minkowski Addition (yellow polygon) of white polygon $A$ with red polygon $B$: $A{\oplus}B$</p>
         <p>
             <script src="https://gist.github.com/felipunky/720cc06580cd86f36480ba480f3076e0.js"></script>
@@ -135,7 +135,7 @@
         <p>
             $$A+B=\{\mathbf {a} +\mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}$$
         </p>
-        <img src="../Images/Minkowski/MinkowskiDifference.jpg" alt="BezierCurve">
+        <img class="lazyload" data-src="../Images/Minkowski/MinkowskiDifference.jpg" src="../Images/Minkowski/MinkowskiDifference_Small.jpg" width="1634" height="809" alt="BezierCurve">
         <p>Minkowski Difference (yellow polygon) of white polygon $A$ with red polygon $B$: $A{\oplus}-B$</p>
         <p>
             <script src="https://gist.github.com/felipunky/5eb6207bbeda8aa63dc582a34afce0a2.js"></script>
@@ -153,14 +153,14 @@
             <br>
             <span style="font-size: 80%">
                 *Note we are dealing only with 2D and
-                that for packing simulated annealing or other heuristics are preferred over the brute-force approach.
+                that for packing, simulated annealing or other heuristics are preferred over the brute-force approach.
             </span>
             <br>
             Minkowski sums are also used in robot planning and videogames, as the Minkowski difference can be used to test for collisions.
         </p>
-        <img src="../Images/Minkowski/CollisionDetected.jpg" alt="BezierCurve">
+        <img class="lazyload" data-src="../Images/Minkowski/CollisionDetected.jpg" src="../Images/Minkowski/CollisionDetected_Small.jpg" width="1634" height="809" alt="BezierCurve">
         <p>Polygon A and Polygon B intersect, we can tell so because the origin is contained in the Minkowski difference</p>
-        <img src="../Images/Minkowski/NoCollisionDetected.jpg" alt="BezierCurve">
+        <img class="lazyload" data-src="../Images/Minkowski/NoCollisionDetected.jpg" src="../Images/Minkowski/NoCollisionDetected_Small.jpg" width="1634" height="809" alt="BezierCurve">
         <p>Polygon A and Polygon B do not intersect, we can tell so because the origin is not contained in the Minkowski difference</p>
 
     </div>
@@ -179,6 +179,13 @@
     
     <!-- Scripts -->
     <script src="../js/scripts.js"></script>
+    <script src="../js/lazyload.min.js"></script>
+    <script>
+        window.addEventListener("load", function(event) {
+            let images = document.querySelectorAll("[data-src]");
+            let lazy = lazyload(images, {"src": "data-src"});
+        });
+    </script>
     
 </body>
 </html>
