@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" sizes="72x72" href="../apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="../apple-touch-icon-114x114.png">
 
-    <title>Minkowski Sums</title>
+    <title>Packing/Nesting</title>
     <link href="../css/style.css" rel="stylesheet" media="screen">
     <style>
 
@@ -113,20 +113,22 @@
         </button>
     
     <h1>
-        Minkowski addition
+        Nesting/Packing
     </h1>
     <div class="First">
         <p>
-            According to <a href="https://en.wikipedia.org/wiki/Minkowski_addition">wikipedia</a> the Minkowski sum of two sets of vectors $A$ and $B$ in Euclidean space is formed by adding each vector in $A$ to each vector in $B$.<br>
-        </p>
-        <p>
-            $$A+B=\{\mathbf {a} +\mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}$$
+            A common problem in computational design is that the model must be discretized into pieces that can be cut and assembled, once this pieces have been derived from the computer model, 
+            the designer has to place the pieces in a way that reduces the amount of "sheet" material from which the <a href="https://en.wikipedia.org/wiki/Numerical_control">CNC</a> is cutting the defined 
+            pieces. This kind of problem is addressed by a <a href="https://en.wikipedia.org/wiki/Nesting_algorithm">Nesting algorithm</a>. Due to the industrial nature of the problem, there are many 
+            papers that propose heuristics that improve the brute force approach of testing every polygon against every polygon against the sheet.
         </p>
         <p class="Small" style="color: white">
-            All images come from an implementation of Minkowski Addition/Difference in the C# Script component for Grasshopper/Rhino3d.
+            All images and videos come from an implementation of a custom coded nesting algorithm for Grasshopper/Rhino3d.
         </p>
-        <img class="lazyload" data-src="../Images/Minkowski/MinkowskiAddition.jpg" src="../Images/Minkowski/MinkowskiAddition_Small.jpg" width="1634" height="809" alt="BezierCurve">
-        <p>Minkowski Addition (yellow polygon) of white polygon $A$ with red polygon $B$: $A{\oplus}B$</p>
+        <img class="lazyload" data-src="../Images/Packing/Nesting_2.jpg" src="../Images/Packing/Nesting_2_Small.jpg" width="1552" height="801" alt="BezierCurve">
+        <p>The transparent white polygon is the "sheet", the inner coloured polygons are packed/nested inside the sheet. The sheet is usually rectangular, but as other objects are cutted from the original
+            rectangle, the shape of the sheet can end up having a non-orthogonal shape like this one.
+        </p>
         <p>
             <script src="https://gist.github.com/felipunky/720cc06580cd86f36480ba480f3076e0.js"></script>
         </p>
@@ -152,7 +154,7 @@
             and $m$ is the number of points of Polygon B.
             <br>
             <span style="font-size: 80%">
-                *Note we are dealing only with 2D (with no rotations) and
+                *Note we are dealing only with 2D and
                 that for packing, simulated annealing or other heuristics are preferred over the brute-force approach.
             </span>
             <br>
