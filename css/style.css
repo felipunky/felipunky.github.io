@@ -1943,6 +1943,17 @@ a.brand:focus{
 
 }
 
+.ImageGISExtraSmall
+{
+
+    width: 40%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
 .VideoModeloParametrico
 {
 
