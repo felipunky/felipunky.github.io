@@ -1,0 +1,182 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Personal Site">
+    <meta name="author" content="Felipe Gutiérrez Duque">
+    <meta name="referrer" content="origin">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../apple-touch-icon-114x114.png">
+
+    <title>Parametric Design</title>
+    <link href="../css/style.css" rel="stylesheet" media="screen">
+    <style>
+
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+        }
+
+        .First {
+            width: auto;
+            height: 100%;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <link href="../css/DarkThemeGist.css" rel="stylesheet" media="screen">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        "HTML-CSS": {minScaleAdjust: 100},
+        SVG: {minScaleAdjust: 100},
+        CommonHTML: {minScaleAdjust: 100},
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+        }
+        });
+    </script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body class="body-full-page">
+    
+    <div class="loader"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>
+    
+    <!-- Content CLick Capture-->
+    
+    
+    <div class="click-capture"></div>
+    
+    <!-- Sidebar Menu-->
+    
+    <div class="menu">
+        <span class="close-menu icon-cross2 right-boxed"></span>
+        <div class="menu-lang right-boxed">
+            <a href="../index.html" class="active">Eng</a>
+            <a href="../indexEspañol.html">Spa</a>
+        </div>
+        <ul class="menu-list right-boxed">
+            <li  data-menuanchor="page1">
+                <a  href="../index.html#page1">Home</a>
+            </li>
+            <li  data-menuanchor="page2">
+                <a href="../index.html#page2">Specialization</a>
+            </li>
+            <li  data-menuanchor="page3">
+                <a href="../index.html#page3">Demos</a>
+            </li>
+            <li  data-menuanchor="page4">
+                <a href="../index.html#page4">Blog</a>
+            </li>
+            <li  data-menuanchor="page5">
+                <a href="../index.html#page5">Services</a>
+            </li>
+            <li  data-menuanchor="page6">
+                <a href="../index.html#page6">Resume</a>
+            </li>
+            <li  data-menuanchor="page7">
+                <a href="../index.html#page7">Contact</a>
+            </li>
+        </ul>
+        <div class="menu-footer right-boxed">
+            <div class="social-list">
+                <!--<a href=https://www.behance.net/FelipeGutierrez95 class="icon ion-social-behance"></a>-->
+                <a href="https://api.whatsapp.com/send?phone=573046592737" class="icon ion-social-whatsapp"></a>
+                <a href=https://www.linkedin.com/in/felipe-gutierrez-1853a8156/ class="icon ion-social-linkedin"></a>
+                <a href=https://www.instagram.com/randomrenders/ class="icon ion-social-instagram"></a>
+                <a href="https://github.com/felipunky" class="icon ion-social-github"></a>
+            </div>
+            <div class="copy">© Felipe Gutierrez Duque. All Rights Reserved<br> Design by Felipe Gutiérrez Duque</div>
+        </div>
+    </div>
+    
+    <!-- Navbar -->
+    
+    
+    <header class="navbar navbar-2 navbar-white boxed">
+        <div class="navbar-bg"></div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    
+    <h1>
+        Parametric Design
+    </h1>
+    <div class="First">
+
+        <p>
+            According to <a href="https://en.wikipedia.org/wiki/Parametric_design#:~:text=Parametric%20design%20is%20a%20process,design%20intent%20and%20design%20response.">
+            wikipedia</a> parametric design is a process based on algorithmic thinking that enables the 
+            expression of parameters and rules that, together, define, encode and clarify the relationship 
+            between design intent and design response.
+            In other words you design through understanding the design problem in terms of what the elements 
+            that compose it mean to each other.
+        </p>
+
+        <p class="Small" style="color: white">
+            <img class="lazyload" data-src="../Images/ParametricDesign/CourseImage.png" 
+                              src="../Images/ParametricDesign/CourseImage_Small.png" 
+                              width="750" height="422" alt="BezierCurve">
+            Image that shows a parametric model of the Ekko pavilion by Thilo Frank.
+        </p>
+
+        <p>This pavilion is modeled through the understanding of the relations between the elements, in this 
+           case those elements are the "frames" that grow radially while rotating.
+           <img class="lazyload" data-src="../Images/ParametricDesign/Ekko_1.png" 
+           src="../Images/ParametricDesign/Ekko_1_Small.png" 
+           width="750" height="422" alt="BezierCurve">
+           As you can see the pavilion starts from a circle primitive, so all of the elements that compose 
+           the pavilion will be modified when the radius of such circle is changed. We could call this model 
+           paramateric as changing the radius parameter will create a new design in which the relations 
+           between elements (for example the number of frames) will remain the same.
+        </p>
+    
+        <div class="ParametricDesignVideo">
+
+            <iframe src="https://www.youtube.com/embed/5bhWmwGdoUM" frameborder="0" 
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            </iframe>
+            
+        </div>
+
+    </div>
+
+    </header>
+    
+    <!-- jQuery -->
+    
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/smoothscroll.js"></script>
+    <script src="../js/jquery.validate.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.pagepiling.js"></script>
+    
+    
+    
+    <!-- Scripts -->
+    <script src="../js/scripts.js"></script>
+    <script src="../js/lazyload.min.js"></script>
+    <script>
+        window.addEventListener("load", function(event) {
+            let images = document.querySelectorAll("[data-src]");
+            let lazy = lazyload(images, {"src": "data-src"});
+        });
+    </script>
+    
+</body>
+</html>

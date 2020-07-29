@@ -7889,6 +7889,17 @@ a.brand:focus{
 }
 
 
+/* Parametric Design */
+
+.ParametricDesignVideo {
+
+  /*display: flex;
+  align-items: center;
+  justify-content: center;*/
+  position:relative;padding-top:56.25%;
+
+}
+
 /* 8.3 Min width 1200px */
 
 
