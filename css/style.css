@@ -407,7 +407,7 @@ textarea::-webkit-input-placeholder {
 }
 
 .form-group{
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 }
 
 input.error{
@@ -3710,7 +3710,7 @@ a.brand:focus{
 @media (min-width: 768px){
 
   html{
-    font-size: 13px;
+    font-size: 30px;
   }
 
   .pull-sm-left{
@@ -3827,7 +3827,7 @@ a.brand:focus{
 @media (min-width: 992px){
 
   html{
-    font-size: 14px;
+    font-size: 16px;
   }
 
 
@@ -7635,7 +7635,7 @@ a.brand:focus{
 @media (min-width: 768px){
 
   html{
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .pull-sm-left{
@@ -7752,7 +7752,7 @@ a.brand:focus{
 @media (min-width: 992px){
 
   html{
-    font-size: 14px;
+    font-size: 16px;
   }
 
 
@@ -7892,12 +7892,7 @@ a.brand:focus{
 /* Parametric Design */
 
 .ParametricDesignVideo {
-
-  /*display: flex;
-  align-items: center;
-  justify-content: center;*/
   position:relative;padding-top:56.25%;
-
 }
 
 /* 8.3 Min width 1200px */

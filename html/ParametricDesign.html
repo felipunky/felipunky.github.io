@@ -112,186 +112,222 @@
             <span class="icon-bar"></span>
         </button>
     
-    <h1>
-        Parametric Design
-    </h1>
-    <div class="First">
-
-        <p>
-            According to <a href="https://en.wikipedia.org/wiki/Parametric_design#:~:text=Parametric%20design%20is%20a%20process,design%20intent%20and%20design%20response.">
-            wikipedia</a> parametric design is a process based on algorithmic thinking that enables the 
-            expression of parameters and rules that, together, define, encode and clarify the relationship 
-            between design intent and design response.<br>
-            In other words you design through understanding the design problem in terms of what the elements 
-            that compose it mean to each other. This entails a much more thorough understanding of the design 
-            problem, leading to deeper thinking of what the design problem means.
-            <img class="lazyload" data-src="../Images/ParametricDesign/CourseImage.png" 
-                              src="../Images/ParametricDesign/CourseImage_Small.png" 
-                              width="750" height="422" alt="Ekko Pavilion Closeup">
-            <a class="Small" style="color: white">
-                Image that shows a parametric model of the Ekko pavilion by Thilo Frank. Model and render by 
-                Felipe Gutiérrez, produced in Grasshopper/Rhinoceros3d. 
-            </a>
-        </p>
-
-        <p>
-           This pavilion is modeled through the understanding of the relations between the elements, in this 
-           case those elements are the "frames" that grow radially while rotating.
-           
-           <div class="owl-carousel owl-theme">
-                <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_1.png" 
-                src="../Images/ParametricDesign/Ekko_Const_1_Small.png" 
-                width="750" height="422" alt="Ekko Pavilion Closeup">
-                <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_2.png" 
-                src="../Images/ParametricDesign/Ekko_Const_2_Small.png" 
-                width="750" height="422" alt="Ekko Pavilion Closeup">
-                <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_3.png" 
-                src="../Images/ParametricDesign/Ekko_Const_3_Small.png" 
-                width="750" height="422" alt="Ekko Pavilion Closeup">
-                <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_4.png" 
-                src="../Images/ParametricDesign/Ekko_Const_4_Small.png" 
-                width="750" height="422" alt="Ekko Pavilion Closeup">
-                <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_5.png" 
-                src="../Images/ParametricDesign/Ekko_Const_5_Small.png" 
-                width="750" height="422" alt="Ekko Pavilion Closeup">
-                <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_6.png" 
-                src="../Images/ParametricDesign/Ekko_Const_6_Small.png" 
-                width="750" height="422" alt="Ekko Pavilion Closeup">
+    <div class="container">
+        <div class="row">
+            <h1 class="col">
+                Parametric Design
+            </h1>
+            <div class="col">
+                <h2>
+                    What is Parametric Design?
+                </h2>
             </div>
-
-           As you can see the pavilion starts from a circle primitive, so all of the elements that compose 
-           the pavilion will be modified when the radius of such circle is changed. We could call this model 
-           paramateric as changing the radius parameter will create a new design in which the relations 
-           between elements (for example the number of frames) will remain the same. The term parameter comes 
-           from the mathematical definition of a parametric equation, in which an end result will change 
-           according to some initial parameters. Parametric design can be thought of an algorithm/set of steps 
-           that produce a design, that can be modified by changing the original parameters of such procedure.
-        </p>
-        
-        <p>
-            <img class="lazyload" data-src="../Images/ParametricDesign/Ekko_1.png" 
-                              src="../Images/ParametricDesign/Ekko_1_Small.png" 
-                              width="750" height="422" alt="Ekko Pavilion Top View">
-            <a class="Small" style="color: white">
-                Top View.
-            </a>
-        </p>
-
-        <p>
-            <img class="lazyload" data-src="../Images/ParametricDesign/Ekko.png" 
-                              src="../Images/ParametricDesign/Ekko_Small.png" 
-                              width="750" height="422" alt="Ekko Pavilion Perspective">
-            <a class="Small" style="color: white">
-                Perspective.
-            </a>
-        </p>
-
-        <div>
-
-            <p>
-                The next video is a short introduction of what parametric design is, this video was recorded for 
-                the Udemy course <a href="https://www.udemy.com/course/introduction-to-parametric-design-grasshopper/?referralCode=D411E6F0AAF7BE96626E">
-                Introduction to Parametric Design: Grasshopper</a>. 
-            </p>
-
-            <p class="ParametricDesignVideo">
-
-                <iframe src="https://www.youtube.com/embed/5bhWmwGdoUM" frameborder="0" 
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-                style="position:absolute;top:0;left:0;width:100%;height:100%;">
-                </iframe>
-
-            </p>
-            
+            <div class="row">
+                <div class="col-sm-12 col-md-7">
+                    According to <a href="https://en.wikipedia.org/wiki/Parametric_design#:~:text=Parametric%20design%20is%20a%20process,design%20intent%20and%20design%20response.">
+                    wikipedia</a> parametric design is a process based on algorithmic thinking that enables the 
+                    expression of parameters and rules that, together, define, encode and clarify the relationship 
+                    between design intent and design response.<br>
+                    In other words you design through understanding the design problem in terms of what the elements 
+                    that compose it mean to each other. This entails a much more thorough understanding of the design 
+                    problem, leading to deeper thinking of what the design problem means.
+                </div>
+                <div class="col-sm-12 col-md-5">
+                    <img class="lazyload" data-src="../Images/ParametricDesign/CourseImage.png" 
+                                    src="../Images/ParametricDesign/CourseImage_Small.png" 
+                                    width="750" height="422" alt="Ekko Pavilion Closeup">
+                    <p class="Small" style="color: white">
+                        Image that shows a parametric model of the Ekko pavilion by Thilo Frank. Model and render by 
+                        Felipe Gutiérrez, produced in Grasshopper/Rhinoceros3d. 
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col">
+                        <h2>
+                            Introduction to Parametric Design: Grasshopper
+                        </h2>
+                    </div>
+                    <div class="col">
+                        The next video is a short introduction of what parametric design is, this video was recorded for 
+                        the Udemy course <a href="https://www.udemy.com/course/introduction-to-parametric-design-grasshopper/?referralCode=D411E6F0AAF7BE96626E">
+                        Introduction to Parametric Design: Grasshopper</a>. 
+                    </div>
+                    <div class="col ParametricDesignVideo">
+                        <iframe src="https://www.youtube.com/embed/5bhWmwGdoUM" frameborder="0" 
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                        </iframe>
+                    </div>
+                </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <h2>
+                    Practical Example
+                </h2>
+                <div class="col">
+                    This pavilion is modeled through the understanding of the relations between the elements, in this 
+                    case those elements are the "frames" that grow radially while rotating. There is also an explicit 
+                    relation between the "floor" or world plane with the frames, as the floor cuts the frames, leaving 
+                    only the upper part of these frames.
+                    <div class="owl-carousel owl-theme">
+                        <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_1.png" 
+                        src="../Images/ParametricDesign/Ekko_Const_1_Small.png" 
+                        width="750" height="422" alt="Ekko Pavilion Closeup">
+                        <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_2.png" 
+                        src="../Images/ParametricDesign/Ekko_Const_2_Small.png" 
+                        width="750" height="422" alt="Ekko Pavilion Closeup">
+                        <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_3.png" 
+                        src="../Images/ParametricDesign/Ekko_Const_3_Small.png" 
+                        width="750" height="422" alt="Ekko Pavilion Closeup">
+                        <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_4.png" 
+                        src="../Images/ParametricDesign/Ekko_Const_4_Small.png" 
+                        width="750" height="422" alt="Ekko Pavilion Closeup">
+                        <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_5.png" 
+                        src="../Images/ParametricDesign/Ekko_Const_5_Small.png" 
+                        width="750" height="422" alt="Ekko Pavilion Closeup">
+                        <img class="owl-lazy" data-src="../Images/ParametricDesign/Ekko_Const_6.png" 
+                        src="../Images/ParametricDesign/Ekko_Const_6_Small.png" 
+                        width="750" height="422" alt="Ekko Pavilion Closeup">
+                    </div>
+                </div>
+                <div class="col">
+                    As you can see the pavilion starts from a circle primitive, so all of the elements that compose 
+                    the pavilion will be modified when the radius of such circle is changed. We could call this model 
+                    paramateric as changing the radius parameter will create a new design in which the relations 
+                    between elements (for example the number of frames) will remain the same. There are other parameters 
+                    that have been defined for this definition, such as the width and height of the frame, the rotation 
+                    angle, the thickness of the elements and others. 
+                    The term parameter comes from the mathematical definition of a parametric equation, in which an end 
+                    result will change according to some initial parameters. Parametric design can be thought of an 
+                    algorithm/set of steps that produce a design, that can be modified by changing the original parameters 
+                    of such procedure.
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6">
+                        <img class="lazyload" data-src="../Images/ParametricDesign/Ekko_1.png" 
+                                        src="../Images/ParametricDesign/Ekko_1_Small.png" 
+                                        width="750" height="422" alt="Ekko Pavilion Top View">
+                        <a class="Small" style="color: white">
+                            Top View.
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <img class="lazyload" data-src="../Images/ParametricDesign/Ekko.png" 
+                                        src="../Images/ParametricDesign/Ekko_Small.png" 
+                                        width="750" height="422" alt="Ekko Pavilion Perspective">
+                        <a class="Small" style="color: white">
+                            Perspective.
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <h2>
-            Parametric Architecture
-        </h2>
-
-        <p>
-            Parametric design is used in many industries, one of those industries is architecture. In which 
-            buildings, urban designs, furniture and others are modeled through the use of parametric design. 
-            <img class="lazyload" data-src="../Images/ParametricDesign/SevilleParasol_1.png" 
-                              src="../Images/ParametricDesign/SevilleParasol_1_Small.png" 
-                              width="750" height="422" alt="Seville Parasol Closeup">
-            <a class="Small" style="color: white">
-                This image shows the Seville Parasol, also known as "Las Setas de Sevilla" spanish for the 
-                Seville's Mushrooms, architect: Jürgen Mayer H. Model and render created by Felipe Gutiérrez 
-                in Grasshopper/Rhinoceros3d.
-            </a>
-        </p>
-
-        <p>
-            This model is created by using a technique known in the industry as constructive solid geometry 
-            <a href="https://en.wikipedia.org/wiki/Constructive_solid_geometry">
-                CSG</a> in which primitives (in this case spheres) are subjected to boolean operations, such 
-            as unions after that relations between them are created, such as the function that modifies 
-            the points that compose the spheres to create the columns and the overall shape of the structure.
-            <img class="lazyload" data-src="../Images/ParametricDesign/SevilleParasol_2.png" 
-                              src="../Images/ParametricDesign/SevilleParasol_2_Small.png" 
-                              width="750" height="422" alt="Seville Parasol Closeup">
-        </p>
-
-        <p>
-            The algorithmic nature of designing through parametrism allows the user to create complex mathematical 
-            relations between objects, that result in beautiful objects and spaces.
-            <img class="lazyload" data-src="../Images/ParametricDesign/LogStructure_1.png" 
-                              src="../Images/ParametricDesign/LogStructure_1_Small.png" 
-                              width="750" height="422" alt="Seville Parasol Closeup">
-            <a class="Small" style="color: white">
-                Design model and render created by Felipe Gutiérrez in Grasshopper/Rhinoceros3d.
-            </a>
-        </p>
-
-        <p>
-            This model uses mathematical functions to produce a flower-like column. The elements that 
-            compose this design have been thought from the beginning to be able to produce an structure which 
-            is easily constructable in the real world as all of the "pieces" are simple in the sense that they 
-            are lines that can correspond to a beam and triangles that can correspond to a wood/metal panel.
-            <img class="lazyload" data-src="../Images/ParametricDesign/LogStructure.png" 
-                              src="../Images/ParametricDesign/LogStructure_Small.png" 
-                              width="750" height="422" alt="Seville Parasol Closeup">
-        </p>
-
-        <h3>
-            Software
-        </h3>
-
-        <p>
-            There are various software that can handle parametric workflows, some of them are:
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                <div class="col">
+                    <h2>
+                        Parametric Architecture
+                    </h2>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6">
+                        Parametric design is used in many industries, one of those industries is architecture. In which 
+                        buildings, urban planning, furniture and others are modeled through the use of parametric design. 
+                        <img class="lazyload" data-src="../Images/ParametricDesign/SevilleParasol_1.png" 
+                                        src="../Images/ParametricDesign/SevilleParasol_1_Small.png" 
+                                        width="750" height="422" alt="Seville Parasol Closeup">
+                        <a class="Small" style="color: white">
+                            This image shows the Seville Parasol, also known as "Las Setas de Sevilla" spanish for the 
+                            Seville's Mushrooms, architect: Jürgen Mayer H. Model and render created by Felipe Gutiérrez 
+                            in Grasshopper/Rhinoceros3d.
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        This model is created by using a technique known in the industry as constructive solid geometry 
+                        <a href="https://en.wikipedia.org/wiki/Constructive_solid_geometry">
+                            CSG</a> in which primitives (in this case spheres) are subjected to boolean operations, such 
+                        as unions after that relations between them are created, such as the function that modifies 
+                        the points that compose the spheres to create the columns and the overall shape of the structure.
+                        <img class="lazyload" data-src="../Images/ParametricDesign/SevilleParasol_2.png" 
+                                        src="../Images/ParametricDesign/SevilleParasol_2_Small.png" 
+                                        width="750" height="422" alt="Seville Parasol Closeup">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>
+                    Algorithmic design
+                </h2>
+            </div>
+            <div class="col-sm-12 col-xl-6">
+                The algorithmic nature of designing through parametrism allows the user to create complex mathematical 
+                relations between objects, that result in beautiful objects and spaces.
+                <img class="lazyload" data-src="../Images/ParametricDesign/LogStructure_1.png" 
+                                src="../Images/ParametricDesign/LogStructure_1_Small.png" 
+                                width="750" height="422" alt="Seville Parasol Closeup">
+                <a class="Small" style="color: white">
+                    Design model and render created by Felipe Gutiérrez in Grasshopper/Rhinoceros3d.
+                </a>
+            </div>
+            <div class="col-sm-12 col-xl-6">
+                This model uses mathematical functions to produce a flower-like column. The elements that 
+                compose this design have been thought from the beginning to be able to produce an structure which 
+                is easily constructable in the real world as all of the "pieces" are simple in the sense that they 
+                are lines that can correspond to a beam and triangles that can correspond to a wood/metal panel.
+                <img class="lazyload" data-src="../Images/ParametricDesign/LogStructure.png" 
+                                src="../Images/ParametricDesign/LogStructure_Small.png" 
+                                width="750" height="422" alt="Seville Parasol Closeup">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>
+                    Software
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                There are various software that can handle parametric workflows, some of them are:
+            </div>
             <ul>
-                <li>
-                    <a href="https://www.grasshopper3d.com/">Grasshopper</a>:
-                    Tightly integrated visual scripting environment for 
-                    <a href="https://www.rhino3d.com/">Rhinoceros3d</a>, industry standard when it comes to 
-                    parametric workflows, including but not only limited to architecture.
-                </li>
-                <li>
-                    <a href="https://www.blender.org/">Blender</a>: Open Source 3d modeler, used by many as 
-                    the software is free of charge and easy to modify as the source code can be viewed and 
-                    modified by anyone.
-                </li>
-                <li>
-                    <a href="https://www.autodesk.com/products/3ds-max/overview">Autodesk 3DS Max</a>: used 
-                    mostly for visualization purposes (rendering), but able to produce geometry on it's own. 
-                    Superb animation tools, used mainly in the movie and videogames industry.
-                </li>
-                <li>
-                    <a href="https://www.autodesk.com/products/revit/overview">Autodesk Revit</a>: due to the
-                    wide adoption of <a href="https://en.wikipedia.org/wiki/Building_information_modeling">BIM</a> 
-                    in the construction practice, this software has been the standard tool for anything related 
-                    with engineering/architecture since the beginning of the century. Although it has not been 
-                    keeping up with the pace of the industry's needs according to 
-                    <a href="https://www.dezeen.com/2020/07/28/autodesk-revit-bim-software-criticism/.">
-                    major architecture firms</a>.<br> 
-                    There is a project that tries to resemble the workflow provided by Grasshopper in Revit 
-                    called <a href="https://dynamobim.org/">Dynamo</a>, promising but it is fairly new compared 
-                    to Grasshopper, so there is less tools available to customize it.
-                </li>
+                <div class="col-sm-12 col-md-6">
+                    <li>
+                        <a href="https://www.grasshopper3d.com/">Grasshopper</a>:
+                        Tightly integrated visual scripting environment for 
+                        <a href="https://www.rhino3d.com/">Rhinoceros3d</a>, industry standard when it comes to 
+                        parametric workflows, including but not only limited to architecture.
+                    </li>
+                    <li>
+                        <a href="https://www.blender.org/">Blender</a>: Open Source 3d modeler, used by many as 
+                        the software is free of charge and easy to modify as the source code can be viewed and 
+                        modified by anyone.
+                    </li>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <li>
+                        <a href="https://www.autodesk.com/products/3ds-max/overview">Autodesk 3DS Max</a>: used 
+                        mostly for visualization purposes (rendering), but able to produce geometry on it's own. 
+                        Superb animation tools, used mainly in the movie and videogames industry.
+                    </li>
+                    <li>
+                        <a href="https://www.autodesk.com/products/revit/overview">Autodesk Revit</a>: due to the
+                        wide adoption of <a href="https://en.wikipedia.org/wiki/Building_information_modeling">BIM</a> 
+                        in the construction practice, this software has been the standard tool for anything related 
+                        with engineering/architecture since the beginning of the century. Although it has not been 
+                        keeping up with the pace of the industry's needs according to 
+                        <a href="https://www.dezeen.com/2020/07/28/autodesk-revit-bim-software-criticism/.">
+                        major architecture firms</a>.<br> 
+                        There is a project that tries to resemble the workflow provided by Grasshopper in Revit 
+                        called <a href="https://dynamobim.org/">Dynamo</a>, promising but it is fairly new compared 
+                        to Grasshopper, so there is less tools available to customize it.
+                    </li>
+                </div>
+                </div>
             </ul>
-        </p>
-
+        </div>
     </div>
 
     </header>
