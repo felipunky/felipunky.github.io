@@ -3710,7 +3710,7 @@ a.brand:focus{
 @media (min-width: 768px){
 
   html{
-    font-size: 30px;
+    font-size: 16px;
   }
 
   .pull-sm-left{
@@ -3827,7 +3827,7 @@ a.brand:focus{
 @media (min-width: 992px){
 
   html{
-    font-size: 16px;
+    font-size: 18px;
   }
 
 
@@ -7752,7 +7752,7 @@ a.brand:focus{
 @media (min-width: 992px){
 
   html{
-    font-size: 16px;
+    font-size: 18px;
   }
 
 
@@ -7895,6 +7895,11 @@ a.brand:focus{
   position:relative;padding-top:56.25%;
 }
 
+@media (min-width: 1200px) {
+  .container {
+    width: 1920px;
+  }
+}
 /* 8.3 Min width 1200px */
 
 
