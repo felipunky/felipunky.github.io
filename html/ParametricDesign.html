@@ -15,46 +15,13 @@
 
     <title>Parametric Design</title>
     <link href="../css/style.css" rel="stylesheet" media="screen">
-    <style>
 
-        body {
-            margin: 0;
-            background-color: black;
-            color: white;
-        }
-
-        .First {
-            width: auto;
-            height: 100%;
-        }
-
-        img {
-            width: 100%;
-            height: auto;
-        }
-    </style>
-    <link href="../css/DarkThemeGist.css" rel="stylesheet" media="screen">
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-        "HTML-CSS": {minScaleAdjust: 100},
-        SVG: {minScaleAdjust: 100},
-        CommonHTML: {minScaleAdjust: 100},
-        tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-        }
-        });
-    </script>
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
-    </script>
 </head>
 <body class="body-full-page">
     
     <div class="loader"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>
     
     <!-- Content CLick Capture-->
-    
     
     <div class="click-capture"></div>
     
@@ -155,9 +122,9 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-8 ParametricDesignVideo">
-                            <iframe src="https://www.youtube.com/embed/5bhWmwGdoUM" frameborder="0" 
+                            <iframe src="https://www.youtube.com/embed/5bhWmwGdoUM"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-                            style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                            style="border: 0px;position:absolute;top:0;left:0;width:100%;height:100%;">
                             </iframe>
                         </div>
                         <div class="col-sm-12 col-md-4">
@@ -317,55 +284,57 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h3>
+                    <h2>
                         Software
-                    </h3>
+                    </h2>
                 </div>
                 <div class="row">
                     <div class="col">
                         There are various software that can handle parametric workflows, some of them are:
                     </div>
-                    <ul>
                         <div class="col-sm-12 col-md-6">
-                            <li>
-                                <a href="https://www.grasshopper3d.com/">Grasshopper</a>:
-                                Tightly integrated visual scripting environment for 
-                                <a href="https://www.rhino3d.com/">Rhinoceros3d</a>, industry standard when it comes to 
-                                parametric workflows, including but not only limited to architecture.<br>
-                                Due to the number of years this software has been running commercially, it has an 
-                                enormous amount of plugins to customize it, while it also allows the more advanced users 
-                                to program as they will the software for their specific needs, through custom scripting.
-                                There is a technology that McNeel is working on (and anyone who is willing too as it is 
-                                open source) called <a href="https://www.rhino3d.com/inside">Rhino.Inside</a> that enables 
-                                interoperability between Rhino/Grasshopper and major software such as UE4, Revit, ArcGIS 
-                                and many others. 
-                            </li>
-                            <li>
-                                <a href="https://www.blender.org/">Blender</a>: Open Source 3d modeler, used by many as 
-                                the software is free of charge and easy to modify as the source code can be viewed and 
-                                modified by anyone.
-                            </li>
+                            <ul>
+                                <li>
+                                    <a href="https://www.grasshopper3d.com/">Grasshopper</a>:
+                                    Tightly integrated visual scripting environment for 
+                                    <a href="https://www.rhino3d.com/">Rhinoceros3d</a>, industry standard when it comes to 
+                                    parametric workflows, including but not only limited to architecture.<br>
+                                    Due to the number of years this software has been running commercially, it has an 
+                                    enormous amount of plugins to customize it, while it also allows the more advanced users 
+                                    to program as they will the software for their specific needs, through custom scripting.
+                                    There is a technology that McNeel is working on (and anyone who is willing too as it is 
+                                    open source) called <a href="https://www.rhino3d.com/inside">Rhino.Inside</a> that enables 
+                                    interoperability between Rhino/Grasshopper and major software such as UE4, Revit, ArcGIS 
+                                    and many others. 
+                                </li>
+                                <li>
+                                    <a href="https://www.blender.org/">Blender</a>: Open Source 3d modeler, used by many as 
+                                    the software is free of charge and easy to modify as the source code can be viewed and 
+                                    modified by anyone.
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <li>
-                                <a href="https://www.autodesk.com/products/3ds-max/overview">Autodesk 3DS Max</a>: used 
-                                mostly for visualization purposes (rendering), but able to produce geometry on it's own. 
-                                Superb animation tools, used mainly in the movie and videogames industry.
-                            </li>
-                            <li>
-                                <a href="https://www.autodesk.com/products/revit/overview">Autodesk Revit</a>: due to the
-                                wide adoption of <a href="https://en.wikipedia.org/wiki/Building_information_modeling">BIM</a> 
-                                in the construction practice, this software has been the standard tool for anything related 
-                                with engineering/architecture since the beginning of the century. Although it has not been 
-                                keeping up with the pace of the industry's needs according to 
-                                <a href="https://www.dezeen.com/2020/07/28/autodesk-revit-bim-software-criticism/.">
-                                major architecture firms</a>.<br> 
-                                There is a project that tries to resemble the workflow provided by Grasshopper in Revit 
-                                called <a href="https://dynamobim.org/">Dynamo</a>, promising but it is fairly new compared 
-                                to Grasshopper, so there is less tools available to customize it.
-                            </li>
+                            <ul>
+                                <li>
+                                    <a href="https://www.autodesk.com/products/3ds-max/overview">Autodesk 3DS Max</a>: used 
+                                    mostly for visualization purposes (rendering), but able to produce geometry on it's own. 
+                                    Superb animation tools, used mainly in the movie and videogames industry.
+                                </li>
+                                <li>
+                                    <a href="https://www.autodesk.com/products/revit/overview">Autodesk Revit</a>: due to the
+                                    wide adoption of <a href="https://en.wikipedia.org/wiki/Building_information_modeling">BIM</a> 
+                                    in the construction practice, this software has been the standard tool for anything related 
+                                    with engineering/architecture since the beginning of the century. Although it has not been 
+                                    keeping up with the pace of the industry's needs according to 
+                                    <a href="https://www.dezeen.com/2020/07/28/autodesk-revit-bim-software-criticism/.">
+                                    major architecture firms</a>.<br> 
+                                    There is a project that tries to resemble the workflow provided by Grasshopper in Revit 
+                                    called <a href="https://dynamobim.org/">Dynamo</a>, promising but it is fairly new compared 
+                                    to Grasshopper, so there is less tools available to customize it.
+                                </li>
+                            </ul>
                         </div>
-                    </ul>
                 </div>
             </div>
         </div>
