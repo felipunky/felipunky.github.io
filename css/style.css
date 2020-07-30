@@ -7903,6 +7903,10 @@ a.brand:focus{
 /* 8.3 Min width 1200px */
 
 
+.owl-item .oul-carousel { 
+  width:100%;
+  max-width:200px;
+}
 
 
 @media (min-width: 1200px){
