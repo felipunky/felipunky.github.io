@@ -384,6 +384,66 @@
                 </div>
             </div>
         </div>
+        <div class="vertical-centred" style="padding-top: 50px;">
+            <div class="boxed boxed-inner">
+                <div class="vertical-title text-dark hidden-xs hidden-sm"><span>contact</span></div>
+                <div class="boxed">
+                    <div class="container">
+                        <div class="intro overflow-hidden">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2 class="MediumYellow">Get In Touch<br>
+                                        <span class="MediumWhite">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p style="background-color: green;
+                                                    border-radius: 25px;">
+                                                        <a href="https://api.whatsapp.com/send?phone=573046592737" 
+                                                        class="icon ion-social-whatsapp" >
+                                                            Whatsapp
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                Or send a message:
+                                            </div>
+                                      </span>
+                                    </h2>
+                                    <div class="contact-info">
+                                    <form id="contactform" method="POST">
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <input type="text" name="name" required="" placeholder="Name*" aria-required="true">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <input type="email" name="email" placeholder="Email">
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <input type="text" name="subject" placeholder="Subject (Optional)">
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <textarea name="message" required="" placeholder="Message*" aria-required="true"></textarea>
+                                            </div>
+                                                <input type="text" name="_gotcha" style="display:none" />
+                                            <div class="col-sm-12"><button type="submit" class="btn">Send Message</button></div>
+                                    </form>
+                                    <script>
+                                        var contactform =  document.getElementById('contactform');
+                                        contactform.setAttribute('action', 'http://formspree.io/' + 'felipegutierrezduque10' + '@' + 'gmail' + '.' + 'com');
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     </header>
