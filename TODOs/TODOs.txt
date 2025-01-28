@@ -1,0 +1,50 @@
+TODOs:
+*Webpage:
+	*Add project section.
+*Projects:
+	*Texture space decals:
+		-Get it to compile on Windows.
+		-Add CMake support.
+		-Default initial parameters:
+			+Start with decal projected already.
+		-Add info about controls.
+		-Implement PBR:
+			+Lighting
+			+IBL
+		-Shadow mapping.
+		-Implement orbit camera.
+		-Decals:
+			+Add back deferred screen space decals with controls ImGuizmo.
+		-Model loading:
+			+Allow glb/compressed GLTF.
+		-Camera fixes:
+			+Implement logarithmic z-buffer.
+		-Proper README on Github.
+	*Deferred renderer:
+		-Add Tangent Space Normal mapping.
+		-Add PBR.
+		-Add Parallax Occlussion Mapping:
+			+https://www.reddit.com/r/webgpu/comments/1iahs0v/webgpu_parallax_occlusion_mapping_2/
+		-Implement multiple shadow mapping algorithms:
+			+Cascade Shadow Mapping.
+			+Variance Shadow Maps:
+				+https://developer.nvidia.com/gpugems/gpugems3/part-ii-light-and-shadows/chapter-8-summed-area-variance-shadow-maps
+		-Implement tessellation displacement.
+	*InstagramBotSelenium:
+		-Polish.
+	*Physarum:
+		-Implement a physarum simulation on the GPU using compute shaders.
+	*Hydraulic Erosion:
+		-Implement a hydraulic simulation on the GPU using compute shaders.
+	*GHopperGIS:
+		-Add various fixes including the ones mentioned on the comments on the food4Rhino page.
+	*Implement a Deferred Renderer using Vulkan.
+	*CUDA:
+		-https://github.com/felipunky/HelloCUDA
+		-Implement image processing using CUDA.
+		-Add README.
+	*NURBS:
+		-Curves
+		-Surfaces
+		-Rendering
+		-Tessellation shaders?
